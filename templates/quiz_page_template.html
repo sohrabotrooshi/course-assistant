@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MBAX 6418 · Practice Quizzes</title>
+<style>
+/* ---------- token theme (recolor by editing :root) ---------- */
+:root{
+  --bg:#FAF7F0;            /* CU-buff-tinted paper */
+  --fg:#1B1B1B;            /* CU black */
+  --muted:#6B675E;
+  --card:#FFFFFF;
+  --line:#E4DECF;
+  --accent:#B8994A;        /* CU gold */
+  --accent-deep:#8A6D2F;
+  --accent-ink:#33280C;
+  --good:#2E6B3E;
+  --good-bg:#E9F2EA;
+  --bad:#A33B2E;
+  --bad-bg:#FAEAE7;
+  --radius:14px;
+  --font:"Inter","SF Pro Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--fg);
+  font-family:var(--font);line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:880px;margin:0 auto;padding:40px 22px 80px}
+/* masthead */
+.overline{font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent-deep);font-weight:700}
+h1{font-size:30px;margin:6px 0 8px;letter-spacing:-.02em}
+.sub{color:var(--muted);max-width:64ch;margin:0 0 26px;font-size:14.5px}
+/* stats */
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:12px 18px;min-width:120px}
+.stat b{display:block;font-size:24px;letter-spacing:-.02em}
+.stat span{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.pbar{flex:1 1 100%;height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+.pbar i{display:block;height:100%;width:0%;background:var(--accent);transition:width .25s}
+/* week tabs */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px}
+.tab{padding:8px 16px;border:1px solid var(--line);background:var(--card);
+  border-radius:99px;font:600 13px var(--font);color:var(--muted);cursor:pointer}
+.tab.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+/* question cards */
+.q{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px 22px;margin:0 0 16px}
+.qhead{display:flex;align-items:center;gap:10px;margin:0 0 10px}
+.qnum{font:800 13px var(--font);color:var(--accent-deep)}
+.tag{font:600 11px var(--font);padding:3px 10px;border-radius:99px;background:#F1EBDC;
+  color:var(--accent-deep);text-transform:uppercase;letter-spacing:.06em}
+.tag.done{display:none}
+.stem{font-size:16.5px;font-weight:600;margin:0 0 14px;letter-spacing:-.01em}
+.opts{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:8px}
+.opts label{display:flex;gap:11px;align-items:flex-start;padding:11px 14px;
+  border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:14.5px;
+  transition:border-color .12s, background .12s}
+.opts label:hover{border-color:var(--accent)}
+.opts .ltr{font-weight:800;color:var(--muted);min-width:18px}
+.opts input{accent-color:var(--accent-deep);margin-top:3px}
+.q.chk .opts label{pointer-events:none}
+.q.chk .opts label.right{border-color:var(--good);background:var(--good-bg)}
+.q.chk .opts label.right .ltr{color:var(--good)}
+.q.chk .opts label.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.q.chk .opts label.wrong .ltr{color:var(--bad)}
+.actions{display:flex;gap:10px;align-items:center}
+.btn{font:700 13.5px var(--font);border:none;border-radius:10px;padding:9px 18px;
+  cursor:pointer;background:var(--fg);color:#FFF}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.plain{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.reveal{display:none;margin-top:14px;border-top:1px dashed var(--line);padding-top:14px}
+.q.chk .reveal{display:block}
+.verdict{font:700 13px var(--font);margin:0 0 8px}
+.verdict.good{color:var(--good)} .verdict.bad{color:var(--bad)}
+.rationale{font-size:14px;margin:0 0 12px}
+.rationale b{font-weight:700}
+details.source{font-size:13.5px;border:1px solid var(--line);border-radius:10px;
+  background:#FBF9F3;padding:10px 14px}
+details.source summary{cursor:pointer;font-weight:700;color:var(--accent-deep)}
+.snippet{margin:10px 0 0;white-space:pre-wrap;color:var(--muted);font-size:13px;
+  border-top:1px dashed var(--line);padding-top:10px}
+.foot{margin-top:34px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);
+  padding-top:16px}
+.hidden{display:none}
+@media(max-width:560px){ .wrap{padding:24px 14px 60px} h1{font-size:24px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="overline">MBAX 6418 · Study tool</div>
+  <h1>Practice Quizzes</h1>
+  <p class="sub" id="sub"></p>
+
+  <div class="stats">
+    <div class="stat"><b id="sDone">0/0</b><span>answered</span></div>
+    <div class="stat"><b id="sRight">0</b><span>correct</span></div>
+    <div class="stat"><b id="sPct">—</b><span>accuracy</span></div>
+    <div class="pbar"><i id="sBar"></i></div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+  <div id="deck"></div>
+  <button class="btn plain" id="reset">Reset progress</button>
+
+  <p class="foot" id="foot"></p>
+</div>
+
+<script>
+const QUIZ = __QUIZ_DATA__;
+const SOURCES = __SOURCES_DATA__;
+
+const state = {answers:{}, checked:{}};
+const LS_KEY = "mbax6418-quiz-v1";
+let weekOpen = null;
+
+function load(){try{const s=localStorage.getItem(LS_KEY);if(s)Object.assign(state,JSON.parse(s));}catch(e){}}
+function persist(){try{localStorage.setItem(LS_KEY,JSON.stringify(state));}catch(e){}}
+function esc(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML;}
+
+function allQ(){
+  const out=[];
+  for(const wk in QUIZ.weeks)
+    for(const q of QUIZ.weeks[wk].questions) out.push({wk,q});
+  return out;
+}
+function qid(wk,q){return wk+"|"+q.question.slice(0,40);}
+
+function renderTabs(){
+  const tabs=document.getElementById("tabs");tabs.innerHTML="";
+  for(const wk in QUIZ.weeks){
+    const b=document.createElement("button");
+    b.className="tab"+(weekOpen===wk?" on":"");b.textContent="Week "+wk;
+    b.onclick=()=>{weekOpen=wk;renderTabs();renderCards();};
+    tabs.appendChild(b);
+  }
+}
+function renderCards(){
+  const deck=document.getElementById("deck");deck.innerHTML="";
+  const week=QUIZ.weeks[weekOpen]; if(!week)return;
+  week.questions.forEach((q,idx)=>{
+    const id=qid(weekOpen,q);
+    const card=document.createElement("article");card.className="q";
+    const head=document.createElement("div");head.className="qhead";
+    const num=document.createElement("span");num.className="qnum";
+    num.textContent="Q"+(idx+1);head.appendChild(num);
+    const wk=document.createElement("span");wk.className="tag";
+    wk.textContent="Week "+weekOpen;head.appendChild(wk);
+    const done=document.createElement("span");done.className="tag done";
+    done.textContent="✓ saved";done.id=id+"-tag";head.appendChild(done);
+    card.appendChild(head);
+
+    const stem=document.createElement("p");stem.className="stem";stem.textContent=q.question;
+    card.appendChild(stem);
+
+    const ol=document.createElement("ol");ol.className="opts";
+    q.options.forEach((opt,i)=>{
+      const li=document.createElement("li");
+      const lab=document.createElement("label");
+      const inp=document.createElement("input");inp.type="radio";inp.name=id;
+      inp.value=i;
+      if(state.answers[id]===i)inp.checked=true;
+      inp.addEventListener("change",()=>{
+        state.answers[id]=i;persist();checkBtn.disabled=false;
+      });
+      const ltr=document.createElement("span");ltr.className="ltr";
+      ltr.textContent=String.fromCharCode(65+i)+".";
+      const txt=document.createElement("span");txt.textContent=opt;
+      lab.appendChild(inp);lab.appendChild(ltr);lab.appendChild(txt);
+      li.appendChild(lab);ol.appendChild(li);
+    });
+    card.appendChild(ol);
+
+    const actions=document.createElement("div");actions.className="actions";
+    const checkBtn=document.createElement("button");checkBtn.className="btn";
+    checkBtn.textContent=state.checked[id]?"Revealed":"Check answer";
+    checkBtn.disabled=state.answers[id]===undefined;
+    checkBtn.onclick=()=>{state.checked[id]=true;persist();renderCards();};
+    actions.appendChild(checkBtn);card.appendChild(actions);
+
+    const rev=document.createElement("div");rev.className="reveal";
+    const src=SOURCES[q.source_chunk_id]||{};
+    if(state.checked[id]){
+      card.classList.add("chk");done.classList.remove("done");
+      const v=document.createElement("p");
+      const right=state.answers[id]===q.answer;
+      v.className="verdict "+(right?"good":"bad");
+      v.textContent=right?"✓ Correct":"✗ Incorrect — correct answer: "+
+        String.fromCharCode(65+q.answer)+".";
+      rev.appendChild(v);
+      const r=document.createElement("p");r.className="rationale";r.textContent=q.rationale;
+      rev.appendChild(r);
+      const det=document.createElement("details");det.className="source";det.open=true;
+      const sm=document.createElement("summary");
+      sm.textContent="Source: [Week "+src.week+", slide "+src.slide+"] "+(src.title||"");
+      det.appendChild(sm);
+      const snip=document.createElement("div");snip.className="snippet";snip.textContent=src.text||"";
+      det.appendChild(snip);rev.appendChild(det);
+      checkBtn.disabled=true;
+    }
+    card.appendChild(rev);
+    deck.appendChild(card);
+  });
+  updateStats();
+}
+function updateStats(){
+  const all=allQ(), n=all.length;
+  let done=0,right=0;
+  for(const {wk,q} of all){const id=qid(wk,q);
+    if(state.checked[id]){done++;if(state.answers[id]===q.answer)right++;}}
+  document.getElementById("sDone").textContent=done+"/"+n;
+  document.getElementById("sRight").textContent=right;
+  document.getElementById("sPct").textContent=done?Math.round(100*right/done)+"%":"—";
+  document.getElementById("sBar").style.width=Math.round(100*done/n)+"%";
+}
+document.getElementById("reset").onclick=()=>{
+  localStorage.removeItem(LS_KEY);
+  state.answers={};state.checked={};
+  if(weekOpen===null){const ks=Object.keys(QUIZ.weeks);weekOpen=ks[0];}
+  renderCards();
+};
+
+(function init(){
+  load();
+  const meta=QUIZ.meta||{};
+  const total=allQ().length;
+  document.getElementById("sub").textContent=
+    total+" multiple-choice questions generated from the Week "+
+    Object.keys(QUIZ.weeks).join("–")+" lecture slides — every question cites "+
+    "the exact slide it came from. Answer, check, and the source slide appears. "+
+    "Your progress is saved in this browser.";
+  document.getElementById("foot").textContent=
+    "Questions generated with the class LLM endpoint ("+(meta.model||"Qwen3.6-35B")+
+    "), one per sampled slide, seed "+(meta.seed||"?")+". Offline: all data is baked into this file.";
+  if(Object.keys(QUIZ.weeks).length&&weekOpen===null)weekOpen=Object.keys(QUIZ.weeks)[0];
+  renderTabs();renderCards();
+})();
+</script>
+</body>
+</html>

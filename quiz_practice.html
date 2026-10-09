@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MBAX 6418 · Practice Quizzes</title>
+<style>
+/* ---------- token theme (recolor by editing :root) ---------- */
+:root{
+  --bg:#FAF7F0;            /* CU-buff-tinted paper */
+  --fg:#1B1B1B;            /* CU black */
+  --muted:#6B675E;
+  --card:#FFFFFF;
+  --line:#E4DECF;
+  --accent:#B8994A;        /* CU gold */
+  --accent-deep:#8A6D2F;
+  --accent-ink:#33280C;
+  --good:#2E6B3E;
+  --good-bg:#E9F2EA;
+  --bad:#A33B2E;
+  --bad-bg:#FAEAE7;
+  --radius:14px;
+  --font:"Inter","SF Pro Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--fg);
+  font-family:var(--font);line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:880px;margin:0 auto;padding:40px 22px 80px}
+/* masthead */
+.overline{font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent-deep);font-weight:700}
+h1{font-size:30px;margin:6px 0 8px;letter-spacing:-.02em}
+.sub{color:var(--muted);max-width:64ch;margin:0 0 26px;font-size:14.5px}
+/* stats */
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:12px 18px;min-width:120px}
+.stat b{display:block;font-size:24px;letter-spacing:-.02em}
+.stat span{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.pbar{flex:1 1 100%;height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+.pbar i{display:block;height:100%;width:0%;background:var(--accent);transition:width .25s}
+/* week tabs */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px}
+.tab{padding:8px 16px;border:1px solid var(--line);background:var(--card);
+  border-radius:99px;font:600 13px var(--font);color:var(--muted);cursor:pointer}
+.tab.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+/* question cards */
+.q{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px 22px;margin:0 0 16px}
+.qhead{display:flex;align-items:center;gap:10px;margin:0 0 10px}
+.qnum{font:800 13px var(--font);color:var(--accent-deep)}
+.tag{font:600 11px var(--font);padding:3px 10px;border-radius:99px;background:#F1EBDC;
+  color:var(--accent-deep);text-transform:uppercase;letter-spacing:.06em}
+.tag.done{display:none}
+.stem{font-size:16.5px;font-weight:600;margin:0 0 14px;letter-spacing:-.01em}
+.opts{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:8px}
+.opts label{display:flex;gap:11px;align-items:flex-start;padding:11px 14px;
+  border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:14.5px;
+  transition:border-color .12s, background .12s}
+.opts label:hover{border-color:var(--accent)}
+.opts .ltr{font-weight:800;color:var(--muted);min-width:18px}
+.opts input{accent-color:var(--accent-deep);margin-top:3px}
+.q.chk .opts label{pointer-events:none}
+.q.chk .opts label.right{border-color:var(--good);background:var(--good-bg)}
+.q.chk .opts label.right .ltr{color:var(--good)}
+.q.chk .opts label.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.q.chk .opts label.wrong .ltr{color:var(--bad)}
+.actions{display:flex;gap:10px;align-items:center}
+.btn{font:700 13.5px var(--font);border:none;border-radius:10px;padding:9px 18px;
+  cursor:pointer;background:var(--fg);color:#FFF}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.plain{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.reveal{display:none;margin-top:14px;border-top:1px dashed var(--line);padding-top:14px}
+.q.chk .reveal{display:block}
+.verdict{font:700 13px var(--font);margin:0 0 8px}
+.verdict.good{color:var(--good)} .verdict.bad{color:var(--bad)}
+.rationale{font-size:14px;margin:0 0 12px}
+.rationale b{font-weight:700}
+details.source{font-size:13.5px;border:1px solid var(--line);border-radius:10px;
+  background:#FBF9F3;padding:10px 14px}
+details.source summary{cursor:pointer;font-weight:700;color:var(--accent-deep)}
+.snippet{margin:10px 0 0;white-space:pre-wrap;color:var(--muted);font-size:13px;
+  border-top:1px dashed var(--line);padding-top:10px}
+.foot{margin-top:34px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);
+  padding-top:16px}
+.hidden{display:none}
+@media(max-width:560px){ .wrap{padding:24px 14px 60px} h1{font-size:24px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="overline">MBAX 6418 · Study tool</div>
+  <h1>Practice Quizzes</h1>
+  <p class="sub" id="sub"></p>
+
+  <div class="stats">
+    <div class="stat"><b id="sDone">0/0</b><span>answered</span></div>
+    <div class="stat"><b id="sRight">0</b><span>correct</span></div>
+    <div class="stat"><b id="sPct">—</b><span>accuracy</span></div>
+    <div class="pbar"><i id="sBar"></i></div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+  <div id="deck"></div>
+  <button class="btn plain" id="reset">Reset progress</button>
+
+  <p class="foot" id="foot"></p>
+</div>
+
+<script>
+const QUIZ = {"meta": {"seed": 20261009, "per_week": 6, "generated_at": "2026-10-09T03:56:02+00:00", "model": "cyankiwi/Qwen3.6-35B-A3B-AWQ-4bit"}, "weeks": {"2": {"name": "MBAX 6418 - Week 2 - LLM Fundamentals v2.pptx", "questions": [{"question": "According to the slide, what is a primary concern regarding AI models that are overly agreeable, and how is this issue being addressed?", "options": ["Models are overly agreeable, a concern addressed through alignment measures and benchmarks like SycEval.", "Models are ignoring user input, which is solved by using the Claude Sonnet 4.5 model exclusively.", "Models are generating false information, which is mitigated by removing all alignment protocols.", "Models are becoming too argumentative, which is addressed by increasing their training data volume."], "answer": 0, "rationale": "The slide explicitly warns to 'Be careful with models that are overly agreeable' and states that 'Models are measured in terms of alignment to address this concern,' citing benchmarks such as SycEval.", "source_chunk_id": "w2-s20"}, {"question": "According to the slide, which of the following is listed as a popular MCP used for browser automation?", "options": ["Comfy MCP", "Playwright MCP", "Context7", "MCP Market Leaderboard"], "answer": 1, "rationale": "The slide explicitly lists 'Playwright MCP or Chrome DevTools' as examples of MCPs used for browser automation.", "source_chunk_id": "w2-s42"}, {"question": "According to the slide, which specific technical components are listed as part of the 'Plus' configuration for the popular open coding model?", "options": ["51B n-gram embedding and 4B MTP", "YaRN and RoPE extensions", "4B MTP and RoPE", "Aug 2026 and 51B n-gram"], "answer": 0, "rationale": "The slide explicitly lists 'Plus 51B n-gram embedding (and 4B MTP)' as the components associated with the model's configuration.", "source_chunk_id": "w2-s22"}, {"question": "According to the slide, what is the primary mechanism by which speculative decoding improves throughput?", "options": ["It increases the context length to allow for more tokens to be processed simultaneously.", "It uses a separate drafter model to generate tokens that are verified by the larger model in a single pass.", "It relies on multi-token prediction methods that are built into all large language models.", "It guesses several upcoming candidate tokens that are verified by the model in a single pass."], "answer": 3, "rationale": "The slide defines speculative decoding as a method of 'guessing' several upcoming candidate tokens that are verified by the model in a single pass to improve throughput.", "source_chunk_id": "w2-s13"}, {"question": "According to the slide, which characteristic distinguishes models that simulate cognitive processing for internal planning to improve response quality?", "options": ["Naming conventions that include 'VL' or 'V'", "Thinking or Reasoning features such as chain-of-thought", "Multimodal capabilities involving vision and audio", "Tool Calling or Agentic abilities for task completion"], "answer": 1, "rationale": "The slide states that 'Thinking/Reasoning' models simulate cognitive processing (e.g., chain-of-thought) for internal planning, often allowing for better response quality.", "source_chunk_id": "w2-s19"}, {"question": "According to the slide, what is the primary mechanism by which KV caching improves the speed of LLM decoding?", "options": ["By eliminating the need for any inference passes during token generation", "By increasing the Time to First Token (TTFT) to allow for deeper analysis", "By avoiding the reprocessing of prior tokens when generating new ones", "By reducing the memory demands required for storing key-value pairs"], "answer": 2, "rationale": "The slide states that decoding moves faster by 'avoiding the need to reprocess prior tokens when generating new ones,' which reduces TTFT.", "source_chunk_id": "w2-s11"}]}, "3": {"name": "MBAX 6418 - Week 3 - Prompt Engineering v1.pptx", "questions": [{"question": "According to the slide, what is the primary purpose of using Markdown format in prompts for LLMs?", "options": ["To convert text into binary code for faster processing", "To replace the need for natural language entirely", "To provide text-based structure that LLMs understand", "To encrypt the prompt data for security"], "answer": 2, "rationale": "The slide states that prompts are often written in Markdown format 'to help provide text-based structure that LLMs understand.'", "source_chunk_id": "w3-s16"}, {"question": "According to the slide, what components make up a prompt provided to a model?", "options": ["Text and/or multimodal content such as images, audio, or video", "Only visual data like images and video", "Internal model weights and biases", "Only text-based instructions"], "answer": 0, "rationale": "The slide explicitly states that prompts consist of 'text and/or multimodal content (e.g., images, audio, video) provided to a model to guide its behavior and outputs.'", "source_chunk_id": "w3-s4"}, {"question": "According to the slide, what is the specific function of the USER.md file in Hermes' persistent memory system?", "options": ["Managing the installation and inspection of out-of-the-box skills", "Maintaining a user profile with preferences and communication style", "Storing the agent's personal notes and environment facts", "Recording reusable skills learned from user descriptions"], "answer": 1, "rationale": "The slide explicitly states that USER.md contains the 'User profile, including your preferences, communication style, expectations'.", "source_chunk_id": "w3-s32"}, {"question": "According to the slide, which Hermes command allows a user to set a standing goal that the agent works on until it is achieved?", "options": ["/subgoal", "/steer", "/plan", "/goal"], "answer": 3, "rationale": "The slide explicitly defines the /goal command as the method to 'Set a standing goal Hermes works on until achieved.'", "source_chunk_id": "w3-s29"}, {"question": "According to the slide, why is it recommended to use step-by-step instructions with numbered lists for complex tasks like coding?", "options": ["Research beforehand is unnecessary if the prompt is complex", "A single, giant prompt can lead to missed or skipped steps", "Numbered lists allow the model to ignore sequential order", "LLMs perform better when given multiple aspects to work on simultaneously"], "answer": 1, "rationale": "The slide explicitly states that 'A single, giant prompt can lead to missed or skipped steps,' necessitating step-by-step instructions.", "source_chunk_id": "w3-s24"}, {"question": "According to the slide, what is the primary characteristic of the rules-of-thumb regarding prompt engineering?", "options": [" Their effectiveness often varies depending on the specific task and setting.", " They have been proven to be ineffective in higher education contexts.", " They are universally applicable across all tasks and settings without exception.", " They are based solely on the findings of Lee & Palmer (2025)."], "answer": 0, "rationale": "The slide states that while there are many rules-of-thumb, 'outcomes often vary by task and setting.'", "source_chunk_id": "w3-s17"}]}, "4": {"name": "MBAX 6418 - Week 4 - Serving and Debugging v4.pptx", "questions": [{"question": "According to the slide, what is the primary characteristic that allows the OpenAI Python API library to function with endpoints other than the official OpenAI platform?", "options": ["These endpoints communicate in the same way as the official OpenAI API Platform.", "These endpoints require a different Python library specifically designed for vLLM.", "These endpoints only support the DeepSeek-V4-Flash-0731 model name.", "These endpoints are hosted exclusively on AWS infrastructure to ensure compatibility."], "answer": 0, "rationale": "The slide states that OpenAI-compatible endpoints 'communicate the same way as the official OpenAI API Platform,' which allows the standard library to be used.", "source_chunk_id": "w4-s12"}, {"question": "According to the slide, which Git command is used to send commits to a remote repository such as GitHub?", "options": ["git clone", "git push", "git revert", "git pull"], "answer": 1, "rationale": "The slide explicitly states that 'git push' is used to 'send commits to a remote repository, e.g., GitHub'.", "source_chunk_id": "w4-s24"}, {"question": "According to the slide, why are Gradio and Streamlit considered good interface options for Python?", "options": ["They provide low-level control over technical details.", "They are the only available interface options for Python.", "They require extensive manual coding for every interface element.", "They offer high abstraction by handling many technical details automatically."], "answer": 3, "rationale": "The slide states that Gradio and Streamlit are 'good, high abstraction options' because they 'handle many of the technical details for us.'", "source_chunk_id": "w4-s5"}, {"question": "According to the slide, what is the primary function of Gradio and Streamlit in the context of building Python applications?", "options": [" They provide prebuilt user interface (UI) elements to help quickly build interactive Python apps.", " They replace the need for Python programming by using a no-code drag-and-drop interface.", " They generate static HTML pages without any interactive components like buttons or sliders.", " They are exclusively used for backend database management and data storage."], "answer": 0, "rationale": "The slide explicitly states that 'Gradio and Streamlit provide prebuilt user interface (UI) elements (e.g., buttons, sliders, and text inputs) to help you quickly build interactive Python apps.'", "source_chunk_id": "w4-s6"}, {"question": "According to the slide, what is the critical step required after an agent claims a bug has been fixed?", "options": ["Reproduce the error to ensure it was not intended", "Verify the fix yourself because agent claims may be false", "Create a thorough bug report to document the issue", "Build and test the app to find new bugs"], "answer": 1, "rationale": "The slide explicitly warns that 'Just because an agent says a bug was fixed doesn\u2019t mean it\u2019s true! You must check!', indicating that verification is necessary.", "source_chunk_id": "w4-s18"}, {"question": "According to the slide, what is the specific starter prompt provided for creating the web application?", "options": ["build a python app using flask for a pizza ordering website where customers can customize their pizzas with things like toppings, size, crust, etc.", "build a python app using django for a pizza ordering website where customers can customize their pizzas with things like toppings, size, crust, etc.", "build a python app using gradio for a pizza ordering website where customers can customize their pizzas with things like toppings, size, crust, etc.", "build a python app using streamlit for a pizza ordering website where customers can customize their pizzas with things like toppings, size, crust, etc."], "answer": 2, "rationale": "The slide explicitly lists the starter prompt as: 'build a python app using gradio for a pizza ordering website where customers can customize their pizzas with things like toppings, size, crust, etc.'", "source_chunk_id": "w4-s4"}]}, "5": {"name": "MBAX 6418 - Week 5 - Context Engineering and RAG v1.pptx", "questions": [{"question": "According to the slide, how does semantic search typically represent text and other data to retrieve information relevant to a user's question?", "options": ["By assigning random numerical values to text to ensure that all data points are evenly distributed in a low-dimensional space.", "By relying on vector search to compare the question's embedding with data embeddings without using any numerical representation.", "By using keyword matching algorithms to find exact string matches between the user's question and the database.", "By converting data into embeddings that act as coordinates in high-dimensional space, where similar items are located closer together."], "answer": 3, "rationale": "The slide states that 'Semantic search typically uses embeddings to numerically represent text, images, and other data' and that 'Embeddings are like coordinates in high-dimensional space: similar items tend to lie closer together.'", "source_chunk_id": "w5-s15"}, {"question": "According to the slide, how does RAG optimize context compared to fine-tuning?", "options": ["Both RAG and fine-tuning adapt the model itself through additional training.", "Both RAG and fine-tuning supply relevant information when the model responds.", "RAG supplies relevant information when the model responds, while fine-tuning adapts the model through additional training.", "RAG adapts the model itself through additional training, while fine-tuning supplies relevant information."], "answer": 2, "rationale": "The slide states that 'RAG optimizes context by supplying relevant information when the model responds' and 'Fine-tuning adapts the model itself through additional training.'", "source_chunk_id": "w5-s13"}, {"question": "In a Hybrid RAG Pipeline with Reranking, what is the specific function of the reranking step after retrieval has identified candidate chunks?", "options": ["RAG uses information from prepared documents to help an LLM answer the user\u2019s question", "Reranking compares these candidates to the original question and prioritizes which chunks are supplied to the LLM as context", "Retrieval finds relevant candidate chunks using both keyword search and vector search in Hybrid RAG", "Keyword search is used to find relevant candidate chunks using both keyword search and vector search in Hybrid RAG"], "answer": 1, "rationale": "The slide states that 'Reranking compares these candidates to the original question and prioritizes which chunks are supplied to the LLM as context.'", "source_chunk_id": "w5-s18"}, {"question": "According to the slide, what is the primary function of the indexing step in preparing documents for search?", "options": ["Preparing chunked passages for both keyword and vector search", "Extracting raw text and structure from the original document files", "Generating embeddings to find chunks with similar meanings only", "Dividing parsed content into passages while preserving source metadata"], "answer": 0, "rationale": "The slide states that 'Indexing prepares the chunked passages for both: Keyword (lexical) search... [and] Vector search'.", "source_chunk_id": "w5-s16"}, {"question": "Which of the following topics is explicitly listed as part of the 'Context Engineering' module in the provided slide?", "options": ["Database Schema Optimization", "Building a RAG System", "Natural Language Processing Fundamentals", "Neural Network Architecture Design"], "answer": 1, "rationale": "The slide explicitly lists 'Building a RAG System' under the 'Context Engineering' title, whereas the other options are not mentioned.", "source_chunk_id": "w5-s2"}, {"question": "According to the slide, which chunking strategy involves splitting text based on structural boundaries such as headings to keep related information together?", "options": ["Recursive", "Fixed size", "Semantic", "Document-based"], "answer": 3, "rationale": "The slide defines Document-based chunking as a strategy that keeps related information together based on structural boundaries such as headings.", "source_chunk_id": "w5-s17"}]}, "6": {"name": "MBAX 6418 - Week 6 - Multimodal Generative AI v1.pptx", "questions": [{"question": "According to the slide, what is the primary function of speaker diarization in the context of speech-to-text processing?", "options": ["Identifying and labeling who spoke at specific times, such as distinguishing between Speaker 1 and Speaker 2", "Converting spoken audio directly into written text without any speaker identification", "Providing multilingual transcription capabilities and segment timestamps for each passage", "Enhancing audio quality to ensure accurate automatic speech recognition by NVIDIA Nemotron-3"], "answer": 0, "rationale": "The slide states that 'Speaker diarization labels who spoke when (e.g., \u201cSpeaker 1\u201d vs. \u201cSpeaker 2\u201d)', distinguishing it from ASR which converts audio to text.", "source_chunk_id": "w6-s10"}, {"question": "Based on the provided slide, which statement best distinguishes a Vision-Language Model (VLM) from the broader category of Multimodal Large Language Models (MLLMs)?", "options": ["A VLM is a type of transcription model that converts speech recordings into text, while an MLLM handles receipt images and totals.", "A VLM specifically processes both visual content and language, while an MLLM is a broader term for an LLM that operates beyond text, often encompassing VLMs.", "A VLM is defined strictly by its ability to generate images from text descriptions, whereas MLLMs are limited to text-only outputs.", "A VLM and an MLLM are identical terms, as both refer exclusively to models that work with multiple modalities across inputs and outputs without distinction."], "answer": 1, "rationale": "The slide states that a VLM works with both visual content and language, while an MLLM is a broader term for an LLM that works beyond text, noting that many modern VLMs are also MLLMs.", "source_chunk_id": "w6-s6"}, {"question": "According to the slide, what is a potential licensing discrepancy that may exist between the code and the weights of a model like OmniVoice?", "options": ["The code may have a permissive license like Apache 2.0 while the weights have a noncommercial license like CC-BY-NC.", "The code is always licensed under CC-BY-NC while the weights are under Apache 2.0.", "Geographic restrictions apply only to the code, while the weights are globally unrestricted.", "The code and weights must always have identical licenses to be legally distributed."], "answer": 0, "rationale": "The slide explicitly states that 'Code and weights may have different licenses: OmniVoice has Apache 2.0 code but noncommercial weights (CC-BY-NC).'", "source_chunk_id": "w6-s19"}, {"question": "According to the slide, what is the primary distinction between open-weight and closed models regarding their operational characteristics?", "options": ["Open-weight models offer managed access with provider-set pricing, while closed models require users to manage deployment and hosting costs.", "Both open-weight and closed models eliminate the need for API access, focusing solely on local deployment without external connectivity.", "Closed models allow for full deployment control and are subject to user-defined licensing, while open-weight models restrict access to managed environments only.", "Open-weight models are subject to licensing and hosting costs with deployment control, whereas closed models provide managed access with provider-set pricing and limits."], "answer": 3, "rationale": "The slide explicitly states that open-weight models involve 'deployment control, subject to licensing and hosting costs,' while closed models are characterized by 'managed access, with provider-set pricing and limits.'", "source_chunk_id": "w6-s18"}, {"question": "According to the slide, what is identified as an ongoing challenge in video generation models?", "options": ["Maintaining temporal consistency across frames", "Ensuring synchronized sound with visual output", "Generating text-to-video prompts accurately", "Using reference images to guide generation"], "answer": 0, "rationale": "The slide explicitly states that 'Temporal consistency, or keeping appearance and motion coherent across frames, is an ongoing challenge.'", "source_chunk_id": "w6-s16"}, {"question": "According to the slide, what is the primary function of reference images in the context of generating and editing images with models like FLUX.2-klein-4B?", "options": ["Reference images are used to define the lighting and composition of the final output.", "Reference images are utilized for inpainting to modify masked areas within an image.", "Reference images serve as negative prompts to describe elements that should be avoided in the generation.", "Reference images guide specific details such as a person\u2019s appearance, product details, or visual style."], "answer": 3, "rationale": "The slide explicitly states that 'Reference images guide a person\u2019s appearance, product details, or visual style.'", "source_chunk_id": "w6-s13"}]}}};
+const SOURCES = {"w2-s20": {"title": "Sycophancy", "text": "Sycophancy\nBe careful with models that are overly \u201cagreeable\u201d\nModels are measured in terms of alignment to address this concern (e.g., Claude Sonnet 4.5)\nConsider benchmarks such as SycEval (Fanous et al. 2025)", "slide": 20, "week": 2}, "w2-s42": {"title": "Model Context Protocol (MCP)", "text": "Model Context Protocol (MCP)\nAn open standard for interfaces to access add-ons like:\nTools\nData (including databases)\nAPIs\nSome popular MCPs for vibe coding:\nContext7 for up-to-date coding documentation\nPlaywright MCP or Chrome DevTools for browser automation\nComfy MCP for image/video/audio/3D generation\nSee the MCP Market Leaderboard for more", "slide": 42, "week": 2}, "w2-s22": {"title": "Popular Open Coding Models (Aug 2026)", "text": "Popular Open Coding Models (Aug 2026)\n*Plus 51B n-gram embedding (and 4B MTP)\n\u2020Can be extended via methods such as YaRN, RoPE", "slide": 22, "week": 2}, "w2-s13": {"title": "Speculative Decoding", "text": "Speculative Decoding\nSpeculative decoding is a method of \u201cguessing\u201d several upcoming candidate tokens (e.g., 3 tokens ahead) that are verified by the model in a single pass to improve throughput\nSome methods under this umbrella such as multi-token prediction (MTP) are built into models (e.g., Qwen3.8)\nOthers such as DSpark, DFlash, and DFlash 2 involve a separate drafter model that works in conjunction with a larger model\nBenchmarking speculative decoding at a variety of output (i.e., 3 vs. 5 tokens) and context lengths is important, as longer lengths can hinder speedup (also see Adaptive MTP)", "slide": 13, "week": 2}, "w2-s19": {"title": "Other Model Considerations", "text": "Other Model Considerations\nMultimodal\nSome models work with modalities beyond text, e.g., vision, audio\nThese vision-language models (VLMs) may include \u201cVL\u201d or \u201cV\u201d in the model\u2019s name\nThinking/Reasoning\nSome models simulate cognitive processing (e.g., chain-of-thought [CoT]) for internal planning, often allowing for better response quality\nTool Calling/Tool Use/Agentic\nSome models advertise \u201cagentic\u201d abilities, which include setting goals, planning, and acting while using \u201ctools\u201d to complete tasks", "slide": 19, "week": 2}, "w2-s11": {"title": "KV Caching", "text": "KV Caching\nA single LLM response can involve a sequence of many inference passes (e.g., once per every output token in the response)\nBy using a key-value (KV) cache, decoding can move faster by avoiding the need to reprocess prior tokens when generating new ones, reducing TTFT\nThe tradeoff of KV cache is increased memory demands", "slide": 11, "week": 2}, "w3-s16": {"title": "Markdown", "text": "Markdown\nPrompts are often written in Markdown format (created by John Gruber in 2004) to help provide text-based structure that LLMs understand\nVarious cheat sheets and guides exist that can help with basic syntax\nMarkdown files use the .md extension\nSource:\u00a0Markdown Guide, Matt Cone,\u00a0CC BY-SA 4.0", "slide": 16, "week": 3}, "w3-s4": {"title": "Prompts", "text": "Prompts\nPrompts consist of text and/or multimodal content (e.g., images, audio, video) provided to a model to guide its behavior and outputs\nFor example, a user prompt to Hermes Agent might be as simple as: \u201cWhat is a prompt?\u201d", "slide": 4, "week": 3}, "w3-s32": {"title": "Hermes Learns from and Remembers You", "text": "Hermes Learns from and Remembers You\nAs you use Hermes, it will start making notes about you via persistent memory files, including:\nMEMORY.md \u2013 Agent\u2019s personal notes, including environment facts, conventions, things learned\nUSER.md \u2013 User profile, including your preferences, communication style, expectations\nHermes comes with out-of-the-box skills to help solve tasks, but it can also learn new ones as you work with it (automatically or manually):\n/skills \u2013 Search, install, inspect, or manage skills\n/learn \u2013 Learn a reusable skill from anything you describe", "slide": 32, "week": 3}, "w3-s29": {"title": "Hermes Agent Commands", "text": "Hermes Agent Commands\nBeyond just typing prompts, Hermes provides several commands to help manage more complex tasks, including:\n/prompt \u2013 Compose your next prompt in $EDITOR (markdown), then send it (aka /compose)\n/queue \u2013 Queue a prompt for the next turn (doesn\u2019t interrupt)\n/steer \u2013 Inject a message after the next tool call without interrupting\n/goal \u2013 Set a standing goal Hermes works on until achieved\n/subgoal \u2013 Add or manage extra criteria on the active goal\n/plan \u2013 Write a markdown implementation plan\u2026without executing anything\n/kanban \u2013 Multi-profile collaboration board (tasks, links, comments)\nThe following slides present key summaries from pg. 14 of Lee & Palmer (2025)", "slide": 29, "week": 3}, "w3-s24": {"title": "Prompting Complex Tasks (e.g., Coding)", "text": "Prompting Complex Tasks (e.g., Coding)\nSuccessfully accomplishing a complex task like coding requires step-by-step instruction (e.g., numbered lists)\nSteps should be sequential\nWhile multiple aspects can be worked in a single prompt, they may interfere with each other if they are not independent\nA single, giant prompt can lead to missed or skipped steps\nBe precise and do your research beforehand, e.g.,\nWhat language do you want to code in?\nWhat packages do you want to use?", "slide": 24, "week": 3}, "w3-s17": {"title": "Research on Prompt Engineering", "text": "Research on Prompt Engineering\nThere are many rules-of-thumb regarding how prompts should be engineered, although outcomes often vary by task and setting\nFor a recent literature review regarding prompt engineering from an educational perspective, see:\nPrompt engineering in higher education: a systematic review to help inform curricula (Lee & Palmer 2025)", "slide": 17, "week": 3}, "w4-s12": {"title": "OpenAI-Compatible Endpoints", "text": "OpenAI-Compatible Endpoints\nThe OpenAI Python API library is designed to work with OpenAI models, but you can also use it to talk to OpenAI-compatible endpoints\nThese endpoints communicate the same way as the official OpenAI API Platform, but can be hosted elsewhere\nFor example, we are already using a free, OpenAI-compatible endpoint for our class LLM (served via vLLM):\nBase URL: http://dobolyi.com:9000/v1\nAPI Key: 6418\nModel Name: DeepSeek-V4-Flash-0731", "slide": 12, "week": 4}, "w4-s24": {"title": "Hermes and GitHub", "text": "Hermes and GitHub\nIf you ask it to (e.g., \u201cLet\u2019s use GitHub for version control\u201d), Hermes will take care of Git/GitHub on your behalf, including common commands:\ngit init \u2013 create a new local repository\ngit clone \u2013 copy an existing repository to your computer\ngit status \u2013 show local changes and what\u2019s ready to commit\ngit add \u2013 select changes to include in the next commit\ngit commit \u2013 record selected changes as a checkpoint\ngit push \u2013 send commits to a remote repository, e.g., GitHub\ngit revert \u2013 create a new commit that reverses a previous commit\ngit pull \u2013 retrieve/incorporate remote changes to your local copy\ngit diff \u2013 compare changes between file versions", "slide": 24, "week": 4}, "w4-s5": {"title": "Choosing an Interface", "text": "Choosing an Interface\nWe have many interface options, but for Python, Gradio and Streamlit are good, high abstraction options (i.e., they handle many of the technical details for us)", "slide": 5, "week": 4}, "w4-s6": {"title": "Components and Widgets", "text": "Components and Widgets\nGradio and Streamlit provide prebuilt user interface (UI) elements (e.g., buttons, sliders, and text inputs) to help you quickly build interactive Python apps:\nGradio Components\nStreamlit Elements/Widgets", "slide": 6, "week": 4}, "w4-s18": {"title": "Bugs and Bug Reports", "text": "Bugs and Bug Reports\nWhile you build and test your app, your code will invariably contain bugs, which are errors in the software that cause it to fail or not work as intended\nTo fix bugs, you need to create a thorough bug report, which helps document, reproduce, and ultimately fix each issue\nWarning! Just because an agent says a bug was fixed doesn\u2019t mean it\u2019s true! You must check!", "slide": 18, "week": 4}, "w4-s4": {"title": "Building", "text": "Building\nLet\u2019s create a small web app, add features (including one with AI), and share it\nWe\u2019ll also commit it to GitHub for version control\nStarter prompt:\n\u201cbuild a python app using gradio for a pizza ordering website where customers can customize their pizzas with things like toppings, size, crust, etc.\u201d\nMade with Hermes Agent and GPT-6 Astra", "slide": 4, "week": 4}, "w5-s15": {"title": "Semantic Search and Embeddings", "text": "Semantic Search and Embeddings\nRAG often uses semantic search, or search based on meaning, to retrieve info relevant to the user\u2019s question\nSemantic search typically uses embeddings to numerically represent text, images, and other data\nEmbeddings are like coordinatesin high-dimensional space: similar items tend to lie closer together\nVector search compares the question\u2019s embedding with data embeddings to find potential matches", "slide": 15, "week": 5}, "w5-s13": {"title": "Context Optimization", "text": "Context Optimization\nRAG optimizes context by supplying relevant information when the model responds\nFine-tuning adapts the model itself through additional training\u2014a topic we\u2019ll cover later", "slide": 13, "week": 5}, "w5-s18": {"title": "Hybrid RAG Pipeline with Reranking", "text": "Hybrid RAG Pipeline with Reranking\nRAG uses information from prepared documents to help an LLM answer the user\u2019s question\nRetrieval finds relevant candidate chunks using both keyword search and vector search in Hybrid RAG\nReranking compares these candidates to the original question and prioritizes which chunks are supplied to the LLM as context", "slide": 18, "week": 5}, "w5-s16": {"title": "Preparing Documents (Docs) for Search", "text": "Preparing Documents (Docs) for Search\nDocs added or updated in the RAG corpus must be prepared for search\nParsing extracts text and structure from each doc\nChunking divides the parsed content of each doc into useful passages while preserving source metadata (e.g., doc name, page number)\nIndexing prepares the chunked passages for both:\nKeyword (lexical) search to find chunks containing matching words\nVector search, which uses embeddings to find chunks with similar meanings", "slide": 16, "week": 5}, "w5-s2": {"title": "Context Engineering", "text": "Context Engineering\nRetrieval Augmented Generation (RAG)\nBuilding a RAG System\nClass Exercise\n2\nTopics", "slide": 2, "week": 5}, "w5-s17": {"title": "Each chunk should contain just enough context to be useful in isolation", "text": "Each chunk should contain just enough context to be useful in isolation\nCommon chunking strategies:\nFixed size \u2013 chunks with a set size, often with overlap\nRecursive \u2013 split at boundaries like paragraphs, then divide oversized chunks at finer boundaries like sentences\nDocument-based \u2013 keep related information together based on structural boundaries such as headings (see example above)\nSemantic \u2013 split based on changing topics or meanings\nChunking: How Much Context Is Enough?", "slide": 17, "week": 5}, "w6-s10": {"title": "Speech to Text", "text": "Speech to Text\nAutomatic speech recognition (ASR) converts spoken audio into written text\nWhisper large-v3-turbo supports multilingual transcription and segment timestamps, indicating when each passage occurs\nSpeaker diarization labels who spoke when (e.g., \u201cSpeaker 1\u201d vs. \u201cSpeaker 2\u201d), using models like NVIDIA Nemotron-3-Diarization", "slide": 10, "week": 6}, "w6-s6": {"title": "What Goes In vs. What Comes Out", "text": "What Goes In vs. What Comes Out\nA modality is a type of content, e.g., text, image, audio, and/or video\nA multimodal model works with multiple modalities across inputs, outputs, or both\nA vision-language model (VLM) works with both visual content and language (e.g., describe this picture)\nA multimodal large language model (MLLM) is a broader term for an LLM that works beyond text (i.e., many modern VLMs are also MLLMs)\nDifferent models support different input \u2192 output combinations\nVisual understanding: receipt image + \u201cThe total?\u201d \u2192 text answer\nTranscription: speech recording \u2192 text transcript\nImage generation: text description \u2192 generated image", "slide": 6, "week": 6}, "w6-s19": {"title": "Weights and Serving", "text": "Weights and Serving\nCheck permissions for commercial use, self-hosting, and redistribution\nProvider-hosted APIs have their own terms\nLook for permissive licenses such as Apache 2.0, MIT, and OpenMDW 1.1, which allow commercial use subject to their terms\nCode and weights may have different licenses: OmniVoice has Apache 2.0 code but noncommercial weights (CC-BY-NC)\nGeographic restrictions may apply: MiniMax H3\u2019s community license excludes the US, but users can apply for a separate license\nWith all this in mind: What are you allowed to do with the content a model generates?", "slide": 19, "week": 6}, "w6-s18": {"title": "Open-Weight / Closed Models (Sep 2026)", "text": "Open-Weight / Closed Models (Sep 2026)\nOpen-weight models: deployment control, subject to licensing and hosting costs\nClosed models: managed access, with provider-set pricing and limits\nBoth allow for API access: compare quality, speed, cost, and privacy", "slide": 18, "week": 6}, "w6-s16": {"title": "Generating Video", "text": "Generating Video\nModels like MiniMax H3 use DiTs to generate video with synchronized sound\nText-to-video prompts describe scenes, actions, and camera movement\nImage-to-video uses a first frame, last frame, or both to guide generation\nReference-to-video uses images, video, or audio to guide, edit, or extend clips\nTemporal consistency, or keeping appearance and motion coherent across frames, is an ongoing challenge\nRef. Video\nGenerated Video\nRef. Image\nRef. Audio", "slide": 16, "week": 6}, "w6-s13": {"title": "Generating and Editing Images", "text": "Generating and Editing Images\nDiffusion Transformers (DiTs) and related methods turn noise into images, guided by prompts that specify the subject, setting, lighting, and composition\nModels like FLUX.2-klein-4B support text-to-image generation from descriptions and image-to-image editing through instructions\nReference images guide a person\u2019s appearance, product details, or visual style\nSome models offer inpainting to modify masked areas, outpainting to extend an image, and negative prompts to describe what to avoid", "slide": 13, "week": 6}};
+
+const state = {answers:{}, checked:{}};
+const LS_KEY = "mbax6418-quiz-v1";
+let weekOpen = null;
+
+function load(){try{const s=localStorage.getItem(LS_KEY);if(s)Object.assign(state,JSON.parse(s));}catch(e){}}
+function persist(){try{localStorage.setItem(LS_KEY,JSON.stringify(state));}catch(e){}}
+function esc(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML;}
+
+function allQ(){
+  const out=[];
+  for(const wk in QUIZ.weeks)
+    for(const q of QUIZ.weeks[wk].questions) out.push({wk,q});
+  return out;
+}
+function qid(wk,q){return wk+"|"+q.question.slice(0,40);}
+
+function renderTabs(){
+  const tabs=document.getElementById("tabs");tabs.innerHTML="";
+  for(const wk in QUIZ.weeks){
+    const b=document.createElement("button");
+    b.className="tab"+(weekOpen===wk?" on":"");b.textContent="Week "+wk;
+    b.onclick=()=>{weekOpen=wk;renderTabs();renderCards();};
+    tabs.appendChild(b);
+  }
+}
+function renderCards(){
+  const deck=document.getElementById("deck");deck.innerHTML="";
+  const week=QUIZ.weeks[weekOpen]; if(!week)return;
+  week.questions.forEach((q,idx)=>{
+    const id=qid(weekOpen,q);
+    const card=document.createElement("article");card.className="q";
+    const head=document.createElement("div");head.className="qhead";
+    const num=document.createElement("span");num.className="qnum";
+    num.textContent="Q"+(idx+1);head.appendChild(num);
+    const wk=document.createElement("span");wk.className="tag";
+    wk.textContent="Week "+weekOpen;head.appendChild(wk);
+    const done=document.createElement("span");done.className="tag done";
+    done.textContent="✓ saved";done.id=id+"-tag";head.appendChild(done);
+    card.appendChild(head);
+
+    const stem=document.createElement("p");stem.className="stem";stem.textContent=q.question;
+    card.appendChild(stem);
+
+    const ol=document.createElement("ol");ol.className="opts";
+    q.options.forEach((opt,i)=>{
+      const li=document.createElement("li");
+      const lab=document.createElement("label");
+      const inp=document.createElement("input");inp.type="radio";inp.name=id;
+      inp.value=i;
+      if(state.answers[id]===i)inp.checked=true;
+      inp.addEventListener("change",()=>{
+        state.answers[id]=i;persist();checkBtn.disabled=false;
+      });
+      const ltr=document.createElement("span");ltr.className="ltr";
+      ltr.textContent=String.fromCharCode(65+i)+".";
+      const txt=document.createElement("span");txt.textContent=opt;
+      lab.appendChild(inp);lab.appendChild(ltr);lab.appendChild(txt);
+      li.appendChild(lab);ol.appendChild(li);
+    });
+    card.appendChild(ol);
+
+    const actions=document.createElement("div");actions.className="actions";
+    const checkBtn=document.createElement("button");checkBtn.className="btn";
+    checkBtn.textContent=state.checked[id]?"Revealed":"Check answer";
+    checkBtn.disabled=state.answers[id]===undefined;
+    checkBtn.onclick=()=>{state.checked[id]=true;persist();renderCards();};
+    actions.appendChild(checkBtn);card.appendChild(actions);
+
+    const rev=document.createElement("div");rev.className="reveal";
+    const src=SOURCES[q.source_chunk_id]||{};
+    if(state.checked[id]){
+      card.classList.add("chk");done.classList.remove("done");
+      const v=document.createElement("p");
+      const right=state.answers[id]===q.answer;
+      v.className="verdict "+(right?"good":"bad");
+      v.textContent=right?"✓ Correct":"✗ Incorrect — correct answer: "+
+        String.fromCharCode(65+q.answer)+".";
+      rev.appendChild(v);
+      const r=document.createElement("p");r.className="rationale";r.textContent=q.rationale;
+      rev.appendChild(r);
+      const det=document.createElement("details");det.className="source";det.open=true;
+      const sm=document.createElement("summary");
+      sm.textContent="Source: [Week "+src.week+", slide "+src.slide+"] "+(src.title||"");
+      det.appendChild(sm);
+      const snip=document.createElement("div");snip.className="snippet";snip.textContent=src.text||"";
+      det.appendChild(snip);rev.appendChild(det);
+      checkBtn.disabled=true;
+    }
+    card.appendChild(rev);
+    deck.appendChild(card);
+  });
+  updateStats();
+}
+function updateStats(){
+  const all=allQ(), n=all.length;
+  let done=0,right=0;
+  for(const {wk,q} of all){const id=qid(wk,q);
+    if(state.checked[id]){done++;if(state.answers[id]===q.answer)right++;}}
+  document.getElementById("sDone").textContent=done+"/"+n;
+  document.getElementById("sRight").textContent=right;
+  document.getElementById("sPct").textContent=done?Math.round(100*right/done)+"%":"—";
+  document.getElementById("sBar").style.width=Math.round(100*done/n)+"%";
+}
+document.getElementById("reset").onclick=()=>{
+  localStorage.removeItem(LS_KEY);
+  state.answers={};state.checked={};
+  if(weekOpen===null){const ks=Object.keys(QUIZ.weeks);weekOpen=ks[0];}
+  renderCards();
+};
+
+(function init(){
+  load();
+  const meta=QUIZ.meta||{};
+  const total=allQ().length;
+  document.getElementById("sub").textContent=
+    total+" multiple-choice questions generated from the Week "+
+    Object.keys(QUIZ.weeks).join("–")+" lecture slides — every question cites "+
+    "the exact slide it came from. Answer, check, and the source slide appears. "+
+    "Your progress is saved in this browser.";
+  document.getElementById("foot").textContent=
+    "Questions generated with the class LLM endpoint ("+(meta.model||"Qwen3.6-35B")+
+    "), one per sampled slide, seed "+(meta.seed||"?")+". Offline: all data is baked into this file.";
+  if(Object.keys(QUIZ.weeks).length&&weekOpen===null)weekOpen=Object.keys(QUIZ.weeks)[0];
+  renderTabs();renderCards();
+})();
+</script>
+</body>
+</html>

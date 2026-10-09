@@ -1,0 +1,300 @@
+{
+ "n_questions": 15,
+ "bm25_top8_hit": 15,
+ "bm25_top8_rate": 1.0,
+ "rerank_top4_hit": 15,
+ "rerank_top4_rate": 1.0,
+ "bm25_mrr_top8": 0.889,
+ "cases": [
+  {
+   "question": "What is quantization and how does it make models smaller?",
+   "target": "w2-s15",
+   "bm25_rank": 1,
+   "bm25_top8": [
+    "w2-s15",
+    "w2-s16",
+    "w3-s15",
+    "w3-s14",
+    "w4-s27",
+    "w3-s26",
+    "w2-s41",
+    "w2-s18"
+   ],
+   "rerank_top4": [
+    "w2-s15",
+    "w2-s16"
+   ],
+   "rerank_hit": true
+  },
+  {
+   "question": "How does a KV cache speed up decoding?",
+   "target": "w2-s11",
+   "bm25_rank": 1,
+   "bm25_top8": [
+    "w2-s11",
+    "w2-s12",
+    "w2-s13",
+    "w2-s7",
+    "w2-s10",
+    "w6-s18",
+    "w5-s8",
+    "w4-s27"
+   ],
+   "rerank_top4": [
+    "w2-s11",
+    "w2-s10"
+   ],
+   "rerank_hit": true
+  },
+  {
+   "question": "What does speculative decoding guess ahead and verify?",
+   "target": "w2-s13",
+   "bm25_rank": 1,
+   "bm25_top8": [
+    "w2-s13",
+    "w4-s20",
+    "w5-s11",
+    "w2-s11",
+    "w3-s27"
+   ],
+   "rerank_top4": [
+    "w2-s13",
+    "w4-s20",
+    "w5-s11",
+    "w2-s11"
+   ],
+   "rerank_hit": true
+  },
+  {
+   "question": "What is sycophancy and how do benchmarks measure it?",
+   "target": "w2-s20",
+   "bm25_rank": 1,
+   "bm25_top8": [
+    "w2-s20"
+   ],
+   "rerank_top4": [
+    "w2-s20"
+   ],
+   "rerank_hit": true
+  },
+  {
+   "question": "What is ChatML and how are prompts formatted in it?",
+   "target": "w3-s8",
+   "bm25_rank": 2,
+   "bm25_top8": [
+    "w3-s10",
+    "w3-s8",
+    "w3-s3",
+    "w5-s4",
+    "w3-s4",
+    "w3-s2",
+    "w3-s5",
+    "w6-s13"
+   ],
+   "rerank_top4": [
+    "w3-s10",
+    "w3-s8",
+    "w3-s3",
+    "w5-s4"
+   ],
+   "rerank_hit": true
+  },
+  {
+   "question": "What does the few-shot prompting example look like?",
+   "target": "w3-s21",
+   "bm25_rank": 2,
+   "bm25_top8": [
+    "w3-s20",
+    "w3-s21",
+    "w3-s13",
+    "w3-s28",
+    "w3-s24",
+    "w3-s11",
+    "w3-s23",
+    "w3-s2"
+   ],
+   "rerank_top4": [
+    "w3-s21"
+   ],
+   "rerank_hit": true
+  },
+  {
+   "question": "What is an OpenAI-compatible endpoint?",
+   "target": "w4-s12",
+   "bm25_rank": 1,
+   "bm25_top8": [
+    "w4-s12",
+    "w4-s11",
+    "w4-s13",
+    "w4-s14",
+    "w4-s16",
+    "w2-s5",
+    "w2-s25"
+   ],
+   "rerank_top4": [
+    "w4-s12",
+    "w4-s11",
+    "w4-s13"
+   ],
+   "rerank_hit": true
+  },
+  {
+   "question": "What makes a bug report useful?",
+   "target": "w4-s19",
+   "bm25_rank": 1,
+   "bm25_top8": [
+    "w4-s19",
+    "w4-s29",
+    "w4-s18",
+    "w4-s26",
+    "w4-s20",
+    "w5-s17",
+    "w4-s28",
+    "w5-s16"
+   ],
+   "rerank_top4": [
+    "w4-s19",
+    "w4-s18",
+    "w4-s20",
+    "w4-s29"
+   ],
+   "rerank_hit": true
+  },
+  {
+   "question": "What is retrieval augmented generation (RAG)?",
+   "target": "w5-s10",
+   "bm25_rank": 3,
+   "bm25_top8": [
+    "w5-s9",
+    "w5-s2",
+    "w5-s10",
+    "w5-s19",
+    "w5-s18",
+    "w5-s14",
+    "w5-s12",
+    "w5-s11"
+   ],
+   "rerank_top4": [
+    "w5-s9",
+    "w5-s2",
+    "w5-s10",
+    "w5-s19"
+   ],
+   "rerank_hit": true
+  },
+  {
+   "question": "Why is accurate RAG challenging?",
+   "target": "w5-s19",
+   "bm25_rank": 1,
+   "bm25_top8": [
+    "w5-s19",
+    "w5-s14",
+    "w5-s9",
+    "w5-s12",
+    "w5-s10",
+    "w5-s18",
+    "w5-s2",
+    "w5-s11"
+   ],
+   "rerank_top4": [
+    "w5-s19"
+   ],
+   "rerank_hit": true
+  },
+  {
+   "question": "What is the lost in the middle effect?",
+   "target": "w5-s7",
+   "bm25_rank": 1,
+   "bm25_top8": [
+    "w5-s7"
+   ],
+   "rerank_top4": [
+    "w5-s7"
+   ],
+   "rerank_hit": true
+  },
+  {
+   "question": "How do embeddings enable semantic search?",
+   "target": "w5-s15",
+   "bm25_rank": 1,
+   "bm25_top8": [
+    "w5-s15",
+    "w5-s16",
+    "w3-s6",
+    "w5-s18",
+    "w4-s10",
+    "w4-s13",
+    "w5-s17",
+    "w3-s32"
+   ],
+   "rerank_top4": [
+    "w5-s15",
+    "w5-s16",
+    "w5-s17",
+    "w5-s18"
+   ],
+   "rerank_hit": true
+  },
+  {
+   "question": "What are multimodal GenAI use cases?",
+   "target": "w6-s4",
+   "bm25_rank": 1,
+   "bm25_top8": [
+    "w6-s4",
+    "w2-s32",
+    "w5-s12",
+    "w6-s7",
+    "w4-s13",
+    "w3-s4",
+    "w2-s19",
+    "w3-s9"
+   ],
+   "rerank_top4": [
+    "w6-s4",
+    "w2-s32",
+    "w6-s7"
+   ],
+   "rerank_hit": true
+  },
+  {
+   "question": "Why is multimodal not the same as generative?",
+   "target": "w6-s7",
+   "bm25_rank": 1,
+   "bm25_top8": [
+    "w6-s7",
+    "w6-s1",
+    "w3-s14",
+    "w2-s21",
+    "w6-s4",
+    "w5-s8",
+    "w3-s4",
+    "w4-s12"
+   ],
+   "rerank_top4": [
+    "w6-s7",
+    "w6-s1"
+   ],
+   "rerank_hit": true
+  },
+  {
+   "question": "What should you weigh when choosing model licensing?",
+   "target": "w6-s17",
+   "bm25_rank": 1,
+   "bm25_top8": [
+    "w6-s17",
+    "w4-s5",
+    "w6-s2",
+    "w5-s13",
+    "w3-s26",
+    "w5-s17",
+    "w3-s12",
+    "w6-s18"
+   ],
+   "rerank_top4": [
+    "w6-s17",
+    "w6-s18"
+   ],
+   "rerank_hit": true
+  }
+ ]
+}
