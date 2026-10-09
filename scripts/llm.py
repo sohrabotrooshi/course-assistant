@@ -18,6 +18,7 @@ Endpoint specifics learned in Assignment 1:
 
 import os
 import json
+import re
 import time
 import urllib.request
 
@@ -83,7 +84,9 @@ def chat_json(messages, required_keys=(), max_tokens=1024, temperature=0.0,
 
 def extract_json(text):
     """Pull the first JSON object/array out of a string (tolerant of prose
-    around it, code fences, leading text). Returns None if none found."""
+    around it, code fences, leading text). Returns None if none found.
+    Lenient on `\\'` and other stray backslashes the model sometimes emits
+    (not valid JSON escapes): they are unescaped before parsing."""
     text = text.strip()
     if text.startswith("```"):
         text = text.strip("`")
@@ -101,8 +104,12 @@ def extract_json(text):
             elif text[i] == close_ch:
                 depth -= 1
                 if depth == 0:
+                    cand = text[start:i + 1]
+                    # unescape stray backslashes (\\' -> ', \\a -> a) but keep
+                    # real escapes (\\n, \\", \\\\, \\uXXXX)
+                    cand = re.sub(r"\\([^\\/bfnrtu])", r"\1", cand)
                     try:
-                        return json.loads(text[start:i + 1])
+                        return json.loads(cand)
                     except json.JSONDecodeError:
                         break
     return None

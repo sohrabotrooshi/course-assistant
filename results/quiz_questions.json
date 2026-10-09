@@ -9,11 +9,12 @@
    "week05",
    "week06",
    "hermes-agent-installation-guide-2026-v1",
-   "mbax-6418-assignment-1"
+   "mbax-6418-assignment-1",
+   "mbax-6418-syllabus-fall-2026-1"
   ],
   "topic": null,
   "model": "cyankiwi/Qwen3.6-35B-A3B-AWQ-4bit",
-  "generated_at": "2026-10-09T18:19:24+00:00"
+  "generated_at": "2026-10-09T18:54:21+00:00"
  },
  "docs": {
   "week02": {
@@ -21,15 +22,15 @@
    "kind": "slide",
    "questions": [
     {
-     "question": "According to the slide, what is a primary concern regarding AI models that are overly agreeable, and how is this issue being addressed?",
+     "question": "According to the slide, what is the primary concern associated with AI models that are overly agreeable?",
      "options": [
-      "Models exhibit sycophancy, which is measured through alignment techniques and evaluated using benchmarks like SycEval.",
-      "Models fail to provide any feedback, which is solved by removing all safety filters.",
-      "Models are too independent, which is mitigated by using older versions like Claude Sonnet 4.5 without alignment.",
-      "Models are becoming too argumentative, which is addressed by increasing their training data volume."
+      "Models will prioritize speed over accuracy in all interactions.",
+      "Models will fail to generate creative content due to excessive caution.",
+      "Models will refuse to answer any questions to avoid disagreement.",
+      "Models may exhibit sycophancy, requiring alignment measures and specific benchmarks to address."
      ],
-     "answer": 0,
-     "rationale": "The slide warns against models that are overly 'agreeable' (sycophancy) and states that models are measured in terms of alignment to address this, citing benchmarks such as SycEval.",
+     "answer": 3,
+     "rationale": "The slide explicitly warns to 'Be careful with models that are overly agreeable' and notes that models are measured in terms of alignment to address this concern, citing SycEval as a relevant benchmark.",
      "source_chunk_id": "w2-s20"
     },
     {
@@ -48,9 +49,9 @@
      "question": "According to the slide titled 'Popular Open Coding Models (Aug 2026)', which specific technical components are listed as additional features for the model indicated by the plus sign?",
      "options": [
       "51B n-gram embedding and 4B MTP",
-      "Standard transformer architecture and 10B parameters",
+      "4B n-gram embedding and 51B MTP",
       "YaRN and RoPE extensions",
-      "Multi-modal processing and 2B context window"
+      "YaRN extensions and 51B n-gram embedding"
      ],
      "answer": 0,
      "rationale": "The slide explicitly lists 'Plus 51B n-gram embedding (and 4B MTP)' as the features associated with the model marked by the plus sign.",
@@ -60,12 +61,12 @@
      "question": "According to the slide, what is the primary mechanism by which speculative decoding improves throughput?",
      "options": [
       "It increases the context length to allow for more tokens to be processed simultaneously.",
-      "It uses a separate drafter model to generate tokens independently of the main model.",
+      "It uses a separate drafter model to generate tokens that are verified by the larger model in a single pass.",
       "It relies on multi-token prediction methods that are built into all large language models.",
-      "It guesses several upcoming candidate tokens and verifies them by the model in a single pass."
+      "It guesses several upcoming candidate tokens that are verified by the model in a single pass."
      ],
      "answer": 3,
-     "rationale": "The slide defines speculative decoding as a method of 'guessing' several upcoming candidate tokens that are 'verified by the model in a single pass to improve throughput.'",
+     "rationale": "The slide defines speculative decoding as a method of 'guessing' several upcoming candidate tokens that are verified by the model in a single pass to improve throughput.",
      "source_chunk_id": "w2-s13"
     },
     {
@@ -83,10 +84,10 @@
     {
      "question": "What is the primary mechanism by which KV caching improves the speed of LLM inference?",
      "options": [
-      "By reducing the total number of tokens generated in a single response",
-      "By allowing the model to skip the initial token generation phase entirely",
+      "By reducing the total number of tokens required to generate a response",
+      "By allowing the model to generate all output tokens simultaneously in a single pass",
       "By eliminating the need for the model to reprocess prior tokens when generating new ones",
-      "By decreasing the memory demands required to store the model weights"
+      "By decreasing the memory demands associated with storing key-value pairs"
      ],
      "answer": 2,
      "rationale": "The slide states that decoding moves faster by 'avoiding the need to reprocess prior tokens when generating new ones.'",
@@ -114,12 +115,12 @@
      "question": "According to the slide, what components make up a prompt provided to a model?",
      "options": [
       "Text and/or multimodal content such as images, audio, or video",
-      "Only visual data like images and video",
-      "Internal model weights and biases",
+      "Multimodal content only, excluding text",
+      "Internal model parameters and weights",
       "Only text-based instructions"
      ],
      "answer": 0,
-     "rationale": "The slide states that prompts consist of 'text and/or multimodal content (e.g., images, audio, video) provided to a model to guide its behavior and outputs.'",
+     "rationale": "The slide explicitly states that prompts consist of 'text and/or multimodal content (e.g., images, audio, video) provided to a model to guide its behavior and outputs.'",
      "source_chunk_id": "w3-s4"
     },
     {
@@ -137,21 +138,21 @@
     {
      "question": "According to the slide, which Hermes command allows a user to set a standing goal that the agent works on until it is achieved?",
      "options": [
-      "/goal",
-      "/queue",
+      "/subgoal",
       "/steer",
-      "/plan"
+      "/plan",
+      "/goal"
      ],
-     "answer": 0,
-     "rationale": "The slide explicitly defines the /goal command as the function to 'Set a standing goal Hermes works on until achieved.'",
+     "answer": 3,
+     "rationale": "The slide explicitly defines the /goal command as the method to 'Set a standing goal Hermes works on until achieved.'",
      "source_chunk_id": "w3-s29"
     },
     {
      "question": "According to the slide, why is it recommended to use step-by-step instructions with numbered lists for complex tasks like coding?",
      "options": [
-      "Sequential steps prevent the need for prior research on packages",
+      "Sequential steps prevent the need for prior research on coding languages",
       "A single, giant prompt can lead to missed or skipped steps",
-      "Numbered lists are required to specify the coding language and packages",
+      "Numbered lists are required to generate valid JSON output",
       "AI models cannot process multiple aspects in a single prompt"
      ],
      "answer": 1,
@@ -159,14 +160,14 @@
      "source_chunk_id": "w3-s24"
     },
     {
-     "question": "According to the slide, what is the primary characteristic of rules-of-thumb in prompt engineering?",
+     "question": "According to the slide, what is the primary characteristic of the rules-of-thumb regarding prompt engineering?",
      "options": [
-      " They are universally applicable and guarantee consistent outcomes across all tasks.",
-      " They are exclusively derived from the Lee & Palmer 2025 systematic review.",
-      " Their effectiveness often varies depending on the specific task and setting.",
-      " They have been proven ineffective in higher education contexts."
+      "They have been proven ineffective in higher education contexts.",
+      "They are exclusively based on the findings of Lee & Palmer (2025).",
+      "They are universally applicable across all tasks and settings without variation.",
+      "Their outcomes often vary depending on the specific task and setting."
      ],
-     "answer": 2,
+     "answer": 3,
      "rationale": "The slide states that while there are many rules-of-thumb, 'outcomes often vary by task and setting.'",
      "source_chunk_id": "w3-s17"
     }
@@ -180,23 +181,23 @@
      "question": "According to the slide, how do OpenAI-compatible endpoints differ from the official OpenAI API Platform?",
      "options": [
       "They communicate in the same way as the official platform but can be hosted elsewhere.",
-      "They do not support the vLLM serving infrastructure used in the class example.",
-      "They require a paid subscription to access models like DeepSeek-V4-Flash-0731.",
-      "They use a different Python library than the OpenAI Python API library."
+      "They are exclusively hosted on the OpenAI infrastructure.",
+      "They do not support the use of API keys for authentication.",
+      "They require a different Python library to function correctly."
      ],
      "answer": 0,
      "rationale": "The slide states that these endpoints 'communicate the same way as the official OpenAI API Platform, but can be hosted elsewhere.'",
      "source_chunk_id": "w4-s12"
     },
     {
-     "question": "According to the slide, which specific Git command does Hermes use to send commits to a remote repository such as GitHub?",
+     "question": "According to the slide, which specific Git command does Hermes execute to send commits to a remote repository such as GitHub?",
      "options": [
-      "git revert",
+      "git push",
       "git pull",
       "git clone",
-      "git push"
+      "git revert"
      ],
-     "answer": 3,
+     "answer": 0,
      "rationale": "The slide explicitly states that 'git push' is used to 'send commits to a remote repository, e.g., GitHub'.",
      "source_chunk_id": "w4-s24"
     },
@@ -225,15 +226,15 @@
      "source_chunk_id": "w4-s6"
     },
     {
-     "question": "According to the slide, what is the primary reason for creating a thorough bug report when fixing software errors?",
+     "question": "According to the slide, what is the critical step required after an agent claims a bug has been fixed?",
      "options": [
-      "It allows the agent to automatically verify that the code compiles without errors.",
-      "It prevents the code from containing any bugs during the initial build phase.",
-      "It helps document, reproduce, and ultimately fix each issue.",
-      "It ensures that the agent will never claim a bug is fixed when it is not."
+      "Reproduce the error to ensure it was not intended",
+      "Verify the fix yourself because agent claims may be false",
+      "Create a thorough bug report to document the issue",
+      "Build and test the app to find new bugs"
      ],
-     "answer": 2,
-     "rationale": "The slide states that a thorough bug report 'helps document, reproduce, and ultimately fix each issue.'",
+     "answer": 1,
+     "rationale": "The slide explicitly warns that 'Just because an agent says a bug was fixed doesn’t mean it’s true! You must check!', indicating that independent verification is required.",
      "source_chunk_id": "w4-s18"
     },
     {
@@ -257,13 +258,13 @@
     {
      "question": "According to the slide, how does semantic search typically represent text and other data to retrieve information relevant to a user's question?",
      "options": [
-      "By assigning random numerical values to text to ensure that all data points are evenly distributed in a low-dimensional space.",
-      "By relying on vector search to compare the question's embedding with data embeddings without using any numerical representation.",
-      "By using keyword matching algorithms to find exact word overlaps between the user's question and the database.",
-      "By converting data into embeddings that act as coordinates in high-dimensional space, where similar items are positioned closer together."
+      "By assigning random numerical values to text to ensure that all items are evenly distributed in the search space",
+      "By relying on vector search to compare the question's embedding with data embeddings without using any numerical representation",
+      "By using keyword matching algorithms to find exact word overlaps between the question and the data",
+      "By converting data into embeddings that act as coordinates in high-dimensional space, where similar items lie closer together"
      ],
      "answer": 3,
-     "rationale": "The slide states that 'Semantic search typically uses embeddings to numerically represent text' and that 'Embeddings are like coordinates in high-dimensional space: similar items tend to lie closer together.'",
+     "rationale": "The slide states that 'Semantic search typically uses embeddings to numerically represent text, images, and other data' and that 'Embeddings are like coordinates in high-dimensional space: similar items tend to lie closer together.'",
      "source_chunk_id": "w5-s15"
     },
     {
@@ -272,7 +273,7 @@
       "Both RAG and fine-tuning adapt the model itself through additional training to optimize context.",
       "Both RAG and fine-tuning optimize context by supplying relevant information when the model responds.",
       "RAG optimizes context by supplying relevant information when the model responds, whereas fine-tuning adapts the model itself through additional training.",
-      "RAG adapts the model through additional training, while fine-tuning supplies relevant information during response generation."
+      "RAG adapts the model through additional training, while fine-tuning supplies relevant information at response time."
      ],
      "answer": 2,
      "rationale": "The slide explicitly states that 'RAG optimizes context by supplying relevant information when the model responds' and distinguishes this from fine-tuning, which 'adapts the model itself through additional training.'",
@@ -341,43 +342,43 @@
       "Enhancing audio quality to ensure accurate automatic speech recognition by NVIDIA Nemotron-3"
      ],
      "answer": 0,
-     "rationale": "The slide states that 'Speaker diarization labels who spoke when (e.g., “Speaker 1” vs. “Speaker 2”)', distinguishing it from ASR which converts audio to text.",
+     "rationale": "The slide states that speaker diarization 'labels who spoke when (e.g., “Speaker 1” vs. “Speaker 2”)', distinguishing it from ASR which converts audio to text.",
      "source_chunk_id": "w6-s10"
     },
     {
-     "question": "Based on the provided slide, which statement best distinguishes a Vision-Language Model (VLM) from the broader category of Multimodal Large Language Models (MLLM)?",
+     "question": "Based on the provided slide, which statement accurately distinguishes between a Vision-Language Model (VLM) and a Multimodal Large Language Model (MLLM)?",
      "options": [
-      "A VLM is defined strictly as a model that processes both visual content and language, whereas an MLLM is a broader term for any LLM that operates beyond text, including but not limited to VLMs.",
-      "A VLM is a specific type of MLLM that only generates text from images, while an MLLM can only process audio inputs.",
-      "A VLM refers to any model that works with multiple modalities across inputs or outputs, while an MLLM is restricted to visual understanding tasks like reading receipts.",
-      "A VLM is a subset of MLLMs that exclusively handles transcription tasks, converting speech recordings into text transcripts."
+      "An MLLM is a specific type of VLM that only performs transcription tasks, whereas a VLM can generate images from text descriptions.",
+      "A VLM is a broader term that encompasses all models working beyond text, while an MLLM is strictly limited to visual content and language.",
+      "A VLM works with both visual content and language, while an MLLM is a broader term for an LLM that works beyond text, meaning many modern VLMs are also MLLMs.",
+      "Both VLMs and MLLMs are identical in definition, as both terms strictly refer to models that only accept text inputs and produce text outputs."
      ],
-     "answer": 0,
-     "rationale": "The slide defines a VLM as working with 'both visual content and language' and describes an MLLM as a 'broader term for an LLM that works beyond text,' noting that 'many modern VLMs are also MLLMs.'",
+     "answer": 2,
+     "rationale": "The slide defines a VLM as working with both visual content and language, and explicitly states that an MLLM is a broader term for an LLM working beyond text, noting that 'many modern VLMs are also MLLMs.'",
      "source_chunk_id": "w6-s6"
     },
     {
-     "question": "According to the slide, what is a potential licensing discrepancy between the code and weights of a model like OmniVoice?",
+     "question": "According to the slide, what is a key consideration regarding the licensing of model components?",
      "options": [
-      "The code and weights share the same license, but geographic restrictions apply only to the code, not the weights.",
-      "Both the code and weights are exclusively licensed under MIT, permitting unrestricted commercial use without attribution.",
-      "The code is licensed under Apache 2.0 while the weights are licensed under CC-BY-NC, restricting commercial use.",
-      "The code is noncommercial while the weights are licensed under Apache 2.0, allowing free commercial redistribution."
+      "Code and weights may have different licenses, such as OmniVoice having Apache 2.0 code but noncommercial weights.",
+      "Code and weights always share the same license to simplify commercial use.",
+      "Geographic restrictions never apply to community licenses, allowing global commercial use without exception.",
+      "Permissive licenses like Apache 2.0 and MIT strictly prohibit any form of commercial use."
      ],
-     "answer": 2,
-     "rationale": "The slide explicitly states that 'Code and weights may have different licenses: OmniVoice has Apache 2.0 code but noncommercial weights (CC-BY-NC).'",
+     "answer": 0,
+     "rationale": "The slide explicitly states that 'Code and weights may have different licenses,' citing OmniVoice as an example where the code is under Apache 2.0 but the weights are noncommercial (CC-BY-NC).",
      "source_chunk_id": "w6-s19"
     },
     {
      "question": "According to the slide, what is the primary distinction between open-weight and closed models regarding their operational structure?",
      "options": [
-      "Open-weight models offer managed access with provider-set pricing, while closed models require users to manage their own deployment and hosting costs.",
-      "Open-weight models are subject to licensing and hosting costs with user-controlled deployment, whereas closed models provide managed access with provider-set pricing and limits.",
-      "Both open-weight and closed models eliminate the need for API access, focusing solely on local installation without external connectivity.",
-      "Closed models allow for full deployment control and lower hosting costs, while open-weight models restrict access through strict provider limits and managed services."
+      "Open-weight models offer managed access with provider-set pricing, while closed models require self-hosting.",
+      "Open-weight models are subject to licensing and hosting costs, whereas closed models provide managed access with provider-set limits.",
+      "Both model types strictly prohibit API access to ensure maximum data privacy.",
+      "Closed models allow for full deployment control by the user, while open-weight models restrict access to specific regions."
      ],
      "answer": 1,
-     "rationale": "The slide states that open-weight models involve 'deployment control, subject to licensing and hosting costs,' while closed models offer 'managed access, with provider-set pricing and limits.'",
+     "rationale": "The slide explicitly states that open-weight models involve 'deployment control, subject to licensing and hosting costs,' while closed models are characterized by 'managed access, with provider-set pricing and limits.'",
      "source_chunk_id": "w6-s18"
     },
     {
@@ -398,7 +399,7 @@
       "Reference images are used to guide a person’s appearance, product details, or visual style.",
       "Reference images are used to modify masked areas within an existing image.",
       "Reference images are used to extend an image beyond its original boundaries.",
-      "Reference images are used to describe what to avoid in the final output."
+      "Reference images are used to describe what to avoid during the generation process."
      ],
      "answer": 0,
      "rationale": "The slide explicitly states that 'Reference images guide a person’s appearance, product details, or visual style,' whereas negative prompts describe what to avoid, inpainting modifies masked areas, and outpainting extends images.",
@@ -411,27 +412,27 @@
    "kind": "page",
    "questions": [
     {
-     "question": "According to the installation guide, what is the required user action immediately after the installation process completes?",
+     "question": "According to the installation guide, what action must the user take immediately after the installation finishes and the screen appears?",
      "options": [
-      "Click the LAUNCH button to proceed with loading Hermes",
-      "Restart the computer to finalize the installation",
-      "Wait for the system to automatically launch the model connection screen",
-      "Manually configure the model settings before the screen appears"
+      "Wait for Hermes to load",
+      "Restart the computer",
+      "Connect a model",
+      "Click LAUNCH to proceed"
      ],
-     "answer": 0,
-     "rationale": "The slide explicitly states that when the installation finishes, the user must 'Click LAUNCH to proceed' before waiting for Hermes to load.",
+     "answer": 3,
+     "rationale": "The slide states that when the installation finishes and the screen appears, the user should 'Click LAUNCH to proceed.'",
      "source_chunk_id": "hermes-agent-installation-guide-2026-v1-p9"
     },
     {
-     "question": "According to the Hermes Agent Installation Guide, what is the recommended action if the installation process appears to be stuck for up to 10 minutes?",
+     "question": "According to the Windows installation instructions, what is the recommended action if the installation process appears to be stuck for up to 10 minutes?",
      "options": [
-      "Patience is required as this is a known issue with a temporary fix of waiting it out.",
-      "Contact Nous Research support for a new installer version.",
-      "Manually edit the registry to bypass the cua-driver.exe verification.",
-      "Cancel the installation and restart the computer immediately."
+      "Manually edit the registry to bypass the delay.",
+      "Cancel the installation and restart the computer immediately.",
+      "Contact Nous Research support for a new executable file.",
+      "Patiently wait for the process to complete."
      ],
-     "answer": 0,
-     "rationale": "The slide states there is a known issue where steps may take 10 minutes to complete and the temporary fix is to 'patiently wait it out.'",
+     "answer": 3,
+     "rationale": "The slide states that there is a known issue where some steps may take 10 minutes to complete and the temporary fix is to 'patiently wait it out.'",
      "source_chunk_id": "hermes-agent-installation-guide-2026-v1-p8"
     },
     {
@@ -450,21 +451,21 @@
      "question": "According to the installation guide, what specific action must be taken after entering the endpoint URL and port number to finalize the connection?",
      "options": [
       "Click the 'Connect' button to proceed to the completion screen",
-      "Type 'hi' in the input box to verify the installation",
-      "Enter the API key in the top right corner",
-      "Restart the Hermes Agent service manually"
+      "Type 'hi' in the input box to verify the installation is complete",
+      "Enter the JSON response format to confirm data transmission",
+      "Restart the Hermes Agent service to apply the new settings"
      ],
      "answer": 0,
-     "rationale": "The slide explicitly instructs that 'Once done, click Connect to arrive at this screen' after entering the details, whereas typing 'hi' is a subsequent testing step.",
+     "rationale": "The slide explicitly instructs that 'Once done, click Connect to arrive at this screen' after entering the details, indicating that clicking Connect is the necessary step to finalize the connection before testing.",
      "source_chunk_id": "hermes-agent-installation-guide-2026-v1-p5"
     },
     {
      "question": "According to the guide, what is the correct method to launch Hermes directly from the Terminal?",
      "options": [
-      "Type 'start hermes' in the input box at the bottom",
+      "Type 'hi' in the input box at the bottom of the interface",
       "Type 'hermes' at the prompt and press Enter",
-      "Click the Windows Menu and select 'Run Hermes'",
-      "Search for 'Hermes Agent' in the Terminal search bar"
+      "Click the Windows Menu and select 'Search' then 'Hermes'",
+      "Open the Terminal and type 'install hermes' to start the agent"
      ],
      "answer": 1,
      "rationale": "The slide explicitly states that you can load Hermes in the Terminal by 'simply typing hermes at the prompt and pressing Enter'.",
@@ -513,35 +514,35 @@
      "source_chunk_id": "mbax-6418-assignment-1-p3"
     },
     {
-     "question": "According to the submission requirements for the final deliverable, how should team members handle the submission of their work if they collaborated on the same project?",
+     "question": "According to the submission requirements, how should team members handle the final deliverable if they collaborate on the same project?",
      "options": [
-      "Team members should share a single GitHub repository and submit one link to ensure the codebase is unified.",
-      "Only the team leader needs to submit the GitHub repository link, while other members submit their individual reports.",
-      "Team members must combine their individual reports into a single PDF document and upload it to the course portal instead of using GitHub.",
-      "Each team member must submit their own separate GitHub repository, even if the content is essentially identical to their teammates' work."
+      "Only the team leader needs to submit the repository, while other members submit their individual reports.",
+      "Each team member must submit their own separate GitHub repository, even if the content is essentially identical.",
+      "Team members must combine their code into one repository but submit separate README files.",
+      "Team members should share a single GitHub repository and submit one link to ensure consistency."
      ],
-     "answer": 3,
-     "rationale": "The slide explicitly states that 'each of you submits your own repository, even if it contains essentially the same project' to verify individual completion, rather than sharing one repo.",
+     "answer": 1,
+     "rationale": "The slide explicitly states that 'One per person, even in a team' and 'each of you submits your own repository, even if it contains essentially the same project' to verify individual work.",
      "source_chunk_id": "mbax-6418-assignment-1-p5"
     },
     {
-     "question": "According to Step 6, why is balanced sampling recommended over reading the first N rows in order when evaluating the three-class model?",
+     "question": "According to Step 6, why is balanced sampling recommended over reading the first N rows in order when analyzing the three-class rating split?",
      "options": [
       "Reading the first N rows in order under-represents the rarer classes, whereas balanced sampling ensures a roughly equal number of samples from each class.",
-      "Reading the first N rows in order is computationally faster, allowing for quicker dashboard updates without sacrificing accuracy.",
-      "Balanced sampling is required because the model only performs well when trained on exactly 50 samples per class, regardless of the total dataset size.",
-      "Reading the first N rows in order introduces layout bugs that collapse chart elements, which balanced sampling prevents by using a fixed random seed."
+      "Reading the first N rows in order is computationally faster, allowing for quicker dashboard generation without sacrificing accuracy.",
+      "Balanced sampling is required because the model only predicts positive and negative classes, making neutral reviews irrelevant.",
+      "Reading the first N rows in order creates layout bugs in the dashboard, while balanced sampling prevents chart elements from collapsing."
      ],
      "answer": 0,
-     "rationale": "The slide explicitly states that 'reading the first N rows in order under-represents the rarer classes,' which is why the instruction advises pulling a balanced group with a roughly equal number from each class.",
+     "rationale": "The slide explicitly states that 'reading the first N rows in order under-represents the rarer classes,' which is why the instruction is to 'pull a balanced group from the whole file' with a roughly equal number from each class.",
      "source_chunk_id": "mbax-6418-assignment-1-p4"
     },
     {
      "question": "According to the instructions for Step 2, how is the 'correct answer' for sentiment classification determined from the dataset's rating field?",
      "options": [
       "A review is classified as positive if the helpful_vote count is high, regardless of the rating.",
-      "A review is classified as positive if the rating is 4 or higher, and negative if it is less than 4.",
-      "A review is classified as positive if the rating is 5, and negative if it is 1, 2, 3, or 4.",
+      "A review is classified as positive if the rating is 4 or higher, and negative otherwise.",
+      "A review is classified as positive if the rating is exactly 5, and negative otherwise.",
       "A review is classified as positive if the rating is greater than 4, and negative otherwise."
      ],
      "answer": 1,
@@ -549,16 +550,94 @@
      "source_chunk_id": "mbax-6418-assignment-1-p2"
     },
     {
-     "question": "According to the slide, what is the primary reason for making results repeatable by using a fixed seed and fixed settings?",
+     "question": "According to the slide, what is the correct approach regarding the 'standing considerations' or rating when evaluating the model?",
      "options": [
-      "To hide the imbalance in the data so the model appears more effective than it is.",
-      "So that running the process again yields the same answer, ensuring the published numbers are verifiable.",
-      "To ensure the dashboard looks like a finished, cohesive product.",
-      "Because the model needs to see the rating to generate consistent outputs."
+      "The standing considerations should be visible in the README screenshots to ensure transparency.",
+      "The rating is the correct answer because it is what you judge the model against, but the model never sees it.",
+      "The model should be trained on the standing considerations to improve its accuracy.",
+      "The standing considerations must be balanced with the data to prevent the model from favoring easy classes."
      ],
      "answer": 1,
-     "rationale": "The slide states that results should be repeatable so that 'running it again gives the same answer,' ensuring that any published number comes from a fixed choice of reviews and settings.",
+     "rationale": "The slide explicitly states that 'The rating is the correct answer: it's what you judge the model against, but the model never sees it.'",
      "source_chunk_id": "mbax-6418-assignment-1-p7"
+    }
+   ]
+  },
+  "mbax-6418-syllabus-fall-2026-1": {
+   "name": "MBAX 6418 Syllabus Fall 2026 (1)",
+   "kind": "page",
+   "questions": [
+    {
+     "question": "According to the course grading policy, what is the specific grade penalty applied for an assignment submitted one calendar day late?",
+     "options": [
+      "Automatic failure of the assignment",
+      "A 10% reduction from the original score",
+      "A 15% reduction from the original score",
+      "A 20% reduction from the original score"
+     ],
+     "answer": 1,
+     "rationale": "The syllabus states that 'Not submitting assignments on time will result in a 10% grade penalty for every calendar day the assignment is late.'",
+     "source_chunk_id": "mbax-6418-syllabus-fall-2026-1-p2"
+    },
+    {
+     "question": "According to the syllabus, what is required for students with temporary medical conditions or medical isolation to request accommodations for missed classes?",
+     "options": [
+      "B. Contact Disability Services at 303-492-8671 to provide documentation",
+      "A. Submit a doctor's note to the faculty member via email",
+      "D. Complete a 'check-in' survey on Canvas to verify attendance",
+      "C. Reach out to the instructor via email without stating the nature of the illness or providing a doctor's note"
+     ],
+     "answer": 3,
+     "rationale": "The slide states that for temporary medical conditions or medical isolation, students should reach out to the instructor via email and 'do not need to state the nature of your illness... and you also do not need to supply a “doctor’s note”'.",
+     "source_chunk_id": "mbax-6418-syllabus-fall-2026-1-p4"
+    },
+    {
+     "question": "According to the syllabus, what is the primary expectation regarding the use of generative AI tools in MBAX 6418?",
+     "options": [
+      "Students may use generative AI tools as they see fit, but must document their usage and consider privacy implications.",
+      "Students must use generative AI tools for all assignments to ensure consistent grading standards.",
+      "Students are prohibited from using generative AI tools to protect academic integrity.",
+      "Generative AI tools are only permitted if the student obtains prior written permission from the instructor."
+     ],
+     "answer": 0,
+     "rationale": "The slide states that students 'may use gen AI tools in this course however you see fit' and must 'Document your usage by following the guidelines provided during the course' while keeping 'privacy implications and security risks' in mind.",
+     "source_chunk_id": "mbax-6418-syllabus-fall-2026-1-p6"
+    },
+    {
+     "question": "According to the course description, which of the following is explicitly stated regarding the prerequisites for enrollment in MBAX 6418?",
+     "options": [
+      "Coding experience is required to successfully complete the course assignments.",
+      "Coding experience is not a prerequisite for this course.",
+      "Students must have prior experience with graphical user interfaces (GUIs) before the first class.",
+      "Students must have a background in sustainable model deployment to enroll."
+     ],
+     "answer": 1,
+     "rationale": "The course description explicitly states at the end that 'Coding experience is not a prerequisite for this course.'",
+     "source_chunk_id": "mbax-6418-syllabus-fall-2026-1-p1"
+    },
+    {
+     "question": "According to the syllabus, what is the consequence for in-person students who have unexcused absences beyond the first one?",
+     "options": [
+      "Their final project grade is automatically lowered by 10%.",
+      "They must complete extra credit assignments to make up the missed class.",
+      "Their class participation grade will be reduced.",
+      "They are required to submit a written apology to the instructor."
+     ],
+     "answer": 2,
+     "rationale": "The slide states that 'Any observed unexcused absence beyond the first will result in a reduction of your class participation grade.'",
+     "source_chunk_id": "mbax-6418-syllabus-fall-2026-1-p3"
+    },
+    {
+     "question": "According to the syllabus, what is the required timeline for a student to notify the instructional faculty member to request an accommodation for a religious observance conflict?",
+     "options": [
+      "Students must notify the faculty member at least two weeks in advance of the conflict, unless the course start date is less than two weeks before the conflict, in which case notification must occur on the start date.",
+      "Students must notify the faculty member immediately upon discovering a conflict, regardless of when the conflict occurs.",
+      "Students are not required to notify faculty in advance; accommodations are granted automatically upon request via email.",
+      "Students must notify the faculty member at least one month in advance of any scheduled exam or assignment deadline."
+     ],
+     "answer": 0,
+     "rationale": "The slide states that students must notify the faculty member 'at least two weeks in advance' unless the course start date is less than two weeks before the date, in which case they must notify on the start date.",
+     "source_chunk_id": "mbax-6418-syllabus-fall-2026-1-p5"
     }
    ]
   }

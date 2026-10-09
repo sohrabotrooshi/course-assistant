@@ -1,0 +1,94 @@
+Class Model API Endpoints
+
+Last updated: 2026/09/30
+
+Hermes Primary Model — 9000
+Usage: Reserved exclusively for agentic use with Hermes.
+Base URL: http://dobolyi.com:9000/v1
+API Key: 6418
+Model: deepseek-ai/DeepSeek-V4-Flash-0731
+Hugging Face: https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731
+License: MIT
+
+Hermes Auxiliary Vision Model / Classification LLM — 9001
+Usage: Use for basic LLM/VLM tasks, including classification, chat, and general text/vision processing.
+Base URL: http://dobolyi.com:9001/v1
+API Key: 6418
+Model: cyankiwi/Qwen3.6-35B-A3B-AWQ-4bit
+Hugging Face: https://huggingface.co/cyankiwi/Qwen3.6-35B-A3B-AWQ-4bit
+License: Apache 2.0
+
+Text Embeddings — 9002
+Base URL: http://dobolyi.com:9002
+API Key: 6418
+Model: nvidia/Nemotron-3-Embed-1B-BF16
+Hugging Face: https://huggingface.co/nvidia/Nemotron-3-Embed-1B-BF16
+License: OpenMDW-1.1
+
+Multimodal Embeddings — 9003
+Base URL: http://dobolyi.com:9003/v1
+API Key: 6418
+Model: Qwen/Qwen3-VL-Embedding-2B
+Hugging Face: https://huggingface.co/Qwen/Qwen3-VL-Embedding-2B
+License: Apache 2.0
+
+Multimodal Reranking — 9004
+Base URL: http://dobolyi.com:9004
+API Key: 6418
+Model: Qwen/Qwen3-VL-Reranker-2B
+Hugging Face: https://huggingface.co/Qwen/Qwen3-VL-Reranker-2B
+License: Apache 2.0
+
+Document Parsing — 9005
+Base URL: http://dobolyi.com:9005/v1
+API Key: 6418
+Model: dots.mocr
+Hugging Face: https://huggingface.co/dots-studio/dots.mocr
+License: MIT
+
+Image Generation and Editing — 9006
+Base URL: http://dobolyi.com:9006/v1
+API Key: 6418
+Model: black-forest-labs/FLUX.2-klein-4B
+Hugging Face: https://huggingface.co/black-forest-labs/FLUX.2-klein-4B
+License: Apache 2.0
+
+Music Generation — 9007
+Base URL: http://dobolyi.com:9007
+API Key: 6418
+Model: ACE-Step/acestep-v15-xl-turbo
+Hugging Face: https://huggingface.co/ACE-Step/acestep-v15-xl-turbo
+License: MIT
+
+Text-to-Speech and Voice Cloning — 9008
+Base URL: http://dobolyi.com:9008
+API Key: 6418
+Model: Chatterbox Multilingual V3
+Hugging Face: https://huggingface.co/ResembleAI/chatterbox
+License: MIT
+
+Speech-to-Text — 9009
+Base URL: http://dobolyi.com:9009/v1
+API Key: 6418
+Model: openai/whisper-large-v3-turbo
+Hugging Face: https://huggingface.co/openai/whisper-large-v3-turbo
+License: MIT
+
+Structured Decisions — 9010
+Base URL: http://dobolyi.com:9010
+API Key: 6418
+Model: internlm/Intern-Decision-4B
+Hugging Face: https://huggingface.co/internlm/Intern-Decision-4B
+License: Apache 2.0
+
+Notes for agents
+
+Endpoint routing: Port 9000 is reserved exclusively for agentic use with Hermes. Do not use port 9000 for basic LLM/VLM tasks such as classification, chat, or general text/vision processing; use port 9001 for those tasks.
+
+Consult each model's Hugging Face page and the relevant server documentation for request formats, model identifiers, templates, and supported parameters.
+
+- vLLM (9000–9005): https://docs.vllm.ai/en/latest/
+- vLLM-Omni (9006 and 9009): https://docs.vllm.ai/projects/vllm-omni/en/latest/
+- ACE-Step (9007): Uses an asynchronous music-generation API: submit a task, poll its status, then download the audio. Documentation: https://github.com/ace-step/ACE-Step-1.5/blob/main/docs/en/API.md
+- Chatterbox (9008): Custom FastAPI wrapper for Chatterbox Multilingual V3. Use POST /v1/audio/speech with input text and request model ID "chatterbox-v3"; language_id selects the language (default: "en"). Supports the model's built-in default voice, saved voices via /v1/voices, and voice cloning using base64 ref_audio or multipart reference uploads to /v1/audio/speech/upload. Returns a complete audio file (MP3 by default). API docs: http://dobolyi.com:9008/docs; request schema: http://dobolyi.com:9008/openapi.json
+- Intern Decision (9010): Custom FastAPI wrapper for Intern-Decision-4B. Send POST /v1/decisions (alias /v1/jev) with state, a questions object containing named choice, score, or noul (yes/no) questions, and optional images encoded as base64 upload objects. Returns JSON with per-question decisions and probabilities. Use its decision request schema rather than a chat-completions messages payload. Request examples: http://dobolyi.com:9010/examples; API docs: http://dobolyi.com:9010/docs

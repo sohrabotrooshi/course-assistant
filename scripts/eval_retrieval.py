@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
-"""Evaluate retrieval quality on questions with known target slides.
+"""Evaluate retrieval quality on questions with known target sources.
 
 Follows Week 5, slide 19: "Accurate RAG requires checking retrieval quality
-... using questions relevant to your app." 15 hand-written questions, each
-with the slide the answer must come from; measures whether BM25 finds the
-target in its top 8 and whether reranking brings it into the top 4.
+... using questions relevant to your app." 19 hand-written questions (15
+slide-targeted + 4 PDF-targeted), measured at each pipeline stage:
+
+- bm25_top8: would the keyword-only leg (BM25 top 8) find the target?
+- hybrid_top8: does reciprocal-rank fusion of BM25 + Nemotron embeddings
+  (class port 9002) keep the target in its top 8?
+- rerank_top4: does the dedicated reranker (class port 9004) keep the
+  target in the final top 4?
 
 Usage: python3 scripts/eval_retrieval.py [-o results/retrieval_metrics.json]
 """
@@ -16,12 +21,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from llm import chat_json  # noqa: E402
 from retrieve import load_index, retrieve  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# (question, target chunk id) — targets chosen from the actual slide content
+# (question, target chunk id) — targets chosen from the actual slide/page text
 CASES = [
     ("What is quantization and how does it make models smaller?", "w2-s15"),
     ("How does a KV cache speed up decoding?", "w2-s11"),
@@ -38,12 +42,15 @@ CASES = [
     ("What are multimodal GenAI use cases?", "w6-s4"),
     ("Why is multimodal not the same as generative?", "w6-s7"),
     ("What should you weigh when choosing model licensing?", "w6-s17"),
-    # PDF targets (Hermes guide + Assignment 1 handout)
-    ("How do you install Hermes Agent on macOS?", "hermes-agent-installation-guide-2026-v1-p1"),
+    # PDF targets (Hermes guide + Assignment 1 handout + syllabus)
+    ("How do you install Hermes Agent on macOS?",
+     "hermes-agent-installation-guide-2026-v1-p1"),
     ("What should you check after the Windows installation finishes?",
      "hermes-agent-installation-guide-2026-v1-p9"),
     ("Which endpoint and model does the class recommend for Assignment 1 classification?",
      "mbax-6418-assignment-1-p2"),
+    ("How are assignments graded in this course?",
+     "mbax-6418-syllabus-fall-2026-1-p2"),
 ]
 
 
@@ -59,39 +66,62 @@ def main():
     index, _ = load_index()
     rows = []
     for q, target in CASES:
-        bm25 = [c["id"] for c, _ in index.search(q, k=8)]
-        ranked = [c["id"] for c in retrieve(q, index, top=8, rerank_top=4,
-                                            use_rerank=True)]
-        rows.append({
+        bm25 = [c["id"] for c in index.search(q, k=8, use_vector=False)]
+        hybrid = [c["id"] for c in index.search(q, k=8, use_vector=True)]
+        reranked = [c["id"] for c in retrieve(q, index, top=8, rerank_top=4,
+                                              use_rerank=True, use_vector=True)]
+        bm25_reranked = [c["id"] for c in retrieve(q, index, top=8,
+                                                   rerank_top=4,
+                                                   use_rerank=True,
+                                                   use_vector=False)]
+        row = {
             "question": q,
             "target": target,
-            "bm25_rank": rank_of(bm25, target),
             "bm25_top8": bm25,
-            "rerank_top4": ranked,
-            "rerank_hit": target in ranked,
-        })
-        mark = "HIT" if rows[-1]["rerank_hit"] else ("bm25" if rows[-1]["bm25_rank"] else "MISS")
-        print(f"{mark:>5}  {q[:58]:<58} -> {target}  "
-              f"(bm25 rank {rows[-1]['bm25_rank']}, rerank top4: "
-              f"{'yes' if rows[-1]['rerank_hit'] else 'no'})")
+            "bm25_rank": rank_of(bm25, target),
+            "hybrid_top8": hybrid,
+            "hybrid_rank": rank_of(hybrid, target),
+            "rerank_top4": reranked,
+            "rerank_hit": target in reranked,
+            "bm25_rerank_top4": bm25_reranked,
+            "bm25_rerank_hit": target in bm25_reranked,
+        }
+        rows.append(row)
+        tag = ("BM25+r" if row["bm25_rerank_hit"] and not row["rerank_hit"] else
+               ("HIT " if row["rerank_hit"] else
+                ("hybrid" if row["hybrid_rank"] else
+                 ("bm25" if row["bm25_rank"] else "MISS"))))
+        print(f"{tag:>6}  {q[:56]:<56} -> {target}  "
+              f"(bm25 {row['bm25_rank']}, hybrid {row['hybrid_rank']}, "
+              f"bm25+rerank {'in' if row['bm25_rerank_hit'] else 'out'})")
 
-    bm25_hit8 = sum(1 for r in rows if r["bm25_rank"] is not None)
-    rerank_hit4 = sum(1 for r in rows if r["rerank_hit"])
-    mrr = sum(1.0 / r["bm25_rank"] for r in rows if r["bm25_rank"]) / len(rows)
-
+    n = len(rows)
+    def hit(key_rank): return sum(1 for r in rows if r[key_rank] is not None)
+    def mrr(key_rank): return round(
+        sum(1.0 / r[key_rank] for r in rows if r[key_rank]) / n, 3)
     metrics = {
-        "n_questions": len(rows),
-        "bm25_top8_hit": bm25_hit8,
-        "bm25_top8_rate": round(bm25_hit8 / len(rows), 3),
-        "rerank_top4_hit": rerank_hit4,
-        "rerank_top4_rate": round(rerank_hit4 / len(rows), 3),
-        "bm25_mrr_top8": round(mrr, 3),
+        "n_questions": n,
+        "bm25_top8_hit": hit("bm25_rank"),
+        "bm25_top8_rate": round(hit("bm25_rank") / n, 3),
+        "bm25_mrr_top8": mrr("bm25_rank"),
+        "hybrid_top8_hit": hit("hybrid_rank"),
+        "hybrid_top8_rate": round(hit("hybrid_rank") / n, 3),
+        "hybrid_mrr_top8": mrr("hybrid_rank"),
+        "rerank_top4_hit": sum(1 for r in rows if r["rerank_hit"]),
+        "rerank_top4_rate": round(sum(1 for r in rows if r["rerank_hit"]) / n, 3),
+        "bm25_rerank_top4_hit": sum(1 for r in rows if r["bm25_rerank_hit"]),
+        "bm25_rerank_top4_rate": round(
+            sum(1 for r in rows if r["bm25_rerank_hit"]) / n, 3),
         "cases": rows,
     }
     out = ROOT / args.out
     out.write_text(json.dumps(metrics, indent=1, ensure_ascii=False))
-    print(f"\nBM25 top-8: {bm25_hit8}/{len(rows)}  |  rerank top-4: "
-          f"{rerank_hit4}/{len(rows)}  |  BM25 MRR@8: {mrr:.3f}")
+    print(f"\nBM25 top-8: {metrics['bm25_top8_hit']}/{n} "
+          f"(MRR {metrics['bm25_mrr_top8']})"
+          f"  |  hybrid top-8: {metrics['hybrid_top8_hit']}/{n} "
+          f"(MRR {metrics['hybrid_mrr_top8']})"
+          f"  |  rerank top-4 (hybrid): {metrics['rerank_top4_hit']}/{n}"
+          f"  |  rerank top-4 (BM25): {metrics['bm25_rerank_top4_hit']}/{n}")
     print(f"wrote {out.relative_to(ROOT)}")
 
 

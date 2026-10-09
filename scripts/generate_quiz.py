@@ -77,7 +77,7 @@ def validate(q, anchor_id):
 
 
 def make_question(chunk):
-    for attempt in range(2):
+    for attempt in range(3):
         try:
             q = chat_json(
                 [{"role": "system", "content": SYSTEM},
@@ -87,14 +87,12 @@ def make_question(chunk):
                 max_tokens=700, temperature=0.0,
             )
         except ValueError as e:
-            return None, f"parse failed: {e}"
+            continue  # chat_json retried internally; try the whole thing again
         ok, errs = validate(q, chunk["id"])
         if ok:
             q["source_chunk_id"] = chunk["id"]
             return q, None
-        if attempt == 0:
-            continue  # retry once, then give up
-        return None, "; ".join(errs)
+    return None, "; ".join(errs)  # all attempts exhausted
 
 
 def distribute_answers(weeks_out, base_seed):

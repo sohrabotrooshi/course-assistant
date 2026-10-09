@@ -102,9 +102,9 @@ const assert = (cond, label) => {
 async function quizInit(c) {
   await c.goto(QUIZ_URL);
   const cards = await c.eval(`document.querySelectorAll('.q').length`);
-  assert(cards === 42, "42 question cards render (" + cards + ")");
+  assert(cards === 48, "48 question cards render (" + cards + ")");
   const docs = await c.eval(`document.querySelectorAll('.docpill').length`);
-  assert(docs === 7, "7 document groups render (" + docs + ")");
+  assert(docs === 8, "8 document groups render (" + docs + ")");
   const tabs = await c.eval(`[...document.querySelectorAll('.tab')].map(t=>t.textContent)`);
   assert(tabs[0] === "Course bank" && tabs.includes("+ New quiz"),
     "bank + new-quiz tabs (" + tabs.join("|") + ")");
@@ -147,7 +147,7 @@ async function quizAnswered(c) {
     document.getElementById('sRight').textContent + '|' +
     document.getElementById('sSkipped').textContent + '|' +
     document.getElementById('sPct').textContent`);
-  assert(/2\/42\|1\|1\|100%/.test(st), "stats 2/42 answered, 1 right, 1 skipped, 100% (" + st + ")");
+  assert(/2\/48\|1\|1\|100%/.test(st), "stats 2/48 answered, 1 right, 1 skipped, 100% (" + st + ")");
   const verdicts = await c.eval(`[...document.querySelectorAll('.verdict')].map(v=>v.textContent)`);
   assert(verdicts[0].startsWith("\u2713 Correct"), "Q1 verdict correct (" + verdicts[0] + ")");
   assert(verdicts[1].startsWith("Skipped"), "revealed question shows skipped (" + verdicts[1] + ")");
@@ -216,7 +216,7 @@ async function quizGenerate(c) {
 async function chatInitial(c) {
   await c.goto(CHAT_URL);
   const chips = await c.eval(`document.querySelectorAll('.docchip').length`);
-  assert(chips === 7, "7 material chips render (" + chips + ")");
+  assert(chips === 8, "8 material chips render (" + chips + ")");
   const msg = await c.eval(`document.querySelectorAll('.msg').length`);
   assert(msg === 1, "welcome message rendered");
   return c.shot(OUT("chat_initial.png"));

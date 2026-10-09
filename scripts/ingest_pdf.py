@@ -105,18 +105,24 @@ def ingest_pdf(path):
 
 
 def find_pdfs(args):
+    """Default scan dirs (~/CU Boulder/LLM, data/course_files/) are ALWAYS
+    included; any explicit paths are added on top (never replaced)."""
     found = []
+    for d in (Path.home() / "CU Boulder" / "LLM", COURSE_FILES_DIR):
+        if d.exists():
+            found.extend(sorted(d.glob("*.pdf")))
     for p in args:
         p = Path(p)
         if p.is_dir():
             found.extend(sorted(p.glob("*.pdf")))
         elif p.is_file():
             found.append(p)
-    if not args:
-        for d in (Path.home() / "CU Boulder" / "LLM", COURSE_FILES_DIR):
-            if d.exists():
-                found.extend(sorted(d.glob("*.pdf")))
-    return [f for f in found if f.exists()]
+    seen, uniq = set(), []
+    for f in found:
+        if f not in seen:
+            seen.add(f)
+            uniq.append(f)
+    return [f for f in uniq if f.exists()]
 
 
 def run(paths, out_path):

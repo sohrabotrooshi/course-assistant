@@ -1,57 +1,99 @@
 {
- "n_questions": 18,
- "bm25_top8_hit": 18,
+ "n_questions": 19,
+ "bm25_top8_hit": 19,
  "bm25_top8_rate": 1.0,
- "rerank_top4_hit": 18,
- "rerank_top4_rate": 1.0,
- "bm25_mrr_top8": 0.824,
+ "bm25_mrr_top8": 0.831,
+ "hybrid_top8_hit": 16,
+ "hybrid_top8_rate": 0.842,
+ "hybrid_mrr_top8": 0.715,
+ "rerank_top4_hit": 15,
+ "rerank_top4_rate": 0.789,
+ "bm25_rerank_top4_hit": 18,
+ "bm25_rerank_top4_rate": 0.947,
  "cases": [
   {
    "question": "What is quantization and how does it make models smaller?",
    "target": "w2-s15",
-   "bm25_rank": 1,
    "bm25_top8": [
     "w2-s15",
     "w2-s16",
     "w3-s14",
-    "w3-s15",
     "w3-s26",
+    "w3-s15",
     "w2-s18",
     "w6-s18",
     "w2-s21"
    ],
+   "bm25_rank": 1,
+   "hybrid_top8": [
+    "w2-s15",
+    "w2-s16",
+    "w2-s21",
+    "w3-s14",
+    "w6-s18",
+    "w2-s18",
+    "w3-s26",
+    "w3-s9"
+   ],
+   "hybrid_rank": 1,
    "rerank_top4": [
     "w2-s15",
     "w2-s16",
-    "w3-s14",
-    "w3-s15"
+    "w2-s21",
+    "w2-s18"
    ],
-   "rerank_hit": true
+   "rerank_hit": true,
+   "bm25_rerank_top4": [
+    "w2-s15",
+    "w2-s16",
+    "w2-s18",
+    "w2-s21"
+   ],
+   "bm25_rerank_hit": true
   },
   {
    "question": "How does a KV cache speed up decoding?",
    "target": "w2-s11",
-   "bm25_rank": 1,
    "bm25_top8": [
     "w2-s11",
     "w2-s12",
     "w2-s13",
-    "w2-s7",
     "w2-s10",
+    "w2-s7",
     "w6-s18",
     "hermes-agent-installation-guide-2026-v1-p6",
     "hermes-agent-installation-guide-2026-v1-p12"
    ],
+   "bm25_rank": 1,
+   "hybrid_top8": [
+    "w2-s11",
+    "w2-s13",
+    "w2-s12",
+    "mbax-6418-assignment-1-p3",
+    "mbax-6418-assignment-1-p2",
+    "mbax-6418-assignment-1-p4",
+    "mbax-6418-assignment-1-p1",
+    "mbax-6418-syllabus-fall-2026-1-p3"
+   ],
+   "hybrid_rank": 1,
    "rerank_top4": [
     "w2-s11",
+    "w2-s12",
+    "w2-s13",
+    "mbax-6418-assignment-1-p4"
+   ],
+   "rerank_hit": true,
+   "bm25_rerank_top4": [
+    "w2-s11",
+    "w2-s12",
+    "w2-s13",
     "w2-s10"
    ],
-   "rerank_hit": true
+   "bm25_rerank_hit": true
   },
   {
    "question": "What does speculative decoding guess ahead and verify?",
    "target": "w2-s13",
-   "bm25_rank": 1,
    "bm25_top8": [
     "w2-s13",
     "w4-s20",
@@ -59,27 +101,68 @@
     "w2-s11",
     "w3-s27"
    ],
-   "rerank_top4": [
-    "w2-s13"
+   "bm25_rank": 1,
+   "hybrid_top8": [
+    "w2-s13",
+    "w4-s20",
+    "w3-s24",
+    "w5-s11",
+    "mbax-6418-assignment-1-p3",
+    "w2-s11",
+    "w6-s19",
+    "w3-s27"
    ],
-   "rerank_hit": true
+   "hybrid_rank": 1,
+   "rerank_top4": [
+    "w2-s13",
+    "w2-s11",
+    "w5-s11",
+    "w3-s27"
+   ],
+   "rerank_hit": true,
+   "bm25_rerank_top4": [
+    "w2-s13",
+    "w5-s11",
+    "w2-s11",
+    "w4-s20"
+   ],
+   "bm25_rerank_hit": true
   },
   {
    "question": "What is sycophancy and how do benchmarks measure it?",
    "target": "w2-s20",
-   "bm25_rank": 1,
    "bm25_top8": [
-    "w2-s20"
+    "w2-s20",
+    "mbax-6418-syllabus-fall-2026-1-p2"
    ],
+   "bm25_rank": 1,
+   "hybrid_top8": [
+    "w2-s20",
+    "mbax-6418-syllabus-fall-2026-1-p2",
+    "w3-s24",
+    "w6-s20",
+    "mbax-6418-syllabus-fall-2026-1-p4",
+    "w5-s17",
+    "w3-s11",
+    "mbax-6418-syllabus-fall-2026-1-p5"
+   ],
+   "hybrid_rank": 1,
    "rerank_top4": [
-    "w2-s20"
+    "w2-s20",
+    "mbax-6418-syllabus-fall-2026-1-p2",
+    "mbax-6418-syllabus-fall-2026-1-p5",
+    "mbax-6418-syllabus-fall-2026-1-p4"
    ],
-   "rerank_hit": true
+   "rerank_hit": true,
+   "bm25_rerank_top4": [
+    "w2-s20",
+    "mbax-6418-syllabus-fall-2026-1-p2"
+   ],
+   "bm25_rerank_hit": true
   },
   {
    "question": "What is ChatML and how are prompts formatted in it?",
    "target": "w3-s8",
-   "bm25_rank": 2,
    "bm25_top8": [
     "w3-s10",
     "w3-s8",
@@ -90,18 +173,36 @@
     "w3-s5",
     "w6-s13"
    ],
+   "bm25_rank": 2,
+   "hybrid_top8": [
+    "w3-s10",
+    "w3-s16",
+    "w3-s11",
+    "w3-s8",
+    "w6-s13",
+    "w2-s14",
+    "w6-s16",
+    "w3-s17"
+   ],
+   "hybrid_rank": 4,
    "rerank_top4": [
     "w3-s10",
     "w3-s8",
-    "w3-s3",
-    "w5-s4"
+    "w3-s16",
+    "w2-s14"
    ],
-   "rerank_hit": true
+   "rerank_hit": true,
+   "bm25_rerank_top4": [
+    "w3-s10",
+    "w3-s8",
+    "w3-s4",
+    "w3-s3"
+   ],
+   "bm25_rerank_hit": true
   },
   {
    "question": "What does the few-shot prompting example look like?",
    "target": "w3-s21",
-   "bm25_rank": 2,
    "bm25_top8": [
     "w3-s20",
     "w3-s21",
@@ -110,20 +211,38 @@
     "w3-s13",
     "w3-s28",
     "w3-s23",
-    "w3-s2"
+    "w5-s17"
    ],
-   "rerank_top4": [
-    "w3-s21",
+   "bm25_rank": 2,
+   "hybrid_top8": [
     "w3-s20",
-    "w3-s23",
+    "w3-s11",
+    "w3-s24",
+    "w5-s17",
+    "w6-s19",
+    "mbax-6418-assignment-1-p3",
+    "w3-s4",
+    "mbax-6418-assignment-1-p5"
+   ],
+   "hybrid_rank": null,
+   "rerank_top4": [
+    "w3-s20",
+    "w3-s4",
+    "w3-s24",
+    "w3-s11"
+   ],
+   "rerank_hit": false,
+   "bm25_rerank_top4": [
+    "w3-s20",
+    "w3-s21",
+    "w3-s13",
     "w3-s24"
    ],
-   "rerank_hit": true
+   "bm25_rerank_hit": true
   },
   {
    "question": "What is an OpenAI-compatible endpoint?",
    "target": "w4-s12",
-   "bm25_rank": 1,
    "bm25_top8": [
     "w4-s12",
     "w4-s11",
@@ -131,39 +250,79 @@
     "hermes-agent-installation-guide-2026-v1-p10",
     "w4-s16",
     "hermes-agent-installation-guide-2026-v1-p5",
-    "w2-s5",
-    "w2-s25"
+    "w4-s13",
+    "w4-s14"
    ],
+   "bm25_rank": 1,
+   "hybrid_top8": [
+    "w4-s12",
+    "mbax-6418-assignment-1-p1",
+    "w4-s11",
+    "w4-s13",
+    "mbax-6418-assignment-1-p2",
+    "w2-s25",
+    "w6-s16",
+    "hermes-agent-installation-guide-2026-v1-p10"
+   ],
+   "hybrid_rank": 1,
    "rerank_top4": [
     "w4-s12",
-    "w4-s11"
+    "mbax-6418-assignment-1-p1",
+    "w4-s11",
+    "hermes-agent-installation-guide-2026-v1-p10"
    ],
-   "rerank_hit": true
+   "rerank_hit": true,
+   "bm25_rerank_top4": [
+    "w4-s12",
+    "mbax-6418-assignment-1-p1",
+    "w4-s11",
+    "w4-s13"
+   ],
+   "bm25_rerank_hit": true
   },
   {
    "question": "What makes a bug report useful?",
    "target": "w4-s19",
-   "bm25_rank": 1,
    "bm25_top8": [
     "w4-s19",
     "w4-s29",
     "w4-s18",
     "w4-s26",
     "w4-s20",
-    "w5-s17",
     "mbax-6418-assignment-1-p5",
+    "w5-s17",
     "w4-s28"
    ],
+   "bm25_rank": 1,
+   "hybrid_top8": [
+    "w4-s19",
+    "w4-s18",
+    "w5-s17",
+    "mbax-6418-assignment-1-p5",
+    "mbax-6418-assignment-1-p6",
+    "mbax-6418-assignment-1-p1",
+    "w4-s29",
+    "w6-s19"
+   ],
+   "hybrid_rank": 1,
    "rerank_top4": [
     "w4-s19",
-    "w4-s18"
+    "w4-s18",
+    "w4-s29",
+    "w5-s17"
    ],
-   "rerank_hit": true
+   "rerank_hit": true,
+   "bm25_rerank_top4": [
+    "w4-s19",
+    "w4-s18",
+    "w4-s20",
+    "w4-s29"
+   ],
+   "bm25_rerank_hit": true
   },
   {
    "question": "What is retrieval augmented generation (RAG)?",
    "target": "w5-s10",
-   "bm25_rank": 3,
    "bm25_top8": [
     "w5-s9",
     "w5-s2",
@@ -172,54 +331,108 @@
     "w5-s18",
     "w5-s14",
     "w5-s12",
-    "w5-s11"
+    "mbax-6418-syllabus-fall-2026-1-p7"
    ],
-   "rerank_top4": [
+   "bm25_rank": 3,
+   "hybrid_top8": [
     "w5-s9",
     "w5-s2",
     "w5-s10",
-    "w5-s19"
+    "w5-s12",
+    "w5-s14",
+    "w5-s19",
+    "w5-s11",
+    "w5-s1"
    ],
-   "rerank_hit": true
+   "hybrid_rank": 3,
+   "rerank_top4": [
+    "w5-s10",
+    "w5-s11",
+    "w5-s9",
+    "w5-s12"
+   ],
+   "rerank_hit": true,
+   "bm25_rerank_top4": [
+    "w5-s10",
+    "w5-s9",
+    "w5-s12",
+    "w5-s18"
+   ],
+   "bm25_rerank_hit": true
   },
   {
    "question": "Why is accurate RAG challenging?",
    "target": "w5-s19",
-   "bm25_rank": 1,
    "bm25_top8": [
     "w5-s19",
     "w5-s14",
-    "w5-s9",
     "w5-s12",
+    "w5-s9",
     "w5-s10",
     "w5-s18",
     "w5-s2",
     "w5-s11"
    ],
-   "rerank_top4": [
+   "bm25_rank": 1,
+   "hybrid_top8": [
+    "w5-s9",
     "w5-s19",
-    "w5-s14",
+    "w5-s12",
+    "w5-s11",
+    "w5-s2",
     "w5-s10",
+    "w5-s14",
     "w5-s18"
    ],
-   "rerank_hit": true
+   "hybrid_rank": 2,
+   "rerank_top4": [
+    "w5-s19",
+    "w5-s11",
+    "w5-s10",
+    "w5-s9"
+   ],
+   "rerank_hit": true,
+   "bm25_rerank_top4": [
+    "w5-s19",
+    "w5-s11",
+    "w5-s10",
+    "w5-s14"
+   ],
+   "bm25_rerank_hit": true
   },
   {
    "question": "What is the lost in the middle effect?",
    "target": "w5-s7",
-   "bm25_rank": 1,
    "bm25_top8": [
     "w5-s7"
    ],
+   "bm25_rank": 1,
+   "hybrid_top8": [
+    "w5-s7",
+    "w2-s15",
+    "w5-s17",
+    "w6-s19",
+    "w6-s16",
+    "w2-s24",
+    "w3-s24",
+    "mbax-6418-syllabus-fall-2026-1-p4"
+   ],
+   "hybrid_rank": 1,
    "rerank_top4": [
+    "w5-s7",
+    "w3-s24",
+    "w2-s15",
+    "w5-s17"
+   ],
+   "rerank_hit": true,
+   "bm25_rerank_top4": [
     "w5-s7"
    ],
-   "rerank_hit": true
+   "bm25_rerank_hit": true
   },
   {
    "question": "How do embeddings enable semantic search?",
    "target": "w5-s15",
-   "bm25_rank": 1,
    "bm25_top8": [
     "w5-s15",
     "w5-s16",
@@ -230,99 +443,196 @@
     "w5-s17",
     "hermes-agent-installation-guide-2026-v1-p11"
    ],
-   "rerank_top4": [
-    "w5-s15"
+   "bm25_rank": 1,
+   "hybrid_top8": [
+    "w5-s15",
+    "w5-s16",
+    "w5-s17",
+    "w4-s13",
+    "w3-s6",
+    "mbax-6418-syllabus-fall-2026-1-p4",
+    "w5-s18",
+    "w6-s19"
    ],
-   "rerank_hit": true
+   "hybrid_rank": 1,
+   "rerank_top4": [
+    "w5-s15",
+    "w5-s16",
+    "w5-s18",
+    "w5-s17"
+   ],
+   "rerank_hit": true,
+   "bm25_rerank_top4": [
+    "w5-s15",
+    "w5-s16",
+    "w5-s18",
+    "w5-s17"
+   ],
+   "bm25_rerank_hit": true
   },
   {
    "question": "What are multimodal GenAI use cases?",
    "target": "w6-s4",
-   "bm25_rank": 1,
    "bm25_top8": [
     "w6-s4",
     "w2-s32",
     "w5-s12",
     "w6-s7",
+    "mbax-6418-syllabus-fall-2026-1-p1",
     "w4-s13",
     "w2-s19",
-    "w3-s4",
-    "w6-s6"
+    "w3-s4"
    ],
+   "bm25_rank": 1,
+   "hybrid_top8": [
+    "w6-s4",
+    "w6-s7",
+    "mbax-6418-syllabus-fall-2026-1-p1",
+    "w6-s6",
+    "w3-s4",
+    "w6-s19",
+    "w6-s20",
+    "mbax-6418-syllabus-fall-2026-1-p6"
+   ],
+   "hybrid_rank": 1,
    "rerank_top4": [
     "w6-s4",
+    "w6-s7",
     "w6-s6",
-    "w2-s32",
-    "w6-s7"
+    "w3-s4"
    ],
-   "rerank_hit": true
+   "rerank_hit": true,
+   "bm25_rerank_top4": [
+    "w6-s4",
+    "w6-s7",
+    "w2-s19",
+    "w3-s4"
+   ],
+   "bm25_rerank_hit": true
   },
   {
    "question": "Why is multimodal not the same as generative?",
    "target": "w6-s7",
-   "bm25_rank": 1,
    "bm25_top8": [
     "w6-s7",
     "w6-s1",
+    "mbax-6418-syllabus-fall-2026-1-p1",
     "w3-s14",
     "w2-s21",
     "w6-s4",
     "w3-s4",
-    "w5-s8",
     "w6-s6"
    ],
+   "bm25_rank": 1,
+   "hybrid_top8": [
+    "w6-s7",
+    "w6-s4",
+    "w6-s1",
+    "w6-s6",
+    "w3-s14",
+    "mbax-6418-syllabus-fall-2026-1-p7",
+    "w3-s4",
+    "mbax-6418-syllabus-fall-2026-1-p1"
+   ],
+   "hybrid_rank": 1,
    "rerank_top4": [
     "w6-s7",
     "w6-s6",
-    "w6-s1",
-    "w6-s4"
+    "w6-s4",
+    "w6-s1"
    ],
-   "rerank_hit": true
+   "rerank_hit": true,
+   "bm25_rerank_top4": [
+    "w6-s7",
+    "w6-s6",
+    "w6-s4",
+    "w6-s1"
+   ],
+   "bm25_rerank_hit": true
   },
   {
    "question": "What should you weigh when choosing model licensing?",
    "target": "w6-s17",
-   "bm25_rank": 1,
    "bm25_top8": [
     "w6-s17",
     "w4-s5",
     "w6-s2",
     "w5-s13",
-    "hermes-agent-installation-guide-2026-v1-p9",
     "mbax-6418-assignment-1-p7",
     "w6-s18",
+    "hermes-agent-installation-guide-2026-v1-p9",
     "w3-s26"
    ],
-   "rerank_top4": [
-    "w6-s17",
-    "w6-s18"
+   "bm25_rank": 1,
+   "hybrid_top8": [
+    "w6-s2",
+    "w5-s17",
+    "w3-s26",
+    "w6-s18",
+    "mbax-6418-assignment-1-p7",
+    "w3-s20",
+    "mbax-6418-assignment-1-p2",
+    "w3-s24"
    ],
-   "rerank_hit": true
+   "hybrid_rank": null,
+   "rerank_top4": [
+    "w6-s18",
+    "w6-s2",
+    "mbax-6418-assignment-1-p7",
+    "w3-s26"
+   ],
+   "rerank_hit": false,
+   "bm25_rerank_top4": [
+    "w6-s17",
+    "w6-s18",
+    "w6-s2",
+    "mbax-6418-assignment-1-p7"
+   ],
+   "bm25_rerank_hit": true
   },
   {
    "question": "How do you install Hermes Agent on macOS?",
    "target": "hermes-agent-installation-guide-2026-v1-p1",
-   "bm25_rank": 1,
    "bm25_top8": [
     "hermes-agent-installation-guide-2026-v1-p1",
     "w3-s32",
-    "w3-s28",
     "hermes-agent-installation-guide-2026-v1-p2",
+    "w3-s28",
     "w3-s31",
     "w4-s14",
-    "w3-s2",
-    "w4-s16"
+    "hermes-agent-installation-guide-2026-v1-p8",
+    "w3-s2"
    ],
+   "bm25_rank": 1,
+   "hybrid_top8": [
+    "hermes-agent-installation-guide-2026-v1-p1",
+    "w3-s28",
+    "w3-s32",
+    "w3-s2",
+    "w3-s12",
+    "hermes-agent-installation-guide-2026-v1-p8",
+    "w3-s11",
+    "w4-s14"
+   ],
+   "hybrid_rank": 1,
    "rerank_top4": [
     "hermes-agent-installation-guide-2026-v1-p1",
-    "hermes-agent-installation-guide-2026-v1-p2"
+    "w3-s28",
+    "w4-s14",
+    "hermes-agent-installation-guide-2026-v1-p8"
    ],
-   "rerank_hit": true
+   "rerank_hit": true,
+   "bm25_rerank_top4": [
+    "hermes-agent-installation-guide-2026-v1-p1",
+    "hermes-agent-installation-guide-2026-v1-p2",
+    "w3-s28",
+    "w3-s31"
+   ],
+   "bm25_rerank_hit": true
   },
   {
    "question": "What should you check after the Windows installation finishes?",
    "target": "hermes-agent-installation-guide-2026-v1-p9",
-   "bm25_rank": 4,
    "bm25_top8": [
     "hermes-agent-installation-guide-2026-v1-p11",
     "hermes-agent-installation-guide-2026-v1-p1",
@@ -333,34 +643,112 @@
     "hermes-agent-installation-guide-2026-v1-p2",
     "w3-s26"
    ],
-   "rerank_top4": [
-    "hermes-agent-installation-guide-2026-v1-p11",
-    "hermes-agent-installation-guide-2026-v1-p9",
-    "hermes-agent-installation-guide-2026-v1-p8",
-    "hermes-agent-installation-guide-2026-v1-p5"
+   "bm25_rank": 4,
+   "hybrid_top8": [
+    "w5-s17",
+    "w6-s19",
+    "mbax-6418-syllabus-fall-2026-1-p4",
+    "mbax-6418-assignment-1-p4",
+    "w5-s8",
+    "mbax-6418-assignment-1-p2",
+    "w3-s24",
+    "w6-s20"
    ],
-   "rerank_hit": true
+   "hybrid_rank": null,
+   "rerank_top4": [
+    "w6-s20",
+    "w6-s19",
+    "w5-s8",
+    "w3-s24"
+   ],
+   "rerank_hit": false,
+   "bm25_rerank_top4": [
+    "hermes-agent-installation-guide-2026-v1-p9",
+    "hermes-agent-installation-guide-2026-v1-p11",
+    "hermes-agent-installation-guide-2026-v1-p3",
+    "hermes-agent-installation-guide-2026-v1-p1"
+   ],
+   "bm25_rerank_hit": true
   },
   {
    "question": "Which endpoint and model does the class recommend for Assignment 1 classification?",
    "target": "mbax-6418-assignment-1-p2",
-   "bm25_rank": 4,
    "bm25_top8": [
     "w4-s13",
+    "mbax-6418-syllabus-fall-2026-1-p7",
     "w3-s22",
     "mbax-6418-assignment-1-p1",
     "mbax-6418-assignment-1-p2",
-    "mbax-6418-assignment-1-p4",
-    "w4-s12",
-    "w6-s19",
-    "w4-s14"
+    "mbax-6418-syllabus-fall-2026-1-p2",
+    "mbax-6418-syllabus-fall-2026-1-p3",
+    "w4-s12"
    ],
+   "bm25_rank": 5,
+   "hybrid_top8": [
+    "w4-s13",
+    "mbax-6418-assignment-1-p2",
+    "mbax-6418-syllabus-fall-2026-1-p2",
+    "mbax-6418-assignment-1-p1",
+    "mbax-6418-syllabus-fall-2026-1-p3",
+    "hermes-agent-installation-guide-2026-v1-p10",
+    "w6-s19",
+    "mbax-6418-assignment-1-p4"
+   ],
+   "hybrid_rank": 2,
    "rerank_top4": [
     "mbax-6418-assignment-1-p1",
+    "w4-s13",
     "mbax-6418-assignment-1-p2",
     "mbax-6418-assignment-1-p4"
    ],
-   "rerank_hit": true
+   "rerank_hit": true,
+   "bm25_rerank_top4": [
+    "mbax-6418-assignment-1-p1",
+    "w4-s13",
+    "w4-s12",
+    "mbax-6418-assignment-1-p2"
+   ],
+   "bm25_rerank_hit": true
+  },
+  {
+   "question": "How are assignments graded in this course?",
+   "target": "mbax-6418-syllabus-fall-2026-1-p2",
+   "bm25_top8": [
+    "mbax-6418-syllabus-fall-2026-1-p2",
+    "mbax-6418-syllabus-fall-2026-1-p6",
+    "mbax-6418-syllabus-fall-2026-1-p3",
+    "w5-s12",
+    "mbax-6418-syllabus-fall-2026-1-p1",
+    "mbax-6418-syllabus-fall-2026-1-p5",
+    "mbax-6418-syllabus-fall-2026-1-p7",
+    "mbax-6418-syllabus-fall-2026-1-p4"
+   ],
+   "bm25_rank": 1,
+   "hybrid_top8": [
+    "mbax-6418-syllabus-fall-2026-1-p2",
+    "mbax-6418-syllabus-fall-2026-1-p4",
+    "mbax-6418-syllabus-fall-2026-1-p5",
+    "mbax-6418-syllabus-fall-2026-1-p3",
+    "mbax-6418-syllabus-fall-2026-1-p1",
+    "mbax-6418-syllabus-fall-2026-1-p7",
+    "mbax-6418-syllabus-fall-2026-1-p6",
+    "w4-s7"
+   ],
+   "hybrid_rank": 1,
+   "rerank_top4": [
+    "mbax-6418-syllabus-fall-2026-1-p3",
+    "mbax-6418-syllabus-fall-2026-1-p1",
+    "mbax-6418-syllabus-fall-2026-1-p4",
+    "mbax-6418-syllabus-fall-2026-1-p7"
+   ],
+   "rerank_hit": false,
+   "bm25_rerank_top4": [
+    "mbax-6418-syllabus-fall-2026-1-p3",
+    "mbax-6418-syllabus-fall-2026-1-p1",
+    "mbax-6418-syllabus-fall-2026-1-p7",
+    "mbax-6418-syllabus-fall-2026-1-p4"
+   ],
+   "bm25_rerank_hit": false
   }
  ]
 }

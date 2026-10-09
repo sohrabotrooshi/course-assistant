@@ -62,9 +62,18 @@
    "chunks": 7,
    "images": 7,
    "searchable": 7
+  },
+  "mbax-6418-syllabus-fall-2026-1": {
+   "doc": "MBAX 6418 Syllabus Fall 2026 (1)",
+   "kind": [
+    "page"
+   ],
+   "chunks": 7,
+   "images": 7,
+   "searchable": 7
   }
  },
- "total_chunks": 164,
- "total_images": 194,
+ "total_chunks": 171,
+ "total_images": 201,
  "media_dir": "data/media"
 }

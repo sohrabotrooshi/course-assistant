@@ -106,5 +106,35 @@
     "title": "Running Local Models"
    }
   ]
+ },
+ {
+  "question": "When is the final project due according to the syllabus?",
+  "answer": "The course materials do not specify a single due date for the final project in the syllabus text provided.\n\n*   The syllabus states that the final project will \"begin with a proposal and culminate in a brief presentation\" and that more information will be available on Canvas about one month into the course `[MBAX 6418 Syllabus Fall 2026 (1), page 3]`.\n*   The tentative schedule lists \"Final Project Presentations\" for Week 14, specifically on **Dec 3** `[MBAX 6418 Syllabus Fall 2026 (1), page 7]`.\n*   The schedule also notes that \"Online Students Submit via Canvas\" for these presentations `[MBAX 6418 Syllabus Fall 2026 (1), page 7]`.\n\nTherefore, the presentations are scheduled for Dec 3, but the specific submission deadline for the final project deliverables is not explicitly stated in the provided syllabus chunks.",
+  "sources": [
+   {
+    "id": "mbax-6418-syllabus-fall-2026-1-p3",
+    "loc": "MBAX 6418 Syllabus Fall 2026 (1), page 3",
+    "doc": "MBAX 6418 Syllabus Fall 2026 (1)",
+    "title": "Page 3"
+   },
+   {
+    "id": "mbax-6418-assignment-1-p5",
+    "loc": "MBAX 6418 Assignment 1, page 5",
+    "doc": "MBAX 6418 Assignment 1",
+    "title": "Page 5"
+   },
+   {
+    "id": "mbax-6418-syllabus-fall-2026-1-p7",
+    "loc": "MBAX 6418 Syllabus Fall 2026 (1), page 7",
+    "doc": "MBAX 6418 Syllabus Fall 2026 (1)",
+    "title": "Page 7"
+   },
+   {
+    "id": "mbax-6418-syllabus-fall-2026-1-p6",
+    "loc": "MBAX 6418 Syllabus Fall 2026 (1), page 6",
+    "doc": "MBAX 6418 Syllabus Fall 2026 (1)",
+    "title": "Page 6"
+   }
+  ]
  }
 ]

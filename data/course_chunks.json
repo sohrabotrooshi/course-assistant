@@ -2456,5 +2456,117 @@
   "images": [
    "data/media/mbax-6418-assignment-1/p007.jpg"
   ]
+ },
+ {
+  "id": "mbax-6418-syllabus-fall-2026-1-p1",
+  "kind": "page",
+  "doc": "MBAX 6418 Syllabus Fall 2026 (1)",
+  "doc_id": "mbax-6418-syllabus-fall-2026-1",
+  "loc": "MBAX 6418 Syllabus Fall 2026 (1), page 1",
+  "week": null,
+  "slide": null,
+  "page": 1,
+  "section": null,
+  "title": "Page 1",
+  "text": "MBAX 6418 – Fall 2026\nBuilding Business Solutions\nwith Generative AI & LLMs\nCourse Meeting Information\nDays Time Venue\nMondays 09:30 AM to 12:15 PM WLAW 304\nThursdays 08:00 AM to 10:45 AM KOBL 217\nProfessor Information\nProfessor: David Dobolyi, PhD\nEmail: david.dobolyi@colorado.edu\nOffice: KOBL 401F\nOffice Hours: Tuesdays and Fridays 11am to 12pm via Zoom\n(https://cuboulder.zoom.us/my/dobolyi), and by appointment\nPlease notify me of your intention to come by, either in class or via email. I\nam happy to schedule appointments at other times based on availability.\nTeaching Assistant (TA) Information\nTAs: None\nCourse Description\nIn this course, students will learn how to leverage recent advancements in generative artificial\nintelligence (GAI) to solve business problems. The course focuses on three key aspects of GAI for\nbusiness. First, students will learn how best to use open and closed large language models (LLMs) for\ncoding, including topics such as AI-assisted coding, vibe coding, and debugging. Next, students will\ndevelop their skills with models that focus on text as well as multimodal models incorporating text,\nvision, and/or audio (e.g., text to image models): Relevant topics include fine-tuning, sustainable model\ndeployment, and agentic workflows. Finally, students will learn how to quickly and easily share their\nmodels with stakeholders through a variety of methods and platforms, including graphical user\ninterfaces (GUIs), application programming interfaces (APIs), and local/cloud hosting options. Coding\nexperience is not a prerequisite for this course.\nCourse Objectives\n• Survey the current state-of-the-art (SOTA) in open and closed GAI and LLMs\n• Explore use cases for various model types, e.g., code-focused, multimodal, and reasoning models\n• Become familiar with key GAI concepts such as model context protocol (MCP)\n• Learn how to use AI coding agents effectively\n• Fine-tune models to develop bespoke solutions to business challenges\nMBAX 6418 Syllabus (Subject to Change) 1",
+  "images": [
+   "data/media/mbax-6418-syllabus-fall-2026-1/p001.jpg"
+  ]
+ },
+ {
+  "id": "mbax-6418-syllabus-fall-2026-1-p2",
+  "kind": "page",
+  "doc": "MBAX 6418 Syllabus Fall 2026 (1)",
+  "doc_id": "mbax-6418-syllabus-fall-2026-1",
+  "loc": "MBAX 6418 Syllabus Fall 2026 (1), page 2",
+  "week": null,
+  "slide": null,
+  "page": 2,
+  "section": null,
+  "title": "Page 2",
+  "text": "• Evaluate model prediction outcomes to measure success and understanding\n• Optimize model deployments for efficient inferencing and sustainable serving\n• Work through business problems from start to finish using GAI and LLM technology\n• Communicate findings to non-technical audiences\nTextbooks & Course Materials\n• Handouts (e.g., slides) and other course material distributed in class or via Canvas and GitHub\n• Open-Source Software (e.g., Hermes Agent, Visual Studio Code)\n• Open-Source Python Packages (e.g., Transformers, vLLM, SGLang, Unsloth, LangChain, LlamaIndex,\nOpenAI Python API, Streamlit, Gradio, JupyterLab)\n• Cloud Platforms (e.g., Google Colab, OpenAI Developer Platform, Google AI Studio)\n• Commercial AI Subscriptions (e.g., ChatGPT, Claude)\nNote: The bulk of the course materials are free, but students may need to acquire a paid subscription for\nservices such as ChatGPT (https://chatgpt.com/pricing/) depending on their usage and specific needs.\nThat said, I will be providing free API endpoints running local AI models for students for this class.\nCanvas\nI will use the Canvas system, which can be accessed at: https://canvas.colorado.edu/. I will post the\nsyllabus, course materials, slides, etc. there. In addition, I will use Canvas for course announcements as\nneeded (e.g., schedule updates/changes, class cancellations in the case of inclement weather, etc.).\nCourse Grading\nFinal grades will be determined as follows:\nItem Percentage\nAssignments 20%\nQuizzes 15%\nFinal Project 45%\nFinal Exam 15%\nAttendance and Participation 5%\n100%\nThe instructor reserves the right to grade on the curve.\nAssignments (20%)\nStudents will complete assignments throughout the semester related to topics covered in class, and\nthese assignments may be either individual or team-based. It is critical that you complete (or at least\nattempt) every assignment, since they make up a large portion of your class grade. Not submitting\nassignments on time will result in a 10% grade penalty for every calendar day the assignment is late\n(e.g., an assignment that would have received a grade of 80/100 if turned in on time would receive a\ngrade of 72/100 [.80 * .90 = .72] if turned in up to one day late or 64/100 [.80 * .80 = .64] if turned up to\nMBAX 6418 Syllabus (Subject to Change) 2",
+  "images": [
+   "data/media/mbax-6418-syllabus-fall-2026-1/p002.jpg"
+  ]
+ },
+ {
+  "id": "mbax-6418-syllabus-fall-2026-1-p3",
+  "kind": "page",
+  "doc": "MBAX 6418 Syllabus Fall 2026 (1)",
+  "doc_id": "mbax-6418-syllabus-fall-2026-1",
+  "loc": "MBAX 6418 Syllabus Fall 2026 (1), page 3",
+  "week": null,
+  "slide": null,
+  "page": 3,
+  "section": null,
+  "title": "Page 3",
+  "text": "two days late [and so on]). Assignments may not be turned in more than five days late (e.g., so that we\nmay review in class and/or so that answer keys may be provided to other students in a timely fashion),\nbut the assignment with the lowest score will be dropped from your final grade.\nQuizzes (15%)\nQuizzes will be given during class for in-person students or made available on Canvas for online\nstudents, and the dates for these quizzes will be announced in advance. These quizzes are intended to\nensure that students understand core concepts covered during prior classes. Quizzes must be completed\non time to receive course credit: I will NOT accept late quiz submissions, but the quiz with the lowest\nscore will be dropped from your final grade.\nFinal Project (45%)\nThe team-based final project is designed to give you practical, hands-on experience in designing a\nbusiness solution using the tools and techniques you learn about during this course. The project will\nbegin with a proposal and culminate in a brief presentation that provides a broad overview of your\nwork. More information about the project (e.g., requirements, rubrics) will be made available on Canvas\nabout one month into the course.\nFinal Exam (15%)\nThere will be a final exam at the end of the course, which will be broadly similar in terms of overall\ncontent to class assignments. The exam will be completed remotely (instructions will be provided as the\nexam nears).\nAttendance and Participation (5%)\nThe objective of class attendance and participation is to provide a means of assessing the degree to\nwhich individuals contribute to the learning of their peers. Students who show up on time, are prepared\nfor class, and regularly contribute to the conversation in a positive way will receive full credit. However,\nnegative behaviors will result in a significant reduction or complete forfeiture of this portion of your\ngrade. Additionally, sign-in sheets may occasionally be used to formally assess in-person attendance.\nIn-Person Students. Attendance and participation for in-person students will be assessed based on the\nfollowing dimensions:\n1. 2. Attendance: Class attendance is extremely important to succeed in the course. You are expected to\nbe in class and prepared to engage actively with the lecture and discussions. Participation is\nnegatively impacted when you arrive late for class or miss class. Any observed unexcused absence\nbeyond the first will result in a reduction of your class participation grade. It is generally not\npossible to “make up” these absences with extra credit or other arrangements, so please plan your\nschedule carefully and be mindful of the attendance policy to avoid problems.\nTechnology Distractions: Unless expressly permitted, cell phones are not permitted to be used in\nclass at any time for any reason. If you have an emergency situation that necessitates your being\navailable for a phone call, let me know before class. Due to the technical nature of this class, we\nMBAX 6418 Syllabus (Subject to Change) 3",
+  "images": [
+   "data/media/mbax-6418-syllabus-fall-2026-1/p003.jpg"
+  ]
+ },
+ {
+  "id": "mbax-6418-syllabus-fall-2026-1-p4",
+  "kind": "page",
+  "doc": "MBAX 6418 Syllabus Fall 2026 (1)",
+  "doc_id": "mbax-6418-syllabus-fall-2026-1",
+  "loc": "MBAX 6418 Syllabus Fall 2026 (1), page 4",
+  "week": null,
+  "slide": null,
+  "page": 4,
+  "section": null,
+  "title": "Page 4",
+  "text": "will occasionally utilize laptops during lectures. However, you are expected to stay on-topic and\nrefrain from checking email, chatting, or web surfing unrelated topics. Disruptions that affect\nothers may result in a reduction of your class participation grade.\nOnline Students. Attendance and participation for online students will primarily be based on completing\na series of short “check-in” surveys throughout the semester that will be made available on Canvas. In\naddition, for online programs that include synchronous sessions (e.g., via Zoom), attendance and\nparticipation related to those sessions will also factor into this grading component.\nClassroom Behavior\nStudents and faculty are responsible for maintaining an appropriate learning environment in all\ninstructional settings, whether in person, remote, or online. Failure to adhere to such behavioral\nstandards may be subject to discipline. Professional courtesy and sensitivity are especially important\nwith respect to individuals and topics dealing with race, color, national origin, sex, pregnancy, age,\ndisability, creed, religion, sexual orientation, gender identity, gender expression, veteran status, marital\nstatus, political affiliation, or political philosophy.\nAdditional classroom behavior information\n• Student Classroom and Course-Related Behavior Policy.\n• Student Code of Conduct.\n• Office of Institutional Equity and Compliance.\nAccommodation for Disabilities, Temporary Medical Conditions, and Medical Isolation\nIf you qualify for accommodations because of a disability, please submit your accommodation letter\nfrom Disability Services to your faculty member in a timely manner so that your needs can be\naddressed. Disability Services determines accommodations based on documented disabilities in the\nacademic environment. Information on requesting accommodations is located on the Disability Services\nwebsite. Contact Disability Services at 303-492-8671 or DSinfo@colorado.edu for further assistance. If\nyou have a temporary medical condition, see Temporary Medical Conditions on the Disability Services\nwebsite.\nIf you have a temporary medical condition or required medical isolation for which you require\naccommodation, please reach out to me via email at david.dobolyi@colorado.edu. Note that you do not\nneed to state the nature of your illness when reaching out to me, and you also do not need to supply a\n“doctor’s note” for missed classes, etc.\nStudent Names and Pronouns\nCU Boulder recognizes that students’ legal information does not always align with how they identify. If\nyou wish to have a name other than your legal name appear on your instructors’ class rosters and in\nCanvas, or if you wish to choose pronouns to appear on your instructors’ class rosters and in Canvas,\nvisit the Registrar’s website for instructions on how to change your personal information in university\nsystems.\nMBAX 6418 Syllabus (Subject to Change) 4",
+  "images": [
+   "data/media/mbax-6418-syllabus-fall-2026-1/p004.jpg"
+  ]
+ },
+ {
+  "id": "mbax-6418-syllabus-fall-2026-1-p5",
+  "kind": "page",
+  "doc": "MBAX 6418 Syllabus Fall 2026 (1)",
+  "doc_id": "mbax-6418-syllabus-fall-2026-1",
+  "loc": "MBAX 6418 Syllabus Fall 2026 (1), page 5",
+  "week": null,
+  "slide": null,
+  "page": 5,
+  "section": null,
+  "title": "Page 5",
+  "text": "Honor Code\nAll students enrolled in a University of Colorado Boulder course are responsible for knowing and\nadhering to the Honor Code. Violations of the Honor Code may include but are not limited to: plagiarism\n(including use of paper writing services or technology [such as essay bots]), cheating, fabrication, lying,\nbribery, threat, unauthorized access to academic materials, clicker fraud, submitting the same or similar\nwork in more than one course without permission from all course instructors involved, and aiding\nacademic dishonesty. Understanding the course’s syllabus is a vital part of adhering to the Honor Code.\nAll incidents of academic misconduct will be reported to Student Conduct & Conflict Resolution:\nStudentConduct@colorado.edu. Students found responsible for violating the Honor Code will be\nassigned resolution outcomes from Student Conduct & Conflict Resolution and will be subject to\nacademic sanctions from the faculty member. Visit Honor Code for more information on the academic\nintegrity policy.\nSexual Misconduct, Discrimination, Harassment and/or Related Retaliation\nCU Boulder is committed to fostering a productive and welcoming learning, working, and living\nenvironment. University policy prohibits protected-class discrimination and harassment, sexual\nmisconduct (harassment, exploitation, and assault), intimate partner abuse (dating or domestic\nviolence), stalking, and related retaliation by or against members of our community on- or off-campus.\nDenial of an approved accommodation for disability, religious observance, or pregnancy or pregnancy\nrelated medical conditions may be discriminatory.\nThe Office of Institutional Equity and Compliance (OIEC) addresses these concerns, and individuals who\nhave been subjected to misconduct can contact OIEC at 303-492-2127 or email OIEC@colorado.edu.\nInformation about university policies, OIEC reporting options, and OIEC support resources including\nconfidential services can be found on the OIEC website.\nFaculty and graduate instructors are required to inform OIEC when someone discloses misconduct\nregardless of when or where it occurred. This is to ensure that those impacted receive outreach from\nOIEC about resolution options and support resources. To learn more about reporting and support\noptions for a variety of concerns, visit the Don’t Ignore It page.\nAccommodation for Religious Obligations\nInstructional faculty members must make every reasonable effort to accommodate all students who\nhave conflicts with scheduled exams, assignment deadlines or required attendance due to a religious\nobservance. Whenever possible, students must notify the instructional faculty member at least two\nweeks in advance of the expected exam, assignment deadline, or attendance conflict to request an\naccommodation for religious observance. If the start date of the course is less than two weeks before\nthe date of requested accommodation, students must notify the instructional faculty member on the\nstart date of the course. See the Student Academic Accommodations for Religious Observances Policy\nfor more information.\nIn this class, please reach out to me via email at david.dobolyi@colorado.edu with any questions or\nconcerns you may have in a timely manner.\nMBAX 6418 Syllabus (Subject to Change) 5",
+  "images": [
+   "data/media/mbax-6418-syllabus-fall-2026-1/p005.jpg"
+  ]
+ },
+ {
+  "id": "mbax-6418-syllabus-fall-2026-1-p6",
+  "kind": "page",
+  "doc": "MBAX 6418 Syllabus Fall 2026 (1)",
+  "doc_id": "mbax-6418-syllabus-fall-2026-1",
+  "loc": "MBAX 6418 Syllabus Fall 2026 (1), page 6",
+  "week": null,
+  "slide": null,
+  "page": 6,
+  "section": null,
+  "title": "Page 6",
+  "text": "Mental Health and Wellness\nThe University of Colorado Boulder is committed to supporting students’ mental health and overall\nwellbeing. If personal, academic, or emotional challenges are affecting your wellbeing or success,\nCounseling and Psychiatric Services (CAPS), is here to help. CAPS offers counseling, referrals, psychiatric\ncare, crisis support, and much more. Visit CAPS in the C4C, or call (303) 492-2277, 24/7.\nAcceptable Use of AI in This Class\nYou may use gen AI tools in this course however you see fit. In fact, some assignments will require the\nuse of such tools. However, keep in mind your own and others’ privacy implications and security risks\nwhen using gen AI tools. Document your usage by following the guidelines provided during the course.\nMBAX 6418 Syllabus (Subject to Change) 6",
+  "images": [
+   "data/media/mbax-6418-syllabus-fall-2026-1/p006.jpg"
+  ]
+ },
+ {
+  "id": "mbax-6418-syllabus-fall-2026-1-p7",
+  "kind": "page",
+  "doc": "MBAX 6418 Syllabus Fall 2026 (1)",
+  "doc_id": "mbax-6418-syllabus-fall-2026-1",
+  "loc": "MBAX 6418 Syllabus Fall 2026 (1), page 7",
+  "week": null,
+  "slide": null,
+  "page": 7,
+  "section": null,
+  "title": "Page 7",
+  "text": "TENTATIVE COURSE SCHEDULE (SUBJECT TO CHANGE)\nDate Thursday Monday Topic(s) Key Deliverables\nThursday Monday\nWeek 1 Aug 20 Aug 24\nCourse Introduction\nSoftware Installation\nWeek 2\nLLM Fundamentals: Models, APIs, and Interfaces\nAug 27 Aug 31\nWeek 3 Sep 3 Sep 14\nPrompt Engineering\nAI Coding Agents and Vibe Coding\nWeek 4 Serving an Application\nAssignment 1\nSep 10 Sep 21 Debugging and GitHub\nSep 17 Sep 28\nWeek 5 Sep 17 Sep 28\nContext Engineering\nRetrieval-Augmented Generation (RAG)\nWeek 6 Quiz 1 and Assignment 1 Review\nAssignment 2\nSep 24 Oct 5 Hands-On Lab\nOct 5 Oct 16\nWeek 7\nMultimodal Generative AI Oct 1 Oct 12 Project Proposal\nOct 11 Oct 22\nWeek 8 Quiz 2 and Assignment 2 Review\nAssignment 3\nOct 15 Oct 19 Hands-On Lab\nOct 22 Nov 2\nWeek 9 Oct 22 Oct 26\nFine-Tuning LLMs: SFT and PEFT (LoRA, QLoRA)\nTesting and Evaluation\nWeek 10 Quiz 3 and Assignment 3 Review\nAssignment 4\nOct 29 Nov 2 Hands-On Lab\nNov 5 Nov 9\nWeek 11\nSecurity, Privacy, and Governance\nNov 5 Nov 9\nWeek 12 Assignment 4 Review\nNov 12 Nov 16\nLatest Developments in Generative AI\nWeek 13\nProject Teamwork\nNov 19 Nov 30*\nFALL BREAK\nWeek 14 Dec 3 Dec 4†\nFinal Project Presentations\n(Online Students Submit via Canvas)\nFinal Exam Due: TBA\nNotes\n• *This Nov 30 class is on the Monday after fall break.\n• †The final Friday of the semester (Dec 4) follows a Monday schedule and will meet in WLAW 305.\n• There is no Monday class on Sep 7 (Labor Day) and no Thursday class on Oct 8 (Reading Day).\n• Online students will follow the schedule in the second column (Week 1 beginning Aug 24).\nMBAX 6418 Syllabus (Subject to Change) 7",
+  "images": [
+   "data/media/mbax-6418-syllabus-fall-2026-1/p007.jpg"
+  ]
  }
 ]
