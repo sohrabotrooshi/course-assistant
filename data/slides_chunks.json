@@ -1,0 +1,2156 @@
+[
+ {
+  "id": "w2-s1",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 1",
+  "week": 2,
+  "slide": 1,
+  "section": null,
+  "title": "MBAX 6418LLM Fundamentals: Models, APIs, and Interfaces",
+  "text": "MBAX 6418LLM Fundamentals: Models, APIs, and Interfaces\nDavid Dobolyi, PhD\nAssistant Professor\nStone Family Faculty Scholar\ndavid.dobolyi@colorado.edu",
+  "images": [
+   "data/media/week02/s01/image3.jpg"
+  ]
+ },
+ {
+  "id": "w2-s10",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 10",
+  "week": 2,
+  "slide": 10,
+  "section": null,
+  "title": "Inference Speed",
+  "text": "Inference Speed\nModel inference is often measured relative to two phases\nThe first phase is prefill, or prompt processing, which occurs when your input tokens are processed\nTypically measured in terms of time-to-first-token (TTFT) or prefill tokens-per-second (tok/s) at various prompt lengths\nThe second phase is decode, or token generation, which involves how quickly output tokens are generated\nTypically measured in tokens-per-second (tok/s)\nThese metrics are generally not linear and vary based on factors such as context length",
+  "images": [
+   "data/media/week02/s10/image21.png"
+  ]
+ },
+ {
+  "id": "w2-s11",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 11",
+  "week": 2,
+  "slide": 11,
+  "section": null,
+  "title": "KV Caching",
+  "text": "KV Caching\nA single LLM response can involve a sequence of many inference passes (e.g., once per every output token in the response)\nBy using a key-value (KV) cache, decoding can move faster by avoiding the need to reprocess prior tokens when generating new ones, reducing TTFT\nThe tradeoff of KV cache is increased memory demands",
+  "images": []
+ },
+ {
+  "id": "w2-s12",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 12",
+  "week": 2,
+  "slide": 12,
+  "section": null,
+  "title": "Prompt Caching",
+  "text": "Prompt Caching\nPrompt (or prefix) caching extends this performance boost by allowing KV cache to be reused across requests\nFor example, consider a long agentic session involving a ten messages with 100K tokens in use. The user is about to send their eleventh message of 1K tokens:\nWithout prefix caching, the model must prefill the full 101K tokens before beginning generation\nWith prefix caching, the model can reuse the KV cache for the previous 100K tokens and process only the new 1K tokens, leading to significantly lower TTFT",
+  "images": []
+ },
+ {
+  "id": "w2-s13",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 13",
+  "week": 2,
+  "slide": 13,
+  "section": null,
+  "title": "Speculative Decoding",
+  "text": "Speculative Decoding\nSpeculative decoding is a method of “guessing” several upcoming candidate tokens (e.g., 3 tokens ahead) that are verified by the model in a single pass to improve throughput\nSome methods under this umbrella such as multi-token prediction (MTP) are built into models (e.g., Qwen3.8)\nOthers such as DSpark, DFlash, and DFlash 2 involve a separate drafter model that works in conjunction with a larger model\nBenchmarking speculative decoding at a variety of output (i.e., 3 vs. 5 tokens) and context lengths is important, as longer lengths can hinder speedup (also see Adaptive MTP)",
+  "images": [
+   "data/media/week02/s13/image21.png"
+  ]
+ },
+ {
+  "id": "w2-s14",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 14",
+  "week": 2,
+  "slide": 14,
+  "section": null,
+  "title": "Concurrency",
+  "text": "Concurrency\nConcurrency involves processing multiple prompts/requests simultaneously to increase computational efficiency\nCan be combined with continuous batching, where multiple requests are strategically combined into a single execution step, to further improve performance",
+  "images": []
+ },
+ {
+  "id": "w2-s15",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 15",
+  "week": 2,
+  "slide": 15,
+  "section": null,
+  "title": "Quantization",
+  "text": "Quantization\nQuantization is a process for scaling and rounding model parameters to make models smaller and potentially faster\nMany models are trained at 16-bit precision (e.g., FP16, BF16), but this can be reduced to 8-bits (e.g., FP8) or 4-bits (e.g., INT4) without significant accuracy degradation\nFor example, consider Qwen3-Coder-30B-A3B-Instruct\n16-bits: ~61GB; 8-bits: ~31GB; 4-bits: ~17GB\nQuantization can also be applied to model context (e.g., TurboQuant), although this can lead to output quality degradation (particularly below FP8) or a performance hit",
+  "images": [
+   "data/media/week02/s15/image21.png"
+  ]
+ },
+ {
+  "id": "w2-s16",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 16",
+  "week": 2,
+  "slide": 16,
+  "section": null,
+  "title": "Quantization Formats",
+  "text": "Quantization Formats\nVarious quantization formats exist to help reduce hardware requirements and improve inference performance\nUse the ones appropriate to your hardware\nPrefer 4-bit (or larger) formats\nPopular options (mid 2026)\nGPU: AWQ, GPTQ, NVFP4, FP8\nApple M chips: MLX, oQ+\nCPU+GPU (includes Apple M chips): GGUF (e.g., Q4_K_M for 4-bits)",
+  "images": []
+ },
+ {
+  "id": "w2-s17",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 17",
+  "week": 2,
+  "slide": 17,
+  "section": null,
+  "title": "Model Types: Instruct, MoE",
+  "text": "Model Types: Instruct, MoE\nInstruct (Instruction Tuned)\nTunes a base model to take an instruction and provide one response\nNot necessarily tuned for multi-turn “chat”\nMoE (Mixture of Experts)\nModel consists of several mini-models or “experts”\nOnly some “active” experts will respond to a particular input\nPerformance can be significantly faster (in tokens/sec) than a “dense” model (i.e., non-MoE)",
+  "images": []
+ },
+ {
+  "id": "w2-s18",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 18",
+  "week": 2,
+  "slide": 18,
+  "section": null,
+  "title": "Reading a Model Name",
+  "text": "Reading a Model Name\nExample: Qwen3-Coder-30B-A3B-Instruct-FP8\nModel Family: Qwen3-Coder-30B-A3B-Instruct-FP8\nModel Variant: Qwen3-Coder-30B-A3B-Instruct-FP8\nModel Size/Type: Qwen3-Coder-30B-A3B-Instruct-FP8\n~30B Total Parameters\n~3B Active Parameters (i.e., Model is a MoE)\nModel Tuning: Qwen3-Coder-30B-A3B-Instruct-FP8\nQuantization: Qwen3-Coder-30B-A3B-Instruct-FP8\nNote that these conventions can (and do) vary…",
+  "images": [
+   "data/media/week02/s18/image21.png"
+  ]
+ },
+ {
+  "id": "w2-s19",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 19",
+  "week": 2,
+  "slide": 19,
+  "section": null,
+  "title": "Other Model Considerations",
+  "text": "Other Model Considerations\nMultimodal\nSome models work with modalities beyond text, e.g., vision, audio\nThese vision-language models (VLMs) may include “VL” or “V” in the model’s name\nThinking/Reasoning\nSome models simulate cognitive processing (e.g., chain-of-thought [CoT]) for internal planning, often allowing for better response quality\nTool Calling/Tool Use/Agentic\nSome models advertise “agentic” abilities, which include setting goals, planning, and acting while using “tools” to complete tasks",
+  "images": [
+   "data/media/week02/s19/image21.png"
+  ]
+ },
+ {
+  "id": "w2-s2",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 2",
+  "week": 2,
+  "slide": 2,
+  "section": null,
+  "title": "Large Language Models (LLMs) for Coding",
+  "text": "Large Language Models (LLMs) for Coding\nVibe Coding Overview\nVibe Coding Interfaces\n2\nTopics",
+  "images": []
+ },
+ {
+  "id": "w2-s20",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 20",
+  "week": 2,
+  "slide": 20,
+  "section": null,
+  "title": "Sycophancy",
+  "text": "Sycophancy\nBe careful with models that are overly “agreeable”\nModels are measured in terms of alignment to address this concern (e.g., Claude Sonnet 4.5)\nConsider benchmarks such as SycEval (Fanous et al. 2025)",
+  "images": [
+   "data/media/week02/s20/image22.jpg"
+  ]
+ },
+ {
+  "id": "w2-s21",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 21",
+  "week": 2,
+  "slide": 21,
+  "section": null,
+  "title": "TLDR: How to Choose a Coding Model",
+  "text": "TLDR: How to Choose a Coding Model\nContext is often paramount…more context = better\nPrefer larger models (and higher reasoning settings), but consider tradeoffs…\nPros: more intelligent; higher output quality\nCons: slower; require more hardware for local deployment; more expensive in the cloud\nAdditional considerations…\nMoE models are often faster than dense models\nQuantized models offer an efficiency/accuracy tradeoff\nNot all models accept multimodal inputs, optimize for tool usage, etc.",
+  "images": [
+   "data/media/week02/s21/image21.png"
+  ]
+ },
+ {
+  "id": "w2-s22",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 22",
+  "week": 2,
+  "slide": 22,
+  "section": null,
+  "title": "Popular Open Coding Models (Aug 2026)",
+  "text": "Popular Open Coding Models (Aug 2026)\n*Plus 51B n-gram embedding (and 4B MTP)\n†Can be extended via methods such as YaRN, RoPE",
+  "images": []
+ },
+ {
+  "id": "w2-s23",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 23",
+  "week": 2,
+  "slide": 23,
+  "section": null,
+  "title": "Popular Closed Coding Models (Aug 2026)",
+  "text": "Popular Closed Coding Models (Aug 2026)\n*May be capped in the API at 272K or 872K\n†Model features self-compaction with unspecified context window",
+  "images": []
+ },
+ {
+  "id": "w2-s24",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 24",
+  "week": 2,
+  "slide": 24,
+  "section": null,
+  "title": "Hardware Requirements for Running Local",
+  "text": "Hardware Requirements for Running Local\nVideo memory (e.g., VRAM) and/or (ideally unified) system memory (RAM) dictate max local model size\nYou can run small models at 16GB, but more = better\nPrice-to-performance hardware options (mid 2026)\nApple M chips (e.g., MacBook Pro M5 Max 128GB; Mac Studio M5 Ultra 512GB)\nAMD Ryzen AI Max+ PRO 495 192GB\nNVIDIA RTX Pro 6000 Blackwell 96GB\nNVIDIA RTX Spark, DGX Spark 128GB",
+  "images": [
+   "data/media/week02/s24/image23.png",
+   "data/media/week02/s24/image24.jpg",
+   "data/media/week02/s24/image25.png"
+  ]
+ },
+ {
+  "id": "w2-s25",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 25",
+  "week": 2,
+  "slide": 25,
+  "section": null,
+  "title": "Enterprise Deployment",
+  "text": "Enterprise Deployment\nFor larger scale deployment, consider servers with multiple graphical processing units (GPUs)\nFor inference, there are many viable options from AMD, NVIDIA, Intel, etc.\nMoreover, Application-Specific Integrated Circuits (ASICs) are becoming popular for their high performance-per-watt characteristics (e.g., OpenAI Jalapeño with Broadcom)\nIf training or fine-tuning matters, NVIDIA’s Compute Unified Device Architecture (CUDA) is currently unparalleled",
+  "images": []
+ },
+ {
+  "id": "w2-s26",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 26",
+  "week": 2,
+  "slide": 26,
+  "section": null,
+  "title": "Running Local Models",
+  "text": "Running Local Models\nBest choice for efficient inferencing depends on hardware\nRecommendations for most users:\nGraphical User Interfaces (GUIs): LM Studio, Ollama*\nRecommendations for technical users:\nGPU: vLLM, SGLang\nApple M chips: oMLX, MTPLX, mlx-serve\nCPU, CPU+GPU†: llama.cpp, KTransformers\n*See slide notes on how to configure default context length limits\n†CPU+GPU offloading can increase hardware flexibility, albeit with a performance tradeoff",
+  "images": [
+   "data/media/week02/s26/image21.png",
+   "data/media/week02/s26/image26.jpg",
+   "data/media/week02/s26/image27.png",
+   "data/media/week02/s26/image28.png",
+   "data/media/week02/s26/image29.png",
+   "data/media/week02/s26/image30.png",
+   "data/media/week02/s26/image31.png",
+   "data/media/week02/s26/image32.jpg",
+   "data/media/week02/s26/image34.jpg"
+  ]
+ },
+ {
+  "id": "w2-s27",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 27",
+  "week": 2,
+  "slide": 27,
+  "section": null,
+  "title": "Vibe Coding Overview",
+  "text": "Vibe Coding Overview",
+  "images": []
+ },
+ {
+  "id": "w2-s28",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 28",
+  "week": 2,
+  "slide": 28,
+  "section": null,
+  "title": "LLMs Changed Things…Forever?",
+  "text": "LLMs Changed Things…Forever?",
+  "images": [
+   "data/media/week02/s28/image21.png",
+   "data/media/week02/s28/image35.png"
+  ]
+ },
+ {
+  "id": "w2-s29",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 29",
+  "week": 2,
+  "slide": 29,
+  "section": null,
+  "title": "Vibe Coding",
+  "text": "Vibe Coding",
+  "images": [
+   "data/media/week02/s29/image36.png",
+   "data/media/week02/s29/image37.jpg"
+  ]
+ },
+ {
+  "id": "w2-s3",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 3",
+  "week": 2,
+  "slide": 3,
+  "section": null,
+  "title": "LLMs for Coding",
+  "text": "LLMs for Coding",
+  "images": []
+ },
+ {
+  "id": "w2-s30",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 30",
+  "week": 2,
+  "slide": 30,
+  "section": null,
+  "title": "Vibe Coding vs. Agentic Coding",
+  "text": "Vibe Coding vs. Agentic Coding\nVibe Coding\nHuman-in-the-loop\nPrompt-based\nConversational\nDesigned for intuitive ideation and creative exploration\nAgentic Coding\nAutonomous\nInvolves goal-driven agents that plan, execute, test, and iterate\nMinimal human input\nVibe Coding\nAgentic Coding\n(Sapkota, Roumeliotis, & Karkee 2025)",
+  "images": [
+   "data/media/week02/s30/image21.png",
+   "data/media/week02/s30/image38.jpeg"
+  ]
+ },
+ {
+  "id": "w2-s31",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 31",
+  "week": 2,
+  "slide": 31,
+  "section": null,
+  "title": "Iterating the Vibes",
+  "text": "Iterating the Vibes",
+  "images": [
+   "data/media/week02/s31/image21.png",
+   "data/media/week02/s31/image39.jpg"
+  ]
+ },
+ {
+  "id": "w2-s32",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 32",
+  "week": 2,
+  "slide": 32,
+  "section": null,
+  "title": "Recommended Use Cases",
+  "text": "Recommended Use Cases\nRapid prototyping\nDesigning user interfaces\nExplaining codebases\nTranslating code across languages\nPair programming",
+  "images": []
+ },
+ {
+  "id": "w2-s33",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 33",
+  "week": 2,
+  "slide": 33,
+  "section": null,
+  "title": "Vibe Coding on “Prod”",
+  "text": "Vibe Coding on “Prod”",
+  "images": [
+   "data/media/week02/s33/image40.png"
+  ]
+ },
+ {
+  "id": "w2-s34",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 34",
+  "week": 2,
+  "slide": 34,
+  "section": null,
+  "title": "Security? Never heard of it…",
+  "text": "Security? Never heard of it…\nHow it started…\nHow it’s going…",
+  "images": [
+   "data/media/week02/s34/image41.png",
+   "data/media/week02/s34/image42.jpg"
+  ]
+ },
+ {
+  "id": "w2-s35",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 35",
+  "week": 2,
+  "slide": 35,
+  "section": null,
+  "title": "Vibe Coding Interfaces",
+  "text": "Vibe Coding Interfaces",
+  "images": []
+ },
+ {
+  "id": "w2-s36",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 36",
+  "week": 2,
+  "slide": 36,
+  "section": null,
+  "title": "Getting Started",
+  "text": "Getting Started\nTo get started with vibe coding, you need to combine a model with an interface\nInterfaces come in many shapes and forms, and the choice ultimately comes down to personal preference\nCommon umbrella terms for these interfaces include:\nAI coding agents or assistants\nAgentic coding tools\nAgent harness\nThis section covers a variety of options",
+  "images": []
+ },
+ {
+  "id": "w2-s37",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 37",
+  "week": 2,
+  "slide": 37,
+  "section": null,
+  "title": "Command Line Interface (CLI) Tools",
+  "text": "Command Line Interface (CLI) Tools",
+  "images": []
+ },
+ {
+  "id": "w2-s38",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 38",
+  "week": 2,
+  "slide": 38,
+  "section": null,
+  "title": "Visual Studio Code (VSCode) Plugins",
+  "text": "Visual Studio Code (VSCode) Plugins",
+  "images": [
+   "data/media/week02/s38/image44.jpg"
+  ]
+ },
+ {
+  "id": "w2-s39",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 39",
+  "week": 2,
+  "slide": 39,
+  "section": null,
+  "title": "Integrated Development Environment (IDE)",
+  "text": "Integrated Development Environment (IDE)",
+  "images": [
+   "data/media/week02/s39/image45.jpg"
+  ]
+ },
+ {
+  "id": "w2-s4",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 4",
+  "week": 2,
+  "slide": 4,
+  "section": null,
+  "title": "Open- vs. Closed-Weight LLMs",
+  "text": "Open- vs. Closed-Weight LLMs\nOpen-Weights\nFree to download\nRun locally or via cloud application programming interfaces (APIs)*\nReproducible and private (if local)\nClosed-Weights\nHigher performing frontier models\nEasier to use/deploy via interfaces and/or APIs\nVariable costs/credit allowances\n*Open and closed APIs let you send requests to an LLM service and receive model responses programmatically.",
+  "images": [
+   "data/media/week02/s04/image10.png",
+   "data/media/week02/s04/image11.jpg",
+   "data/media/week02/s04/image13.jpeg",
+   "data/media/week02/s04/image14.png",
+   "data/media/week02/s04/image15.png",
+   "data/media/week02/s04/image16.png",
+   "data/media/week02/s04/image4.png",
+   "data/media/week02/s04/image5.png",
+   "data/media/week02/s04/image6.png",
+   "data/media/week02/s04/image7.png",
+   "data/media/week02/s04/image8.png",
+   "data/media/week02/s04/image9.png"
+  ]
+ },
+ {
+  "id": "w2-s40",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 40",
+  "week": 2,
+  "slide": 40,
+  "section": null,
+  "title": "Popular Open Interfaces (2026)",
+  "text": "Popular Open Interfaces (2026)\nHermes Agent – “The agent that grows with you”\nOpenCode – “The open source AI coding agent”\nCline – “an AI assistant that can use your CLI aNd Editor”\nKilo Code – “The open source coding agent for building with AI in VS Code, JetBrains, or the CLI.” (Acquired by Anaconda)\nRoo-Code – “Your AI-Powered Dev Team, Right in Your Editor” (Archived 05/26; Pivot to Roomote)\nContinue – “The future of coding isn’t writing more code. It’s delegating the boring parts, so you can build the interesting stuff” (Acquired by Cursor)",
+  "images": [
+   "data/media/week02/s40/image21.png",
+   "data/media/week02/s40/image46.png",
+   "data/media/week02/s40/image47.png",
+   "data/media/week02/s40/image48.png",
+   "data/media/week02/s40/image50.png",
+   "data/media/week02/s40/image51.png",
+   "data/media/week02/s40/image52.png"
+  ]
+ },
+ {
+  "id": "w2-s41",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 41",
+  "week": 2,
+  "slide": 41,
+  "section": null,
+  "title": "Popular Closed Interfaces (2026)",
+  "text": "Popular Closed Interfaces (2026)\nCodex – “Your new coding partner”\nClaude Code – “Your code’s new collaborator”\nCursor – “Built to make you extraordinarily productive, Cursor is the best way to code with AI”\nGitHub Copilot – “Your AI pair programmer”\nLovable – “Create apps and websites by chatting with AI”",
+  "images": [
+   "data/media/week02/s41/image21.png",
+   "data/media/week02/s41/image53.jpg",
+   "data/media/week02/s41/image55.png",
+   "data/media/week02/s41/image6.png",
+   "data/media/week02/s41/image7.png"
+  ]
+ },
+ {
+  "id": "w2-s42",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 42",
+  "week": 2,
+  "slide": 42,
+  "section": null,
+  "title": "Model Context Protocol (MCP)",
+  "text": "Model Context Protocol (MCP)\nAn open standard for interfaces to access add-ons like:\nTools\nData (including databases)\nAPIs\nSome popular MCPs for vibe coding:\nContext7 for up-to-date coding documentation\nPlaywright MCP or Chrome DevTools for browser automation\nComfy MCP for image/video/audio/3D generation\nSee the MCP Market Leaderboard for more",
+  "images": []
+ },
+ {
+  "id": "w2-s5",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 5",
+  "week": 2,
+  "slide": 5,
+  "section": null,
+  "title": "Training Data",
+  "text": "Training Data\nModels must be pre-trained on large corpuses of data\nThese data may be either open or closed\nFor fully open examples, see Olmo from Ai2 and NVIDIA Nemotron\nSome model providers have been accused of copyright infringement\nSee The New York Times Company v. Microsoft Corp., OpenAI, …\nModels will often include a “knowledge cutoff date” to clarify how up-to-date their training data is (or isn’t)",
+  "images": []
+ },
+ {
+  "id": "w2-s6",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 6",
+  "week": 2,
+  "slide": 6,
+  "section": null,
+  "title": "Model Size and “Intelligence”",
+  "text": "Model Size and “Intelligence”\nModels come in various parameter sizes\ne.g., 30B, 671B\nLarger models tend to perform better, but so do more recent models\nConsider size vs. knowledge vs. performance vs. cost tradeoffs",
+  "images": [
+   "data/media/week02/s06/image17.png"
+  ]
+ },
+ {
+  "id": "w2-s7",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 7",
+  "week": 2,
+  "slide": 7,
+  "section": null,
+  "title": "Benchmark Evaluation",
+  "text": "Benchmark Evaluation\nSWE-Bench Pro\nDeepSWE\nTerminal-Bench\nAgents’ Last Exam\nAutomationBench\nArtificial Analysis Intelligence Index\nSee the AAII website for an additional chart for “Speed.”",
+  "images": [
+   "data/media/week02/s07/image18.png",
+   "data/media/week02/s07/image19.png"
+  ]
+ },
+ {
+  "id": "w2-s8",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 8",
+  "week": 2,
+  "slide": 8,
+  "section": null,
+  "title": "Context, Context, Context…",
+  "text": "Context, Context, Context…\nBesides “intelligence,” one must consider context, or how much text (or other information) a model can access while generating subsequent tokens\nProvides “working memory,” i.e., how much the model can remember and work with before forgetting\nMeasured in tokens (i.e., text chunks) and referred to as context length or context window\nCovers both input and output tokens\nTLDR: more context = better (especially for coding)",
+  "images": []
+ },
+ {
+  "id": "w2-s9",
+  "kind": "slide",
+  "doc": "Week 2 - LLM Fundamentals v2.pptx",
+  "doc_id": "week02",
+  "loc": "Week 2, slide 9",
+  "week": 2,
+  "slide": 9,
+  "section": null,
+  "title": "Managing Long Context",
+  "text": "Managing Long Context\nAgentic AI involves long conversations and thus long context\nContext must be compressed, compacted, summarized, and/or pruned over time\nModel accuracy and performance degrades by context length (e.g., see NVIDIA RULER)",
+  "images": [
+   "data/media/week02/s09/image20.png",
+   "data/media/week02/s09/image21.png"
+  ]
+ },
+ {
+  "id": "w3-s1",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 1",
+  "week": 3,
+  "slide": 1,
+  "section": null,
+  "title": "MBAX 6418Prompt Engineering",
+  "text": "MBAX 6418Prompt Engineering\nDavid Dobolyi, PhD\nAssistant Professor\nStone Family Faculty Scholar\ndavid.dobolyi@colorado.edu",
+  "images": [
+   "data/media/week03/s01/image3.jpg"
+  ]
+ },
+ {
+  "id": "w3-s10",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 10",
+  "week": 3,
+  "slide": 10,
+  "section": null,
+  "title": "JSON Format",
+  "text": "JSON Format\n[\n{\"role\": \"system\", \"content\": \"You are a helpful assistant.\"},\n{\"role\": \"user\", \"content\": \"What is a prompt?\"}\n]\nExample\nJinja Template\n{% for message in messages %}\n<|im_start|>{{ message['role'] }}\n{{ message['content'] }}<|im_end|>\n{% endfor %}\n<|im_start|>assistant\nChatML Formatted Prompt\n<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nWhat is a prompt?<|im_end|>\n<|im_start|>assistant",
+  "images": []
+ },
+ {
+  "id": "w3-s11",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 11",
+  "week": 3,
+  "slide": 11,
+  "section": null,
+  "title": "Why This Matters…",
+  "text": "Why This Matters…\nPrompting goes beyond simply sending messages\nKnowing more about how Hermes Agent processes your prompts provides insight into what you can control, allowing for changes in response quality\nFor example, as a user, you can alter Hermes’ system prompt—including its tone, personality, communication style, etc.—by editing your SOUL.md file",
+  "images": [
+   "data/media/week03/s11/image4.png",
+   "data/media/week03/s11/image6.jpg"
+  ]
+ },
+ {
+  "id": "w3-s12",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 12",
+  "week": 3,
+  "slide": 12,
+  "section": null,
+  "title": "Conclusion",
+  "text": "Conclusion\nDespite all the complexity, most aspects of prompt processing can be left to Hermes Agent and/or other tools to handle for you invisibly\nThe single most important thing you can do when prompting – be that sending messages to Hermes or to a model directly via an API request – is to tailor the user prompt to your task, which we cover in the next section",
+  "images": []
+ },
+ {
+  "id": "w3-s13",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 13",
+  "week": 3,
+  "slide": 13,
+  "section": null,
+  "title": "Prompting for Different Tasks",
+  "text": "Prompting for Different Tasks",
+  "images": []
+ },
+ {
+  "id": "w3-s14",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 14",
+  "week": 3,
+  "slide": 14,
+  "section": null,
+  "title": "Same Prompt…Different Output",
+  "text": "Same Prompt…Different Output\nThe same prompt can produce a different output for a variety of reasons, including differences in:\nModels (e.g., ChatGPT 5.6 Sol vs. Luna)\nReasoning effort (e.g., None vs. High)\nSampling parameters (e.g., temperature, top-p, top-k, seed)\nSystem instructions\nConversation history and other context (e.g., tool results)\nChat templates and/or prompt formatting\nServing implementation, model quantization, hardware, etc.",
+  "images": []
+ },
+ {
+  "id": "w3-s15",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 15",
+  "week": 3,
+  "slide": 15,
+  "section": null,
+  "title": "Your Role",
+  "text": "Your Role\nDespite these limitations, how you define and structure your prompt is the most critical aspect of maximizing output quality for a task\nA poorly-written prompt can make a strong model underperform\nA well-written prompt can make a weak model overperform (within the limits of model knowledge/capabilities)\nThis section focuses on the anatomy of a good prompt",
+  "images": []
+ },
+ {
+  "id": "w3-s16",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 16",
+  "week": 3,
+  "slide": 16,
+  "section": null,
+  "title": "Markdown",
+  "text": "Markdown\nPrompts are often written in Markdown format (created by John Gruber in 2004) to help provide text-based structure that LLMs understand\nVarious cheat sheets and guides exist that can help with basic syntax\nMarkdown files use the .md extension\nSource: Markdown Guide, Matt Cone, CC BY-SA 4.0",
+  "images": [
+   "data/media/week03/s16/image7.jpg"
+  ]
+ },
+ {
+  "id": "w3-s17",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 17",
+  "week": 3,
+  "slide": 17,
+  "section": null,
+  "title": "Research on Prompt Engineering",
+  "text": "Research on Prompt Engineering\nThere are many rules-of-thumb regarding how prompts should be engineered, although outcomes often vary by task and setting\nFor a recent literature review regarding prompt engineering from an educational perspective, see:\nPrompt engineering in higher education: a systematic review to help inform curricula (Lee & Palmer 2025)",
+  "images": []
+ },
+ {
+  "id": "w3-s18",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 18",
+  "week": 3,
+  "slide": 18,
+  "section": null,
+  "title": "Source: Lee & Palmer (2025, pg. 14)",
+  "text": "Source: Lee & Palmer (2025, pg. 14)",
+  "images": [
+   "data/media/week03/s18/image4.png",
+   "data/media/week03/s18/image8.png"
+  ]
+ },
+ {
+  "id": "w3-s19",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 19",
+  "week": 3,
+  "slide": 19,
+  "section": null,
+  "title": "Example",
+  "text": "Example\nYou are an academic expert. Please follow all the instructions very carefully.\n### Consider the following definition of banter:\n- Banter is any teasing that runs along a continuum of bonding to biting.\n- The banter must be in the dialogue (or a vocalization), not the prose.\n- Humorous non-utterances do not count as banter.\n### Task Overview\nYou will be given a dialogue pair and asked to determine if banter is present or not. The banter may be present in either or both parts of the dialogue pair, if present at all.\n### You will make a determination if banter is present or not using this response scale:\n0. Banter is not present\n1. Banter is present\n### Dialogue Pair\n# Part A:\n<inserted by script>\n# Part B:\n<inserted by script>\n### Your Task\nAnswer the following question immediately by stating one response from the scale above verbatim.\nYOUR RESPONSE MUST MATCH THE SCALE EXACTLY WITHOUT ALTERATIONS, INCLUDING THE SCALE RESPONSE NUMBER.\nDoes the dialogue pair contain banter?\nSource: Dobolyi, K., Tamburrino, S., Borden, Z., & Faruque (2026, pgs. 58-59)\n1. Define role: Explain to the AI agent who it is\n2. Provide background: Inform AI agent of context\n3. Define objectives: Explain to the AI agent your goals\n4. Set parameters: Allow or limit tolerances\n5. Be precise: Ensure your instruction or question is concise and explicit\n6. Specify format: Describe or even provide a template",
+  "images": []
+ },
+ {
+  "id": "w3-s2",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 2",
+  "week": 3,
+  "slide": 2,
+  "section": null,
+  "title": "Prompts and Templates",
+  "text": "Prompts and Templates\nPrompting for Different Tasks\nPrompting with Hermes Agent\nClass Exercise\n2\nTopics",
+  "images": []
+ },
+ {
+  "id": "w3-s20",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 20",
+  "week": 3,
+  "slide": 20,
+  "section": null,
+  "title": "Prompting for Basic Tasks",
+  "text": "Prompting for Basic Tasks\nTasks such as the classification example on the previous slide require clarity and precision\nPrompting the model repeatedly on a single piece of data can produce higher quality results than asking several questions at once\nTry using different “shotting” techniques to improve results:\nZero-shot provides no examples when asking for a response\nOne-shot and few-shot offer one or many examples, respectively\nAlso consider positive vs. negative examples and contrastive prompting (Gao & Das 2024)",
+  "images": [
+   "data/media/week03/s20/image4.png"
+  ]
+ },
+ {
+  "id": "w3-s21",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 21",
+  "week": 3,
+  "slide": 21,
+  "section": null,
+  "title": "Few-Shot Example",
+  "text": "Few-Shot Example\n…\n### Examples\nHere are three illustrative examples of banter:\n## Example 1\n# Part A:\n\"Must you rattle those dishes so loudly?\" he complained, as Merlin set out his breakfast tray on the dining table. \"It’s like being served by a stampede of wild horses.\"\n# Part B:\n\"So sorry, sire,\" Merlin said, making sure to let the milk jug clatter as he set it down. \"How inconsiderate of me. It’s just so hard to keep hold of all these things with my clumsy hooves.”\n## Example 2\n# Part A:\n\"It’s only natural, Zombie Boy.\" She turns to take in the rest of the room. \"So what’s this, like the world’s saddest breakfast club?\"\n# Part B:\nJason and Tim both wince at that, but Damian just sits up straight and takes a sip of his cocoa with a smirk of amusement. \"It is now that you’re here, Brown,\" he quips.\n## Example 3\n# Part A:\nDick rolls his eyes, but gets one out of the cupboard anyway. \"I wouldn’t have hurled.\" He hands Jason the metal bowl. \"Also I hate green pepper.\"\n# Part B:\n\"Sorry, what was that?\" Jason mocks, still chopping away. \"Extra pepper you say?\" He dumps a generous handful into the bowl with the onion, receiving a very unamused look from his brother in return.\n…\nSource: Dobolyi, K., Tamburrino, S., Borden, Z., & Faruque (2026, pgs. 58-59)",
+  "images": []
+ },
+ {
+  "id": "w3-s22",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 22",
+  "week": 3,
+  "slide": 22,
+  "section": null,
+  "title": "Structured Output",
+  "text": "Structured Output\nPrompting a model to answer a specific way or to use a specific scale does not guarantee adherence\nIf adherence is key (e.g., classification tasks, downstream use), consider structured outputs, which dictate exactly how a model must respond\nPydantic\nclass ReviewAnalysis(BaseModel):\nsentiment: Literal[\"neg\", \"pos\"]\nconfidence: float\ntopics: list[str]\nJSON\n{\n\"sentiment\": \"neg\",\n\"confidence\": 0.92,\n\"topics\": [\"returns\", \"shipping\"]\n}",
+  "images": [
+   "data/media/week03/s22/image4.png"
+  ]
+ },
+ {
+  "id": "w3-s23",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 23",
+  "week": 3,
+  "slide": 23,
+  "section": null,
+  "title": "Other Prompting Techniques",
+  "text": "Other Prompting Techniques\nSource: Walter (2024, pg. 15)",
+  "images": [
+   "data/media/week03/s23/image4.png",
+   "data/media/week03/s23/image9.png"
+  ]
+ },
+ {
+  "id": "w3-s24",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 24",
+  "week": 3,
+  "slide": 24,
+  "section": null,
+  "title": "Prompting Complex Tasks (e.g., Coding)",
+  "text": "Prompting Complex Tasks (e.g., Coding)\nSuccessfully accomplishing a complex task like coding requires step-by-step instruction (e.g., numbered lists)\nSteps should be sequential\nWhile multiple aspects can be worked in a single prompt, they may interfere with each other if they are not independent\nA single, giant prompt can lead to missed or skipped steps\nBe precise and do your research beforehand, e.g.,\nWhat language do you want to code in?\nWhat packages do you want to use?",
+  "images": [
+   "data/media/week03/s24/image4.png"
+  ]
+ },
+ {
+  "id": "w3-s25",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 25",
+  "week": 3,
+  "slide": 25,
+  "section": null,
+  "title": "Source: Lee & Palmer (2025, pg. 14)",
+  "text": "Source: Lee & Palmer (2025, pg. 14)",
+  "images": [
+   "data/media/week03/s25/image10.png",
+   "data/media/week03/s25/image4.png"
+  ]
+ },
+ {
+  "id": "w3-s26",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 26",
+  "week": 3,
+  "slide": 26,
+  "section": null,
+  "title": "Planning and Goals",
+  "text": "Planning and Goals\nWorking with a model to develop a plan (e.g., plan first…no code yet; “talk only”) or to establish goals can help by:\nBreaking down a complex task into smaller steps (e.g., subgoals)\nProviding a contract for you to analyze what the model did – and didn’t – do after the fact\nAllowing for easier tracking of what’s already been done, which also helps understand what comes next\nPlans/goals should include things that need to be done and things that shouldn’t be done (i.e., constraints)\nHermes (with a good model) may even ask you to clarify",
+  "images": [
+   "data/media/week03/s26/image4.png"
+  ]
+ },
+ {
+  "id": "w3-s27",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 27",
+  "week": 3,
+  "slide": 27,
+  "section": null,
+  "title": "Auditing, Verification, and GitHub",
+  "text": "Auditing, Verification, and GitHub\nNever trust anything your agent does\nYou must review, audit, check, verify\nAsk your model to summarize everything it did in the last turn(s) and commit this record to GitHub\nMaintaining code on GitHub helps provide context for future work as well as recovery from mistakes/problems (e.g., by reverting commits)\nSources: Acuna, K. (2015, March 31); Nolan, C. (2014)\n“What’s your trust setting, TARS?\nLower than yours apparently...”",
+  "images": [
+   "data/media/week03/s27/image11.jpg",
+   "data/media/week03/s27/image4.png"
+  ]
+ },
+ {
+  "id": "w3-s28",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 28",
+  "week": 3,
+  "slide": 28,
+  "section": null,
+  "title": "Prompting with Hermes Agent",
+  "text": "Prompting with Hermes Agent",
+  "images": []
+ },
+ {
+  "id": "w3-s29",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 29",
+  "week": 3,
+  "slide": 29,
+  "section": null,
+  "title": "Hermes Agent Commands",
+  "text": "Hermes Agent Commands\nBeyond just typing prompts, Hermes provides several commands to help manage more complex tasks, including:\n/prompt – Compose your next prompt in $EDITOR (markdown), then send it (aka /compose)\n/queue – Queue a prompt for the next turn (doesn’t interrupt)\n/steer – Inject a message after the next tool call without interrupting\n/goal – Set a standing goal Hermes works on until achieved\n/subgoal – Add or manage extra criteria on the active goal\n/plan – Write a markdown implementation plan…without executing anything\n/kanban – Multi-profile collaboration board (tasks, links, comments)\nThe following slides present key summaries from pg. 14 of Lee & Palmer (2025)",
+  "images": [
+   "data/media/week03/s29/image4.png"
+  ]
+ },
+ {
+  "id": "w3-s3",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 3",
+  "week": 3,
+  "slide": 3,
+  "section": null,
+  "title": "Prompts and Templates",
+  "text": "Prompts and Templates",
+  "images": []
+ },
+ {
+  "id": "w3-s30",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 30",
+  "week": 3,
+  "slide": 30,
+  "section": null,
+  "title": "Hermes and Projects",
+  "text": "Hermes and Projects\nTo help organize, use the projects feature in the desktop application (see slide notes) or ask Hermes to create a project on the command line interface (CLI)\nMake use of Hermes’ context files including:\nHERMES.md – Project instructions (highest priority)\nAGENTS.md – Project instructions, conventions, architecture\nCLAUDE.md – Claude Code context files (also detected)\nSOUL.md – Global personality and tone customization",
+  "images": [
+   "data/media/week03/s30/image4.png"
+  ]
+ },
+ {
+  "id": "w3-s31",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 31",
+  "week": 3,
+  "slide": 31,
+  "section": null,
+  "title": "Advice from Hermes’ Docs",
+  "text": "Advice from Hermes’ Docs\nSource: Hermes Agent Docs",
+  "images": [
+   "data/media/week03/s31/image12.png",
+   "data/media/week03/s31/image4.png"
+  ]
+ },
+ {
+  "id": "w3-s32",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 32",
+  "week": 3,
+  "slide": 32,
+  "section": null,
+  "title": "Hermes Learns from and Remembers You",
+  "text": "Hermes Learns from and Remembers You\nAs you use Hermes, it will start making notes about you via persistent memory files, including:\nMEMORY.md – Agent’s personal notes, including environment facts, conventions, things learned\nUSER.md – User profile, including your preferences, communication style, expectations\nHermes comes with out-of-the-box skills to help solve tasks, but it can also learn new ones as you work with it (automatically or manually):\n/skills – Search, install, inspect, or manage skills\n/learn – Learn a reusable skill from anything you describe",
+  "images": [
+   "data/media/week03/s32/image4.png"
+  ]
+ },
+ {
+  "id": "w3-s33",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 33",
+  "week": 3,
+  "slide": 33,
+  "section": null,
+  "title": "Class Exercise",
+  "text": "Class Exercise",
+  "images": []
+ },
+ {
+  "id": "w3-s4",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 4",
+  "week": 3,
+  "slide": 4,
+  "section": null,
+  "title": "Prompts",
+  "text": "Prompts\nPrompts consist of text and/or multimodal content (e.g., images, audio, video) provided to a model to guide its behavior and outputs\nFor example, a user prompt to Hermes Agent might be as simple as: “What is a prompt?”",
+  "images": []
+ },
+ {
+  "id": "w3-s5",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 5",
+  "week": 3,
+  "slide": 5,
+  "section": null,
+  "title": "How Prompts are Processed",
+  "text": "How Prompts are Processed\nAgent harnesses such as Hermes Agent process your prompt through a stack of context\nThis stack includes not only the user prompt (e.g., “What is a prompt?”), but also additional layers including:\nSystem prompt\nConversation history\nRetrieved context/memory\nTool schemas (including tool name, parameters, etc.)\nTool results",
+  "images": []
+ },
+ {
+  "id": "w3-s6",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 6",
+  "week": 3,
+  "slide": 6,
+  "section": null,
+  "title": "From Prompt to Model Input",
+  "text": "From Prompt to Model Input\nThe full prompt is then sent to a serving framework in a format such as JavaScript Object Notation (JSON) to generate a response:\n{\n\"messages\": [\n{\"role\": \"system\", \"content\": \"...Hermes Agent instructions...\"},\n{\"role\": \"user\", \"content\": \"What is a prompt?\"}\n],\n\"tools\": [\n{\"name\": \"web_search\", \"description\": \"Search the web\", ...}\n],\n...\n}\nThe full prompt is then sent to a serving framework in a format such as JavaScript Object Notation (JSON) to generate a response:\n{\n\"messages\": [\n{\"role\": \"system\", \"content\": \"...Hermes Agent instructions...\"},\n{\"role\": \"user\", \"content\": \"What is a prompt?\"}\n],\n\"tools\": [\n{\"name\": \"web_search\", \"description\": \"Search the web\", ...}\n],\n...\n}",
+  "images": [
+   "data/media/week03/s06/image4.png"
+  ]
+ },
+ {
+  "id": "w3-s7",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 7",
+  "week": 3,
+  "slide": 7,
+  "section": null,
+  "title": "Model Prompt Formatting/Templates",
+  "text": "Model Prompt Formatting/Templates\nPrompt formatting/templates define how this content is structured and presented to the model, including:\nRoles (e.g., system, user, assistant)\nSeparators (e.g., \\n\\n, ###)\nSpecial tokens (e.g., <|user|>, <|im_start|>, <|eot_id|>)",
+  "images": []
+ },
+ {
+  "id": "w3-s8",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 8",
+  "week": 3,
+  "slide": 8,
+  "section": null,
+  "title": "Chat Markup Language (ChatML)",
+  "text": "Chat Markup Language (ChatML)\n<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nWhat is a prompt?<|im_end|>\n<|im_start|>assistant\nLlama 3 Template\n<|begin_of_text|><|start_header_id|>system<|end_header_id|>\nYou are a helpful assistant.<|eot_id|><|start_header_id|>user<|end_header_id|>\nWhat is a prompt?<|eot_id|><|start_header_id|>assistant<|end_header_id|>\nTemplate Examples",
+  "images": []
+ },
+ {
+  "id": "w3-s9",
+  "kind": "slide",
+  "doc": "Week 3 - Prompt Engineering v1.pptx",
+  "doc_id": "week03",
+  "loc": "Week 3, slide 9",
+  "week": 3,
+  "slide": 9,
+  "section": null,
+  "title": "Conversion",
+  "text": "Conversion\nDifferent models have different templates\nServing frameworks (e.g., vLLM) apply a particular model’s chat template to your messages for you\nModels often include a Jinja file to facilitate this conversion, including multimodal content, tool-calling conventions, etc.",
+  "images": [
+   "data/media/week03/s09/image4.png",
+   "data/media/week03/s09/image5.jpg"
+  ]
+ },
+ {
+  "id": "w4-s1",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 1",
+  "week": 4,
+  "slide": 1,
+  "section": null,
+  "title": "David Dobolyi, PhD",
+  "text": "David Dobolyi, PhD\nAssistant Professor\nStone Family Faculty Scholar\ndavid.dobolyi@colorado.edu\nMBAX 6418Serving and Debugging",
+  "images": [
+   "data/media/week04/s01/image3.jpg"
+  ]
+ },
+ {
+  "id": "w4-s10",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 10",
+  "week": 4,
+  "slide": 10,
+  "section": null,
+  "title": "Application Programing Interface (API)",
+  "text": "Application Programing Interface (API)\nApplication programming interfaces (APIs) provide a structured way for software applications to talk to each other\nYour app sends a request and receives a response\nWe’ll use APIs to allow our apps to do things like:\nTalk to large language models (LLMs) to generate text, power chatbots, classify data, etc.\nInterpret or generate images\nTranscribe or generate audio/video\nSearch the web via search APIs or tools (including MCP)",
+  "images": [
+   "data/media/week04/s10/image4.png"
+  ]
+ },
+ {
+  "id": "w4-s11",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 11",
+  "week": 4,
+  "slide": 11,
+  "section": null,
+  "title": "OpenAI API",
+  "text": "OpenAI API\nFor example, OpenAI provides developers an API Platform with all kinds of models\nYou pay per request (e.g., input/output price per million tokens, or MTok)\nThe OpenAI Python API library is one way to connect",
+  "images": [
+   "data/media/week04/s11/image11.jpg",
+   "data/media/week04/s11/image12.png",
+   "data/media/week04/s11/image4.png"
+  ]
+ },
+ {
+  "id": "w4-s12",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 12",
+  "week": 4,
+  "slide": 12,
+  "section": null,
+  "title": "OpenAI-Compatible Endpoints",
+  "text": "OpenAI-Compatible Endpoints\nThe OpenAI Python API library is designed to work with OpenAI models, but you can also use it to talk to OpenAI-compatible endpoints\nThese endpoints communicate the same way as the official OpenAI API Platform, but can be hosted elsewhere\nFor example, we are already using a free, OpenAI-compatible endpoint for our class LLM (served via vLLM):\nBase URL: http://dobolyi.com:9000/v1\nAPI Key: 6418\nModel Name: DeepSeek-V4-Flash-0731",
+  "images": [
+   "data/media/week04/s12/image4.png"
+  ]
+ },
+ {
+  "id": "w4-s13",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 13",
+  "week": 4,
+  "slide": 13,
+  "section": null,
+  "title": "More Endpoints",
+  "text": "More Endpoints\nThroughout this class, I will provide more endpoints to help with various tasks\nFor example, here is a new endpoint we can use for augmenting vision and for classification tasks:\nBase URL: http://dobolyi.com:9001/v1\nAPI Key: 6418\nModel Name: cyankiwi/Qwen3.6-35B-A3B-AWQ-4bit\nWe’ll also talk about models for embeddings, multimodal generation, etc. in future classes",
+  "images": [
+   "data/media/week04/s13/image4.png"
+  ]
+ },
+ {
+  "id": "w4-s14",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 14",
+  "week": 4,
+  "slide": 14,
+  "section": null,
+  "title": "Adding a Vision Model to Hermes Agent",
+  "text": "Adding a Vision Model to Hermes Agent\nHermes Desktop: Go to Settings ➔ Providers ➔ Custom Endpoints, fill out the screen as shown on the right (be sure to uncheck “Use for new chats”), click ⚡ Test followed by 💾 Save\nHermes CLI: In the terminal, run hermes model, find “Custom endpoint (enter URL manually)” and follow the instructions\nOr ask Hermes to set up a new vision model provider for you",
+  "images": [
+   "data/media/week04/s14/image13.jpg",
+   "data/media/week04/s14/image4.png"
+  ]
+ },
+ {
+  "id": "w4-s15",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 15",
+  "week": 4,
+  "slide": 15,
+  "section": null,
+  "title": "Changing the Auxiliary Vision Model",
+  "text": "Changing the Auxiliary Vision Model\nHermes Desktop: Go to Settings ➔ Model, find “Vision” under “Auxiliary models”, click Change and fill out the screen as shown on the right (be sure to click Apply)\nHermes CLI: In the terminal, run hermes model, find “Configure auxiliary models…” and follow the instructions",
+  "images": [
+   "data/media/week04/s15/image14.jpg",
+   "data/media/week04/s15/image4.png"
+  ]
+ },
+ {
+  "id": "w4-s16",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 16",
+  "week": 4,
+  "slide": 16,
+  "section": null,
+  "title": "Adding Providers / Subscriptions",
+  "text": "Adding Providers / Subscriptions\nYou can also add subscriptions (e.g., Codex) to Hermes Agent\nHermes Desktop: Go to Settings ➔ Providers ➔ Accounts, click “Other providers”, choose an option, and follow the instructions\nHermes CLI: In the terminal, run hermes model, select an option (e.g., “OpenAI ▸ …) and follow the instructions\nOr ask Hermes for help",
+  "images": [
+   "data/media/week04/s16/image15.jpg",
+   "data/media/week04/s16/image4.png"
+  ]
+ },
+ {
+  "id": "w4-s17",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 17",
+  "week": 4,
+  "slide": 17,
+  "section": null,
+  "title": "Debugging",
+  "text": "Debugging",
+  "images": []
+ },
+ {
+  "id": "w4-s18",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 18",
+  "week": 4,
+  "slide": 18,
+  "section": null,
+  "title": "Bugs and Bug Reports",
+  "text": "Bugs and Bug Reports\nWhile you build and test your app, your code will invariably contain bugs, which are errors in the software that cause it to fail or not work as intended\nTo fix bugs, you need to create a thorough bug report, which helps document, reproduce, and ultimately fix each issue\nWarning! Just because an agent says a bug was fixed doesn’t mean it’s true! You must check!",
+  "images": [
+   "data/media/week04/s18/image16.png",
+   "data/media/week04/s18/image4.png"
+  ]
+ },
+ {
+  "id": "w4-s19",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 19",
+  "week": 4,
+  "slide": 19,
+  "section": null,
+  "title": "Writing Useful Bug Reports",
+  "text": "Writing Useful Bug Reports\nKey Questions\nWhat is the problem?\nWhere in the app does it happen?\nWhat did you expect to happen?\nWhat actually happened?\nHow do you reproduce it?\nSupporting Evidence\nWas there an error message?\nCan you provide a screenshot?\nDoes it happen every time or only sometimes?",
+  "images": [
+   "data/media/week04/s19/image17.jpg",
+   "data/media/week04/s19/image4.png"
+  ]
+ },
+ {
+  "id": "w4-s2",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 2",
+  "week": 4,
+  "slide": 2,
+  "section": null,
+  "title": "Building, Serving, and Sharing",
+  "text": "Building, Serving, and Sharing\nIncorporating APIs\nDebugging\nGitHub\n2\nTopics",
+  "images": []
+ },
+ {
+  "id": "w4-s20",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 20",
+  "week": 4,
+  "slide": 20,
+  "section": null,
+  "title": "Working with Hermes to Fix Bugs",
+  "text": "Working with Hermes to Fix Bugs\nProvide each bug report to Hermes and ask for a targeted, testable fix\nVerify every fix by trying your reproduction steps: no matter what Hermes claims, test, retest, and test again\nCheck related features: fixing one bug can introduce others\nTo make repeated testing easier, consider asking Hermes for automated tests (as opposed to your own manual tests), including:\nUnit tests – tests for small, specific parts of your software\nSmoke tests – quick/inexpensive tests that ensure your app starts/runs and the basic functions work\nEnd-to-end tests – perform and verify a complete workflow",
+  "images": [
+   "data/media/week04/s20/image4.png"
+  ]
+ },
+ {
+  "id": "w4-s21",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 21",
+  "week": 4,
+  "slide": 21,
+  "section": null,
+  "title": "GitHub",
+  "text": "GitHub",
+  "images": []
+ },
+ {
+  "id": "w4-s22",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 22",
+  "week": 4,
+  "slide": 22,
+  "section": null,
+  "title": "What is GitHub?",
+  "text": "What is GitHub?\nGitHub’s first Start Your Journey tutorial asks, “What is GitHub?”:\n“GitHub is a platform that supports your entire software development process, from planning work to deploying and operating software.”\nGitHub is built on the open-source version control system called Git, which records changes to project files\nWe’ll use Git and GitHub primarily to:\nManage our code\nRecover earlier versions\nCollaborate with others\nAll of this will happen inside a repository (or repo), which stores a project’s files, its history, privacy/collaboration settings, etc.",
+  "images": [
+   "data/media/week04/s22/image4.png"
+  ]
+ },
+ {
+  "id": "w4-s23",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 23",
+  "week": 4,
+  "slide": 23,
+  "section": null,
+  "title": "Working with GitHub",
+  "text": "Working with GitHub\nBefore creating a repo on GitHub, you need an account:\nhttps://github.com/signup\nWith an account, you can create your first repo via the website or locally using the GitHub Desktop application (which you can later push to GitHub)\nOr just ask Hermes:\n“Help me connect to my GitHub account”\n“Create and connect a new GitHub repo for this project before we begin”",
+  "images": []
+ },
+ {
+  "id": "w4-s24",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 24",
+  "week": 4,
+  "slide": 24,
+  "section": null,
+  "title": "Hermes and GitHub",
+  "text": "Hermes and GitHub\nIf you ask it to (e.g., “Let’s use GitHub for version control”), Hermes will take care of Git/GitHub on your behalf, including common commands:\ngit init – create a new local repository\ngit clone – copy an existing repository to your computer\ngit status – show local changes and what’s ready to commit\ngit add – select changes to include in the next commit\ngit commit – record selected changes as a checkpoint\ngit push – send commits to a remote repository, e.g., GitHub\ngit revert – create a new commit that reverses a previous commit\ngit pull – retrieve/incorporate remote changes to your local copy\ngit diff – compare changes between file versions",
+  "images": [
+   "data/media/week04/s24/image4.png"
+  ]
+ },
+ {
+  "id": "w4-s25",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 25",
+  "week": 4,
+  "slide": 25,
+  "section": null,
+  "title": "Commits",
+  "text": "Commits\nAsk Hermes to create a commit with each meaningful change and consider grouping related changes into checkpoints, especially when debugging or experimenting with user interface (UI) styling:\n“Review these changes and commit them with a clear summary”\nHermes will write commit messages for you which include:\nSummary (Subject) – a summary of changes (50 characters or fewer recommended)\nDescription (Body) – optional details of what changed and why\nAsk Hermes to push regularly, or specify when to wait:\n“Push all of the latest commits” or…\n“Hold off on pushing until I say so”",
+  "images": [
+   "data/media/week04/s25/image4.png"
+  ]
+ },
+ {
+  "id": "w4-s26",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 26",
+  "week": 4,
+  "slide": 26,
+  "section": null,
+  "title": "Reverting Commits",
+  "text": "Reverting Commits\nCommits are useful for tracking and recovering from mistakes\nIf a new bug appears, work with Hermes to review your commit history on GitHub to help identify which change introduced it\nAsk Hermes to revert the relevant commit, undoing the changes:\n“This worked before the last commit: find and undo what broke it”\nTest again to confirm the problem is actually resolved",
+  "images": [
+   "data/media/week04/s26/image18.jpg",
+   "data/media/week04/s26/image4.png"
+  ]
+ },
+ {
+  "id": "w4-s27",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 27",
+  "week": 4,
+  "slide": 27,
+  "section": null,
+  "title": "README.md",
+  "text": "README.md\nWhen you create a repo or make your first commit, include a README.md, which describes the project, how to set it up, and how to use it\nUpdate this file as your project changes\nHermes will typically create this file for you, but you can also ask it to directly:\n“Create a README.md explaining this project and how to use it”",
+  "images": [
+   "data/media/week04/s27/image19.jpg"
+  ]
+ },
+ {
+  "id": "w4-s28",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 28",
+  "week": 4,
+  "slide": 28,
+  "section": null,
+  "title": "Branching and Merging",
+  "text": "Branching and Merging\nUse branch to create separate lines of work in a repo to safely:\nDevelop a new feature\nFix a bug\nExperiment\nThe default branch is typically called main, and it holds the primary version you build from\nYou can create and name other branches (e.g., dev)\nUse merge to combine changes across branches (e.g., dev into main)\nAsk Hermes:\n“Create a branch for this feature and test it before merging into main”",
+  "images": [
+   "data/media/week04/s28/image4.png"
+  ]
+ },
+ {
+  "id": "w4-s29",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 29",
+  "week": 4,
+  "slide": 29,
+  "section": null,
+  "title": "Collaboration: Issues and PRs",
+  "text": "Collaboration: Issues and PRs\nCreate issues to provide a record of tasks, discussions, and progress, giving you, collaborators, and Hermes useful context\nCreate pull requests (PRs) to propose changes you want to merge (e.g., fixes to issues), allowing for review, discussion, and tracking\nCollaborators can suggest revisions before you merge\nAsk Hermes:\n“Create an issue from this bug report”\n“Open a pull request for this feature and summarize the changes and testing”",
+  "images": []
+ },
+ {
+  "id": "w4-s3",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 3",
+  "week": 4,
+  "slide": 3,
+  "section": null,
+  "title": "Building, Serving, and Sharing",
+  "text": "Building, Serving, and Sharing",
+  "images": []
+ },
+ {
+  "id": "w4-s4",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 4",
+  "week": 4,
+  "slide": 4,
+  "section": null,
+  "title": "Building",
+  "text": "Building\nLet’s create a small web app, add features (including one with AI), and share it\nWe’ll also commit it to GitHub for version control\nStarter prompt:\n“build a python app using gradio for a pizza ordering website where customers can customize their pizzas with things like toppings, size, crust, etc.”\nMade with Hermes Agent and GPT-6 Astra",
+  "images": [
+   "data/media/week04/s04/image4.png",
+   "data/media/week04/s04/image5.jpg"
+  ]
+ },
+ {
+  "id": "w4-s5",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 5",
+  "week": 4,
+  "slide": 5,
+  "section": null,
+  "title": "Choosing an Interface",
+  "text": "Choosing an Interface\nWe have many interface options, but for Python, Gradio and Streamlit are good, high abstraction options (i.e., they handle many of the technical details for us)",
+  "images": [
+   "data/media/week04/s05/image4.png",
+   "data/media/week04/s05/image6.jpg"
+  ]
+ },
+ {
+  "id": "w4-s6",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 6",
+  "week": 4,
+  "slide": 6,
+  "section": null,
+  "title": "Components and Widgets",
+  "text": "Components and Widgets\nGradio and Streamlit provide prebuilt user interface (UI) elements (e.g., buttons, sliders, and text inputs) to help you quickly build interactive Python apps:\nGradio Components\nStreamlit Elements/Widgets",
+  "images": [
+   "data/media/week04/s06/image4.png",
+   "data/media/week04/s06/image7.jpg"
+  ]
+ },
+ {
+  "id": "w4-s7",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 7",
+  "week": 4,
+  "slide": 7,
+  "section": null,
+  "title": "Serving",
+  "text": "Serving\nGradio provides easy serving without web hosting\nYou can open your app locally using the default port, 7860:\nhttp://127.0.0.1:7860\nhttp://localhost:7860\nAdding share=True to launch() provides a temporary link, e.g., 60de1eaeaeb5f2b135.gradio.live/\nYou must keep your computer running so others are able to load your app in their browser",
+  "images": [
+   "data/media/week04/s07/image4.png",
+   "data/media/week04/s07/image9.png"
+  ]
+ },
+ {
+  "id": "w4-s8",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 8",
+  "week": 4,
+  "slide": 8,
+  "section": null,
+  "title": "Gradio vs. Streamlit vs. …",
+  "text": "Gradio vs. Streamlit vs. …\nGradio is one Python-based option, and Streamlit is another\nBoth have their pros and cons, and each is better at some tasks vs. others\nChatbots, RAG apps, model interfaces, etc.\nUltimately, use whatever you think works (or looks) best for your task (and explore alternatives)",
+  "images": [
+   "data/media/week04/s08/image10.jpg",
+   "data/media/week04/s08/image4.png"
+  ]
+ },
+ {
+  "id": "w4-s9",
+  "kind": "slide",
+  "doc": "Week 4 - Serving and Debugging v4.pptx",
+  "doc_id": "week04",
+  "loc": "Week 4, slide 9",
+  "week": 4,
+  "slide": 9,
+  "section": null,
+  "title": "Incorporating APIs",
+  "text": "Incorporating APIs",
+  "images": []
+ },
+ {
+  "id": "w5-s1",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 1",
+  "week": 5,
+  "slide": 1,
+  "section": null,
+  "title": "MBAX 6418Context Engineering and RAG",
+  "text": "MBAX 6418Context Engineering and RAG\nDavid Dobolyi, PhD\nAssistant Professor\nStone Family Faculty Scholar\ndavid.dobolyi@colorado.edu",
+  "images": [
+   "data/media/week05/s01/image3.jpg"
+  ]
+ },
+ {
+  "id": "w5-s10",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 10",
+  "week": 5,
+  "slide": 10,
+  "section": null,
+  "title": "What Is RAG?",
+  "text": "What Is RAG?\nRetrieval-augmented generation (RAG) retrieves relevant information from documents, databases, and other data sources and adds it to a model’s context to help generate a response to a user’s prompt/question",
+  "images": [
+   "data/media/week05/s10/image4.png"
+  ]
+ },
+ {
+  "id": "w5-s11",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 11",
+  "week": 5,
+  "slide": 11,
+  "section": null,
+  "title": "Why Use RAG?",
+  "text": "Why Use RAG?\nRAG gives a model access to information beyond its training data, including more recent or private information\nIt selects relevant material from a large collection – or corpus – and grounds responses in sources, making answers easier to verify, potentially reducing hallucinations",
+  "images": [
+   "data/media/week05/s11/image12.jpg",
+   "data/media/week05/s11/image4.png"
+  ]
+ },
+ {
+  "id": "w5-s12",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 12",
+  "week": 5,
+  "slide": 12,
+  "section": null,
+  "title": "RAG Use Cases",
+  "text": "RAG Use Cases\nRAG lets your app draw on codebases, course materials, private documents, and other information sources to support a variety of tasks",
+  "images": [
+   "data/media/week05/s12/image13.jpg",
+   "data/media/week05/s12/image4.png"
+  ]
+ },
+ {
+  "id": "w5-s13",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 13",
+  "week": 5,
+  "slide": 13,
+  "section": null,
+  "title": "Context Optimization",
+  "text": "Context Optimization\nRAG optimizes context by supplying relevant information when the model responds\nFine-tuning adapts the model itself through additional training—a topic we’ll cover later",
+  "images": [
+   "data/media/week05/s13/image14.png",
+   "data/media/week05/s13/image4.png"
+  ]
+ },
+ {
+  "id": "w5-s14",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 14",
+  "week": 5,
+  "slide": 14,
+  "section": null,
+  "title": "Building a RAG System",
+  "text": "Building a RAG System",
+  "images": []
+ },
+ {
+  "id": "w5-s15",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 15",
+  "week": 5,
+  "slide": 15,
+  "section": null,
+  "title": "Semantic Search and Embeddings",
+  "text": "Semantic Search and Embeddings\nRAG often uses semantic search, or search based on meaning, to retrieve info relevant to the user’s question\nSemantic search typically uses embeddings to numerically represent text, images, and other data\nEmbeddings are like coordinatesin high-dimensional space: similar items tend to lie closer together\nVector search compares the question’s embedding with data embeddings to find potential matches",
+  "images": [
+   "data/media/week05/s15/image15.png",
+   "data/media/week05/s15/image4.png"
+  ]
+ },
+ {
+  "id": "w5-s16",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 16",
+  "week": 5,
+  "slide": 16,
+  "section": null,
+  "title": "Preparing Documents (Docs) for Search",
+  "text": "Preparing Documents (Docs) for Search\nDocs added or updated in the RAG corpus must be prepared for search\nParsing extracts text and structure from each doc\nChunking divides the parsed content of each doc into useful passages while preserving source metadata (e.g., doc name, page number)\nIndexing prepares the chunked passages for both:\nKeyword (lexical) search to find chunks containing matching words\nVector search, which uses embeddings to find chunks with similar meanings",
+  "images": [
+   "data/media/week05/s16/image4.png"
+  ]
+ },
+ {
+  "id": "w5-s17",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 17",
+  "week": 5,
+  "slide": 17,
+  "section": null,
+  "title": "Each chunk should contain just enough context to be useful in isolation",
+  "text": "Each chunk should contain just enough context to be useful in isolation\nCommon chunking strategies:\nFixed size – chunks with a set size, often with overlap\nRecursive – split at boundaries like paragraphs, then divide oversized chunks at finer boundaries like sentences\nDocument-based – keep related information together based on structural boundaries such as headings (see example above)\nSemantic – split based on changing topics or meanings\nChunking: How Much Context Is Enough?",
+  "images": [
+   "data/media/week05/s17/image4.png"
+  ]
+ },
+ {
+  "id": "w5-s18",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 18",
+  "week": 5,
+  "slide": 18,
+  "section": null,
+  "title": "Hybrid RAG Pipeline with Reranking",
+  "text": "Hybrid RAG Pipeline with Reranking\nRAG uses information from prepared documents to help an LLM answer the user’s question\nRetrieval finds relevant candidate chunks using both keyword search and vector search in Hybrid RAG\nReranking compares these candidates to the original question and prioritizes which chunks are supplied to the LLM as context",
+  "images": [
+   "data/media/week05/s18/image4.png"
+  ]
+ },
+ {
+  "id": "w5-s19",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 19",
+  "week": 5,
+  "slide": 19,
+  "section": null,
+  "title": "Accurate RAG is Challenging",
+  "text": "Accurate RAG is Challenging\nAccurate RAG requires checking both retrieval quality and answer accuracy using questions relevant to your app\nUse the MTEB Leaderboard to shortlist retrieval models and then test them on your own documents and questions",
+  "images": [
+   "data/media/week05/s19/image19.png",
+   "data/media/week05/s19/image4.png"
+  ]
+ },
+ {
+  "id": "w5-s2",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 2",
+  "week": 5,
+  "slide": 2,
+  "section": null,
+  "title": "Context Engineering",
+  "text": "Context Engineering\nRetrieval Augmented Generation (RAG)\nBuilding a RAG System\nClass Exercise\n2\nTopics",
+  "images": []
+ },
+ {
+  "id": "w5-s20",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 20",
+  "week": 5,
+  "slide": 20,
+  "section": null,
+  "title": "RAG Done Right Can Be Valuable",
+  "text": "RAG Done Right Can Be Valuable\nRetrieving relevant evidence early can reduce tokens spent processing irrelevant information, repeating searches, and performing unnecessary reasoning – and this can save money, improve efficiency, etc.",
+  "images": [
+   "data/media/week05/s20/image20.png",
+   "data/media/week05/s20/image4.png"
+  ]
+ },
+ {
+  "id": "w5-s21",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 21",
+  "week": 5,
+  "slide": 21,
+  "section": null,
+  "title": "Class Exercise",
+  "text": "Class Exercise",
+  "images": []
+ },
+ {
+  "id": "w5-s3",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 3",
+  "week": 5,
+  "slide": 3,
+  "section": null,
+  "title": "Context Engineering",
+  "text": "Context Engineering",
+  "images": []
+ },
+ {
+  "id": "w5-s4",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 4",
+  "week": 5,
+  "slide": 4,
+  "section": null,
+  "title": "From Prompts to Context",
+  "text": "From Prompts to Context",
+  "images": [
+   "data/media/week05/s04/image4.png",
+   "data/media/week05/s04/image5.png",
+   "data/media/week05/s04/image6.jpg"
+  ]
+ },
+ {
+  "id": "w5-s5",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 5",
+  "week": 5,
+  "slide": 5,
+  "section": null,
+  "title": "But What Is Context Engineering?",
+  "text": "But What Is Context Engineering?",
+  "images": [
+   "data/media/week05/s05/image4.png",
+   "data/media/week05/s05/image7.jpg"
+  ]
+ },
+ {
+  "id": "w5-s6",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 6",
+  "week": 5,
+  "slide": 6,
+  "section": null,
+  "title": "Expanding the Scope",
+  "text": "Expanding the Scope",
+  "images": [
+   "data/media/week05/s06/image4.png",
+   "data/media/week05/s06/image8.jpg"
+  ]
+ },
+ {
+  "id": "w5-s7",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 7",
+  "week": 5,
+  "slide": 7,
+  "section": null,
+  "title": "Context Location Matters?",
+  "text": "Context Location Matters?\nHistorically, models suffered from a Lost in the Middle (LITM) effect: LLM accuracy dropped when relevant facts occurred in the middle of input context (Liu et al. 2023)\nSome newer models are more resistant to this effect, but performance still depends on the model, task, and/or surrounding content (e.g., McKinnon 2025; Zhang et al. 2026)",
+  "images": [
+   "data/media/week05/s07/image9.png"
+  ]
+ },
+ {
+  "id": "w5-s8",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 8",
+  "week": 5,
+  "slide": 8,
+  "section": null,
+  "title": "Context Is Not Infinite",
+  "text": "Context Is Not Infinite\nEven very large context windows can fill up during long-running or complex tasks\nOlder information may need to be removed or summarized\nAgent harnesses (e.g., Hermes) can manage this for you automatically\nBut what about context engineering for apps you create?",
+  "images": [
+   "data/media/week05/s08/image10.jpg",
+   "data/media/week05/s08/image4.png"
+  ]
+ },
+ {
+  "id": "w5-s9",
+  "kind": "slide",
+  "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+  "doc_id": "week05",
+  "loc": "Week 5, slide 9",
+  "week": 5,
+  "slide": 9,
+  "section": null,
+  "title": "Retrieval Augmented Generation (RAG)",
+  "text": "Retrieval Augmented Generation (RAG)",
+  "images": []
+ },
+ {
+  "id": "w6-s1",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 1",
+  "week": 6,
+  "slide": 1,
+  "section": null,
+  "title": "MBAX 6418Multimodal Generative AI",
+  "text": "MBAX 6418Multimodal Generative AI\nDavid Dobolyi, PhD\nAssistant Professor\nStone Family Faculty Scholar\ndavid.dobolyi@colorado.edu",
+  "images": [
+   "data/media/week06/s01/image3.jpg"
+  ]
+ },
+ {
+  "id": "w6-s10",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 10",
+  "week": 6,
+  "slide": 10,
+  "section": null,
+  "title": "Speech to Text",
+  "text": "Speech to Text\nAutomatic speech recognition (ASR) converts spoken audio into written text\nWhisper large-v3-turbo supports multilingual transcription and segment timestamps, indicating when each passage occurs\nSpeaker diarization labels who spoke when (e.g., “Speaker 1” vs. “Speaker 2”), using models like NVIDIA Nemotron-3-Diarization",
+  "images": [
+   "data/media/week06/s10/image4.png",
+   "data/media/week06/s10/image6.jpg"
+  ]
+ },
+ {
+  "id": "w6-s11",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 11",
+  "week": 6,
+  "slide": 11,
+  "section": null,
+  "title": "Video Q&A",
+  "text": "Video Q&A\nVLMs like Qwen3.6-35B-A3B analyze selected video frames through frame sampling to:\nSummarize actions or events, such as the steps in a recorded demo\nAnswer questions about sequences, including what happened before or after an event\nLocate specific moments using timestamps, e.g., “When does the person place the food on the grill?”\nCombine visual understanding with speech transcription to capture both what is shown and what is said",
+  "images": [
+   "data/media/week06/s11/image4.png"
+  ]
+ },
+ {
+  "id": "w6-s12",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 12",
+  "week": 6,
+  "slide": 12,
+  "section": null,
+  "title": "Creating Images, Audio, and Video",
+  "text": "Creating Images, Audio, and Video",
+  "images": []
+ },
+ {
+  "id": "w6-s13",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 13",
+  "week": 6,
+  "slide": 13,
+  "section": null,
+  "title": "Generating and Editing Images",
+  "text": "Generating and Editing Images\nDiffusion Transformers (DiTs) and related methods turn noise into images, guided by prompts that specify the subject, setting, lighting, and composition\nModels like FLUX.2-klein-4B support text-to-image generation from descriptions and image-to-image editing through instructions\nReference images guide a person’s appearance, product details, or visual style\nSome models offer inpainting to modify masked areas, outpainting to extend an image, and negative prompts to describe what to avoid",
+  "images": [
+   "data/media/week06/s13/image4.png"
+  ]
+ },
+ {
+  "id": "w6-s14",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 14",
+  "week": 6,
+  "slide": 14,
+  "section": null,
+  "title": "Generating Speech",
+  "text": "Generating Speech\nText-to-speech (TTS) converts written text into spoken audio\nOpen-weight models like Chatterbox Multilingual V3 and closed services like ElevenLabs offer multilingual TTS, built-in voices, and voice cloning from reference recordings\nVoice conversion changes a reference recording’s voice while preserving words and delivery\nVoice design creates voices from descriptions without reference recordings (e.g., OmniVoice)\nSome models support emotion and pace controls, or paralinguistic tags such as [laugh] in Chatterbox Turbo\nChatterbox uses PerTh to add an inaudible watermark that helps identify generated audio\nReference Recording\nGenerated Result",
+  "images": [
+   "data/media/week06/s14/image4.png",
+   "data/media/week06/s14/image8.png"
+  ]
+ },
+ {
+  "id": "w6-s15",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 15",
+  "week": 6,
+  "slide": 15,
+  "section": null,
+  "title": "Generating Music",
+  "text": "Generating Music\nText-to-music models like ACE-Step 1.5 XL Turbo use DiTs to generate instrumentals or songs with multilingual vocals\nPrompts and settings guide genre, mood, instruments, duration, and tempo, measured in beats per minute (BPM)\nLyrics specify the sung words, and tags such as [Verse] and [Chorus] guide song structure\nReference audio guides style, covers/remixes transform existing tracks, and repainting regenerates selected sections\nPop-Rock Sample\nFolk Metal Sample",
+  "images": [
+   "data/media/week06/s15/image4.png",
+   "data/media/week06/s15/image8.png"
+  ]
+ },
+ {
+  "id": "w6-s16",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 16",
+  "week": 6,
+  "slide": 16,
+  "section": null,
+  "title": "Generating Video",
+  "text": "Generating Video\nModels like MiniMax H3 use DiTs to generate video with synchronized sound\nText-to-video prompts describe scenes, actions, and camera movement\nImage-to-video uses a first frame, last frame, or both to guide generation\nReference-to-video uses images, video, or audio to guide, edit, or extend clips\nTemporal consistency, or keeping appearance and motion coherent across frames, is an ongoing challenge\nRef. Video\nGenerated Video\nRef. Image\nRef. Audio",
+  "images": [
+   "data/media/week06/s16/image12.jpg",
+   "data/media/week06/s16/image13.jpg",
+   "data/media/week06/s16/image14.jpg",
+   "data/media/week06/s16/image4.png",
+   "data/media/week06/s16/image8.png"
+  ]
+ },
+ {
+  "id": "w6-s17",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 17",
+  "week": 6,
+  "slide": 17,
+  "section": null,
+  "title": "Model Choices, Licensing, and Rights",
+  "text": "Model Choices, Licensing, and Rights",
+  "images": []
+ },
+ {
+  "id": "w6-s18",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 18",
+  "week": 6,
+  "slide": 18,
+  "section": null,
+  "title": "Open-Weight / Closed Models (Sep 2026)",
+  "text": "Open-Weight / Closed Models (Sep 2026)\nOpen-weight models: deployment control, subject to licensing and hosting costs\nClosed models: managed access, with provider-set pricing and limits\nBoth allow for API access: compare quality, speed, cost, and privacy",
+  "images": [
+   "data/media/week06/s18/image4.png"
+  ]
+ },
+ {
+  "id": "w6-s19",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 19",
+  "week": 6,
+  "slide": 19,
+  "section": null,
+  "title": "Weights and Serving",
+  "text": "Weights and Serving\nCheck permissions for commercial use, self-hosting, and redistribution\nProvider-hosted APIs have their own terms\nLook for permissive licenses such as Apache 2.0, MIT, and OpenMDW 1.1, which allow commercial use subject to their terms\nCode and weights may have different licenses: OmniVoice has Apache 2.0 code but noncommercial weights (CC-BY-NC)\nGeographic restrictions may apply: MiniMax H3’s community license excludes the US, but users can apply for a separate license\nWith all this in mind: What are you allowed to do with the content a model generates?",
+  "images": [
+   "data/media/week06/s19/image4.png"
+  ]
+ },
+ {
+  "id": "w6-s2",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 2",
+  "week": 6,
+  "slide": 2,
+  "section": null,
+  "title": "Going Beyond Text",
+  "text": "Going Beyond Text\nUnderstanding Images, Audio, and Video\nCreating Images, Audio, and Video\nModel Choices, Licensing, and Rights\n2\nTopics",
+  "images": []
+ },
+ {
+  "id": "w6-s20",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 20",
+  "week": 6,
+  "slide": 20,
+  "section": null,
+  "title": "Outputs and Rights",
+  "text": "Outputs and Rights\nCheck your rights to use or share what a model generates, including commercial-use permissions and attribution requirements\nFor example, ElevenLabs requires noncommercial use and attribution for free-plan outputs, but content generated on paid plans can be used commercially, subject to product terms\nConfirm rights to reference images, music, and recordings, including permission to clone voices\nPermission to use or sell an output does not guarantee copyright protection: US copyright protects human-authored contributions, and prompts alone are insufficient",
+  "images": [
+   "data/media/week06/s20/image4.png"
+  ]
+ },
+ {
+  "id": "w6-s3",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 3",
+  "week": 6,
+  "slide": 3,
+  "section": null,
+  "title": "Going Beyond Text",
+  "text": "Going Beyond Text",
+  "images": []
+ },
+ {
+  "id": "w6-s4",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 4",
+  "week": 6,
+  "slide": 4,
+  "section": null,
+  "title": "Multimodal GenAI Use Cases",
+  "text": "Multimodal GenAI Use Cases\nWork with text, images, audio, and video to:\nUnderstand existing content, including reading documents, transcribing speech, and interpreting images\nFind relevant information across documents, images, and recordings\nGenerate new content: images, spoken narration, music, and video\nCombine these capabilities into business apps using APIs backed by open- and closed-weight models",
+  "images": [
+   "data/media/week06/s04/image4.png"
+  ]
+ },
+ {
+  "id": "w6-s5",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 5",
+  "week": 6,
+  "slide": 5,
+  "section": null,
+  "title": "Examples",
+  "text": "Examples\nCompany: UNIHAKKA INTERNATIONAL SDN BHD\nDate: 01 Jun 2018\nTotal: RM8.75\nProcess Images\nTranscribe Speech\nCreate and Edit Images\nGenerate Music",
+  "images": [
+   "data/media/week06/s05/image4.png",
+   "data/media/week06/s05/image5.jpg",
+   "data/media/week06/s05/image6.jpg",
+   "data/media/week06/s05/image7.jpg",
+   "data/media/week06/s05/image8.png"
+  ]
+ },
+ {
+  "id": "w6-s6",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 6",
+  "week": 6,
+  "slide": 6,
+  "section": null,
+  "title": "What Goes In vs. What Comes Out",
+  "text": "What Goes In vs. What Comes Out\nA modality is a type of content, e.g., text, image, audio, and/or video\nA multimodal model works with multiple modalities across inputs, outputs, or both\nA vision-language model (VLM) works with both visual content and language (e.g., describe this picture)\nA multimodal large language model (MLLM) is a broader term for an LLM that works beyond text (i.e., many modern VLMs are also MLLMs)\nDifferent models support different input → output combinations\nVisual understanding: receipt image + “The total?” → text answer\nTranscription: speech recording → text transcript\nImage generation: text description → generated image",
+  "images": [
+   "data/media/week06/s06/image4.png"
+  ]
+ },
+ {
+  "id": "w6-s7",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 7",
+  "week": 6,
+  "slide": 7,
+  "section": null,
+  "title": "Multimodal != Generative",
+  "text": "Multimodal != Generative\nGenerative models produce content, including transcriptions, answers, or novel media\nA model can be multimodal without being generative\nConsider models we used for RAG:\nMultimodal embedding and reranking models find relevant material via scoring and matching – but they do not generate content\nVLMs (e.g., Qwen3.6-35B-A3B) generate answers based on retrieved visual information\nDocument VLMs such as dots.mocr generate text and layout information from page images, including optical character recognition (OCR) to recognize text in images",
+  "images": [
+   "data/media/week06/s07/image4.png"
+  ]
+ },
+ {
+  "id": "w6-s8",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 8",
+  "week": 6,
+  "slide": 8,
+  "section": null,
+  "title": "Understanding Images, Audio, and Video",
+  "text": "Understanding Images, Audio, and Video",
+  "images": []
+ },
+ {
+  "id": "w6-s9",
+  "kind": "slide",
+  "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+  "doc_id": "week06",
+  "loc": "Week 6, slide 9",
+  "week": 6,
+  "slide": 9,
+  "section": null,
+  "title": "Image Q&A",
+  "text": "Image Q&A\nMany VLMs, including Qwen3.6-35B-A3B, process image patches using a Vision Transformer (ViT), and these models can:\nInterpret and compare images and charts\nHelp debug UI issues from screenshots during agentic coding sessions\nIdentify objects and their attributes\nLocate items using bounding boxes, which are rectangles that mark the position of elements within an image",
+  "images": [
+   "data/media/week06/s09/image4.png",
+   "data/media/week06/s09/image9.jpg"
+  ]
+ }
+]

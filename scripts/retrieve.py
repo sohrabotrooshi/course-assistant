@@ -98,23 +98,39 @@ class CourseIndex:
         return [(self.chunks[i], s) for i, s in self.bm25.search(query, k)]
 
 
+def filter_chunks(chunks, doc_ids=None, topic=None):
+    """Restrict the corpus by document(s) and/or a topic keyword filter.
+    - doc_ids: set/list of doc_id values (e.g. {"week04", "syllabus"}).
+    - topic: string; every non-stopword token must appear in a chunk's
+      title+text tokens (a plain keyword intersection, honest and fast)."""
+    if doc_ids:
+        doc_ids = set(doc_ids)
+        chunks = [c for c in chunks if c.get("doc_id") in doc_ids]
+    if topic and topic.strip():
+        need = tokenize(topic)
+        if need:
+            chunks = [c for c in chunks
+                      if all(t in set(tokenize(c["title"] + " " + c["text"]))
+                             for t in need)]
+    return chunks
+
+
 def rerank(question, candidates, top=5):
-    """LLM reranker: given the question and candidate chunks (id + title),
+    """LLM reranker: given the question and candidate chunks (id + loc),
     return the ids of the most relevant `top` chunks, best first.
     Follows course Week 5 s18: reranking compares candidates to the question.
     """
     listing = "\n".join(
-        f"- id={c['id']} | Week {c['week']}, slide {c['slide']} | "
-        f"{c['title'][:90]}"
+        f"- id={c['id']} | {c['loc']} | {c['title'][:90]}"
         for c in candidates
     )
     messages = [
         {"role": "system", "content":
          "You are a retrieval reranker for a course Q&A assistant. "
-         "Given a student's question and a list of slide chunks, return the "
-         "chunk ids of the MOST relevant chunks, most relevant first. "
-         "Pick only ids that plausibly help answer the question; you may "
-         "return an empty list if none do."},
+         "Given a student's question and a list of chunks (slides/pages), "
+         "return the chunk ids of the MOST relevant chunks, most relevant "
+         "first. Pick only ids that plausibly help answer the question; you "
+         "may return an empty list if none do."},
         {"role": "user", "content":
          f"QUESTION: {question}\n\nCANDIDATE CHUNKS:\n{listing}\n\n"
          f"Return JSON: {{\"chunk_ids\": [\"id\", ...]}} with at most {top} ids."},
@@ -142,8 +158,9 @@ def retrieve(question, index, top=8, rerank_top=5, use_rerank=True):
     return cands[:rerank_top]
 
 
-def load_index(chunks_path=CHUNKS_PATH):
+def load_index(chunks_path=CHUNKS_PATH, doc_ids=None, topic=None):
     chunks = json.loads(Path(chunks_path).read_text())
+    chunks = filter_chunks(chunks, doc_ids=doc_ids, topic=topic)
     return CourseIndex(chunks), chunks
 
 
@@ -152,9 +169,12 @@ def main():
     ap.add_argument("--query", required=True)
     ap.add_argument("--top", type=int, default=5)
     ap.add_argument("--no-rerank", action="store_true")
+    ap.add_argument("--docs", help="comma-separated doc_ids to restrict to")
+    ap.add_argument("--topic", help="topic keyword filter")
     args = ap.parse_args()
 
-    index, _ = load_index()
+    docs = [d.strip() for d in args.docs.split(",")] if args.docs else None
+    index, _ = load_index(doc_ids=docs, topic=args.topic)
     results = retrieve(args.query, index, top=8, rerank_top=args.top,
                        use_rerank=not args.no_rerank)
     if not results:
@@ -162,7 +182,7 @@ def main():
         sys.exit(0)
     for i, c in enumerate(results, 1):
         snippet = c["text"].replace("\n", " ")[:160]
-        print(f"{i}. {c['id']}  (Week {c['week']}, slide {c['slide']}) "
+        print(f"{i}. {c['id']}  ({c['loc']}) "
               f"{c['title'][:60]}\n   {snippet}")
 
 

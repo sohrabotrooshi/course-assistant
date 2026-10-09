@@ -1,10 +1,10 @@
 {
- "n_questions": 15,
- "bm25_top8_hit": 15,
+ "n_questions": 18,
+ "bm25_top8_hit": 18,
  "bm25_top8_rate": 1.0,
- "rerank_top4_hit": 15,
+ "rerank_top4_hit": 18,
  "rerank_top4_rate": 1.0,
- "bm25_mrr_top8": 0.889,
+ "bm25_mrr_top8": 0.824,
  "cases": [
   {
    "question": "What is quantization and how does it make models smaller?",
@@ -13,16 +13,18 @@
    "bm25_top8": [
     "w2-s15",
     "w2-s16",
-    "w3-s15",
     "w3-s14",
-    "w4-s27",
+    "w3-s15",
     "w3-s26",
-    "w2-s41",
-    "w2-s18"
+    "w2-s18",
+    "w6-s18",
+    "w2-s21"
    ],
    "rerank_top4": [
     "w2-s15",
-    "w2-s16"
+    "w2-s16",
+    "w3-s14",
+    "w3-s15"
    ],
    "rerank_hit": true
   },
@@ -37,8 +39,8 @@
     "w2-s7",
     "w2-s10",
     "w6-s18",
-    "w5-s8",
-    "w4-s27"
+    "hermes-agent-installation-guide-2026-v1-p6",
+    "hermes-agent-installation-guide-2026-v1-p12"
    ],
    "rerank_top4": [
     "w2-s11",
@@ -58,10 +60,7 @@
     "w3-s27"
    ],
    "rerank_top4": [
-    "w2-s13",
-    "w4-s20",
-    "w5-s11",
-    "w2-s11"
+    "w2-s13"
    ],
    "rerank_hit": true
   },
@@ -106,15 +105,18 @@
    "bm25_top8": [
     "w3-s20",
     "w3-s21",
-    "w3-s13",
-    "w3-s28",
     "w3-s24",
     "w3-s11",
+    "w3-s13",
+    "w3-s28",
     "w3-s23",
     "w3-s2"
    ],
    "rerank_top4": [
-    "w3-s21"
+    "w3-s21",
+    "w3-s20",
+    "w3-s23",
+    "w3-s24"
    ],
    "rerank_hit": true
   },
@@ -125,16 +127,16 @@
    "bm25_top8": [
     "w4-s12",
     "w4-s11",
-    "w4-s13",
-    "w4-s14",
+    "mbax-6418-assignment-1-p1",
+    "hermes-agent-installation-guide-2026-v1-p10",
     "w4-s16",
+    "hermes-agent-installation-guide-2026-v1-p5",
     "w2-s5",
     "w2-s25"
    ],
    "rerank_top4": [
     "w4-s12",
-    "w4-s11",
-    "w4-s13"
+    "w4-s11"
    ],
    "rerank_hit": true
   },
@@ -149,14 +151,12 @@
     "w4-s26",
     "w4-s20",
     "w5-s17",
-    "w4-s28",
-    "w5-s16"
+    "mbax-6418-assignment-1-p5",
+    "w4-s28"
    ],
    "rerank_top4": [
     "w4-s19",
-    "w4-s18",
-    "w4-s20",
-    "w4-s29"
+    "w4-s18"
    ],
    "rerank_hit": true
   },
@@ -197,7 +197,10 @@
     "w5-s11"
    ],
    "rerank_top4": [
-    "w5-s19"
+    "w5-s19",
+    "w5-s14",
+    "w5-s10",
+    "w5-s18"
    ],
    "rerank_hit": true
   },
@@ -225,13 +228,10 @@
     "w4-s10",
     "w4-s13",
     "w5-s17",
-    "w3-s32"
+    "hermes-agent-installation-guide-2026-v1-p11"
    ],
    "rerank_top4": [
-    "w5-s15",
-    "w5-s16",
-    "w5-s17",
-    "w5-s18"
+    "w5-s15"
    ],
    "rerank_hit": true
   },
@@ -245,12 +245,13 @@
     "w5-s12",
     "w6-s7",
     "w4-s13",
-    "w3-s4",
     "w2-s19",
-    "w3-s9"
+    "w3-s4",
+    "w6-s6"
    ],
    "rerank_top4": [
     "w6-s4",
+    "w6-s6",
     "w2-s32",
     "w6-s7"
    ],
@@ -266,13 +267,15 @@
     "w3-s14",
     "w2-s21",
     "w6-s4",
-    "w5-s8",
     "w3-s4",
-    "w4-s12"
+    "w5-s8",
+    "w6-s6"
    ],
    "rerank_top4": [
     "w6-s7",
-    "w6-s1"
+    "w6-s6",
+    "w6-s1",
+    "w6-s4"
    ],
    "rerank_hit": true
   },
@@ -285,14 +288,77 @@
     "w4-s5",
     "w6-s2",
     "w5-s13",
-    "w3-s26",
-    "w5-s17",
-    "w3-s12",
-    "w6-s18"
+    "hermes-agent-installation-guide-2026-v1-p9",
+    "mbax-6418-assignment-1-p7",
+    "w6-s18",
+    "w3-s26"
    ],
    "rerank_top4": [
     "w6-s17",
     "w6-s18"
+   ],
+   "rerank_hit": true
+  },
+  {
+   "question": "How do you install Hermes Agent on macOS?",
+   "target": "hermes-agent-installation-guide-2026-v1-p1",
+   "bm25_rank": 1,
+   "bm25_top8": [
+    "hermes-agent-installation-guide-2026-v1-p1",
+    "w3-s32",
+    "w3-s28",
+    "hermes-agent-installation-guide-2026-v1-p2",
+    "w3-s31",
+    "w4-s14",
+    "w3-s2",
+    "w4-s16"
+   ],
+   "rerank_top4": [
+    "hermes-agent-installation-guide-2026-v1-p1",
+    "hermes-agent-installation-guide-2026-v1-p2"
+   ],
+   "rerank_hit": true
+  },
+  {
+   "question": "What should you check after the Windows installation finishes?",
+   "target": "hermes-agent-installation-guide-2026-v1-p9",
+   "bm25_rank": 4,
+   "bm25_top8": [
+    "hermes-agent-installation-guide-2026-v1-p11",
+    "hermes-agent-installation-guide-2026-v1-p1",
+    "hermes-agent-installation-guide-2026-v1-p3",
+    "hermes-agent-installation-guide-2026-v1-p9",
+    "hermes-agent-installation-guide-2026-v1-p5",
+    "hermes-agent-installation-guide-2026-v1-p8",
+    "hermes-agent-installation-guide-2026-v1-p2",
+    "w3-s26"
+   ],
+   "rerank_top4": [
+    "hermes-agent-installation-guide-2026-v1-p11",
+    "hermes-agent-installation-guide-2026-v1-p9",
+    "hermes-agent-installation-guide-2026-v1-p8",
+    "hermes-agent-installation-guide-2026-v1-p5"
+   ],
+   "rerank_hit": true
+  },
+  {
+   "question": "Which endpoint and model does the class recommend for Assignment 1 classification?",
+   "target": "mbax-6418-assignment-1-p2",
+   "bm25_rank": 4,
+   "bm25_top8": [
+    "w4-s13",
+    "w3-s22",
+    "mbax-6418-assignment-1-p1",
+    "mbax-6418-assignment-1-p2",
+    "mbax-6418-assignment-1-p4",
+    "w4-s12",
+    "w6-s19",
+    "w4-s14"
+   ],
+   "rerank_top4": [
+    "mbax-6418-assignment-1-p1",
+    "mbax-6418-assignment-1-p2",
+    "mbax-6418-assignment-1-p4"
    ],
    "rerank_hit": true
   }

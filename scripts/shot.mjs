@@ -4,15 +4,16 @@
 // README. Uses an isolated profile, so it never touches the user's Chrome.
 //
 // Usage (from repo root):
-//   node scripts/shot.mjs quiz-initial                screenshots/quiz_initial.png
-//   node scripts/shot.mjs quiz-answered               screenshots/quiz_answered.png
-//   node scripts/shot.mjs chat-initial                screenshots/chat_initial.png
-//   node scripts/shot.mjs chat-answer "a question"    screenshots/chat_answer.png
+//   node scripts/shot.mjs quiz-initial     screenshots/quiz_initial.png
+//   node scripts/shot.mjs quiz-answered    screenshots/quiz_answered.png (+lightbox)
+//   node scripts/shot.mjs quiz-generate    in-page quiz generation (live endpoint)
+//   node scripts/shot.mjs chat-initial     screenshots/chat_initial.png
+//   node scripts/shot.mjs chat-answer "Q"  live chat round-trip
 //
 // Each mode prints the DOM assertions it checked before capturing.
 
 import { spawn } from "node:child_process";
-import { writeFileSync } from "node:fs";
+import { writeFileSync, mkdirSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -26,6 +27,7 @@ const CHAT_URL = "file://" + resolve(ROOT, "course_chat.html");
 const CLASS_KEY = process.env.LLM_API_KEY || "6418"; // class-provided key
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+mkdirSync(resolve(ROOT, "screenshots"), { recursive: true });
 
 async function launch() {
   const proc = spawn(CHROME, [
@@ -82,7 +84,7 @@ class CDP {
       if (ok) break;
       await sleep(150);
     }
-    await sleep(700); // let page JS (data injection, init) settle
+    await sleep(700);
   }
   async shot(file) {
     const r = await this.send("Page.captureScreenshot",
@@ -97,60 +99,133 @@ const assert = (cond, label) => {
   if (!cond) process.exitCode = 1;
 };
 
+async function quizInit(c) {
+  await c.goto(QUIZ_URL);
+  const cards = await c.eval(`document.querySelectorAll('.q').length`);
+  assert(cards === 42, "42 question cards render (" + cards + ")");
+  const docs = await c.eval(`document.querySelectorAll('.docpill').length`);
+  assert(docs === 7, "7 document groups render (" + docs + ")");
+  const tabs = await c.eval(`[...document.querySelectorAll('.tab')].map(t=>t.textContent)`);
+  assert(tabs[0] === "Course bank" && tabs.includes("+ New quiz"),
+    "bank + new-quiz tabs (" + tabs.join("|") + ")");
+  return c.shot(OUT("quiz_initial.png"));
+}
+
 async function quizAnswered(c) {
   await c.goto(QUIZ_URL);
   await c.eval(`localStorage.removeItem('mbax6418-quiz-v1')`);
-  await c.goto(QUIZ_URL); // reload clean
-  // switch to Week 5, answer first question correctly, check
+  await c.goto(QUIZ_URL);
   await c.eval(`
     (() => {
-      [...document.querySelectorAll('.tab')].find(t => t.textContent === 'Week 5').click();
-      const q = QUIZ.weeks['5'].questions[0];
+      const q = Object.values(QUIZ.docs)[0].questions[0];
       const card = document.querySelector('.q');
       card.querySelectorAll('input[type=radio]')[q.answer].click();
-      card.querySelector('button.btn').click();
-      // Check re-renders the card, so re-query after the click
-      const fresh = document.querySelector('.q');
-      return { verdict: fresh.querySelector('.verdict').textContent,
-               src: fresh.querySelector('details.source summary').textContent,
-               snippet: fresh.querySelector('.snippet').textContent.length };
+      card.querySelector('button.check').click();
+      return true;
     })()
   `);
+  const info = await c.eval(`
+    (() => {
+      let pos = -1, idx = 0;
+      for (const docId in QUIZ.docs)
+        for (const q of QUIZ.docs[docId].questions) {
+          const src = SOURCES[q.source_chunk_id] || {};
+          if (idx > 0 && src.images && src.images.length) { pos = idx; break; }
+          idx++;
+        }
+      if (pos >= 0) {
+        const card = document.querySelectorAll('.q')[pos];
+        const b = [...card.querySelectorAll('button')]
+          .find(x => x.textContent === 'Reveal solution');
+        if (b) b.click();
+      }
+      return pos;
+    })()
+  `);
+  assert(info >= 0, "found a source-with-images question to reveal (pos " + info + ")");
   const st = await c.eval(`document.getElementById('sDone').textContent + '|' +
     document.getElementById('sRight').textContent + '|' +
+    document.getElementById('sSkipped').textContent + '|' +
     document.getElementById('sPct').textContent`);
-  assert(/1\/30\|1\|100%/.test(st), "stats show 1/30 answered, 1 correct, 100% (" + st + ")");
-  const v = await c.eval(`document.querySelector('.verdict').textContent`);
-  assert(v.startsWith("✓ Correct"), "verdict says correct (" + v + ")");
-  const src = await c.eval(`document.querySelector('details.source summary').textContent`);
-  assert(/Week 5, slide \d+/.test(src) && /chunk w5-s\d+/.test(src) === false,
-    "source cites the slide (" + src + ")");
-  const cards = await c.eval(`document.querySelectorAll('.q').length`);
-  assert(cards === 6, "Week 5 shows 6 questions (" + cards + ")");
+  assert(/2\/42\|1\|1\|100%/.test(st), "stats 2/42 answered, 1 right, 1 skipped, 100% (" + st + ")");
+  const verdicts = await c.eval(`[...document.querySelectorAll('.verdict')].map(v=>v.textContent)`);
+  assert(verdicts[0].startsWith("\u2713 Correct"), "Q1 verdict correct (" + verdicts[0] + ")");
+  assert(verdicts[1].startsWith("Skipped"), "revealed question shows skipped (" + verdicts[1] + ")");
+  const imgs = await c.eval(`
+    (() => { const el = [...document.querySelectorAll('.evidence img')];
+      return { count: el.length, loaded: el.filter(i => i.naturalWidth > 0).length }; })()`);
+  assert(imgs.count >= 1 && imgs.loaded === imgs.count,
+    "evidence images render (" + imgs.count + " found, " + imgs.loaded + " loaded)");
+  const snippet = await c.eval(`document.querySelector('.snippet').textContent.length`);
+  assert(snippet > 0, "source excerpt shown (" + snippet + " chars)");
+  await c.eval(`document.querySelector('.evidence img').click()`);
+  const lbOpen = await c.eval(`document.getElementById('lb').classList.contains('open')`);
+  assert(lbOpen, "lightbox opens on image click");
+  await c.shot(OUT("quiz_lightbox.png"));
+  await c.eval(`document.getElementById('lb').click()`);
   return c.shot(OUT("quiz_answered.png"));
 }
 
-async function quizInitial(c) {
+async function quizGenerate(c) {
   await c.goto(QUIZ_URL);
-  const n = await c.eval(`document.querySelectorAll('.q').length`);
-  assert(n === 6, "default week (2) shows its 6 questions (" + n + ")");
-  const total = await c.eval(
-    `Object.values(QUIZ.weeks).reduce((a, w) => a + w.questions.length, 0)`);
-  assert(total === 30, "quiz data has 30 questions total (" + total + ")");
-  return c.shot(OUT("quiz_initial.png"));
+  await c.eval(`localStorage.setItem('mbax6418-chat-key', ${JSON.stringify(CLASS_KEY)})`);
+  await c.goto(QUIZ_URL);
+  await c.eval(`
+    (() => {
+      document.querySelector('.tab.newtab').click();
+      [...document.querySelectorAll('#docPick input')].forEach(b => {
+        if (b.value !== 'week05') b.checked = false;
+      });
+      const r = document.getElementById('countIn');
+      r.value = 4; r.dispatchEvent(new Event('input'));
+      document.getElementById('genGo').click();
+      return true;
+    })()
+  `);
+  // poll: the generated tab is named "Quiz <time> (4q)" and only appears when
+  // the endpoint has finished all questions (4 live LLM calls + retries)
+  let done = false;
+  for (let i = 0; i < 500 && !done; i++) {
+    await sleep(1000);
+    const poll = await c.eval(`
+      (() => {
+        const tabs = [...document.querySelectorAll('.tab')].map(t => t.textContent);
+        return { ok: tabs.some(t => t.indexOf("Quiz ") === 0 && t.endsWith("(4q)")),
+                 tabs: tabs };
+      })()
+    `);
+    if (i < 3 || i % 90 === 0) console.log("poll", i, JSON.stringify(poll).slice(0, 160));
+    done = poll.ok;
+  }
+  assert(done, "generated quiz tab appeared (4 questions)");
+  const genCards = await c.eval(`document.querySelectorAll('.q').length`);
+  assert(genCards === 4, "generated quiz shows 4 questions (" + genCards + ")");
+  const stored = await c.eval(`
+    (() => {
+      const g = JSON.parse(localStorage.getItem('mbax6418-quizgen-v1') || '{}');
+      const id = Object.keys(g)[0];
+      const n = Object.values(g[id].docs).reduce((a, d) => a + d.questions.length, 0);
+      const docIds = Object.keys(g[id].docs).join();
+      return { n, docIds };
+    })()`);
+  assert(stored.n === 4 && stored.docIds === "week05",
+    "quiz persisted with fixed key (" + JSON.stringify(stored) + ")");
+  return c.shot(OUT("quiz_generated.png"));
 }
 
 async function chatInitial(c) {
   await c.goto(CHAT_URL);
-  const chips = await c.eval(`document.querySelectorAll('.msg').length`);
-  assert(chips === 1, "welcome message rendered");
+  const chips = await c.eval(`document.querySelectorAll('.docchip').length`);
+  assert(chips === 7, "7 material chips render (" + chips + ")");
+  const msg = await c.eval(`document.querySelectorAll('.msg').length`);
+  assert(msg === 1, "welcome message rendered");
   return c.shot(OUT("chat_initial.png"));
 }
 
 async function chatAnswer(c, question) {
   await c.goto(CHAT_URL);
   await c.eval(`localStorage.setItem('mbax6418-chat-key', ${JSON.stringify(CLASS_KEY)})`);
-  await c.goto(CHAT_URL); // reload so the status pill shows "ready"
+  await c.goto(CHAT_URL);
   await c.eval(`
     (() => {
       const inp = document.getElementById('input');
@@ -159,34 +234,37 @@ async function chatAnswer(c, question) {
       return true;
     })()
   `);
-  // poll for the real answer: a bot message that arrived with source chips
-  // (the welcome message has none), or an error bubble
   let bot = null, err = null;
   for (let i = 0; i < 160; i++) {
     await sleep(800);
     bot = await c.eval(`
       (() => {
-        const m = [...document.querySelectorAll('.msg.bot')]
-          .find(x => x.querySelector('.srcs'));
+        const m = [...document.querySelectorAll('.msg.bot')].find(x => x.querySelector('.srcs'));
         return m ? { text: m.childNodes[0] && m.childNodes[0].textContent
                        ? m.childNodes[0].textContent : m.textContent,
-                    chips: m.querySelectorAll('.chip').length } : null;
+                     chips: [...m.querySelectorAll('.chip')].map(x => x.textContent),
+                     imgs: m.querySelectorAll('.srev img').length } : null;
       })()
     `);
     if (bot) break;
-    err = await c.eval(`
-      (() => { const e = document.querySelector('.msg.bot.err');
-               return e ? e.textContent : null; })()`);
+    err = await c.eval(`(() => { const e = document.querySelector('.msg.bot.err');
+      return e ? e.textContent : null; })()`);
     if (err) break;
   }
-  assert(!!bot, "bot answered with sources (not a timeout/error)");
-  assert(!err, "no error bubble: " + (err || "none"));
-  assert(bot && bot.chips > 0, "source chips rendered (" + (bot && bot.chips) + ")");
-  const hasRefusal = bot && bot.text.includes("don't cover");
-  console.log("ANSWER:\n" + (bot ? bot.text.slice(0, 900) : err || "timeout"));
-  console.log("refusal said materials don't cover:", hasRefusal);
-  // open one source box to prove the snippet panel
-  if (bot) await c.eval(`document.querySelector('.chip').click()`);
+  assert(!!bot, "bot answered with sources");
+  assert(!err, "no error bubble (" + (err || "none") + ")");
+  assert(bot && bot.chips.length > 0, "source chips rendered ("
+    + (bot ? bot.chips.join(",") : "?") + ")");
+  console.log("ANSWER:\n" + (bot ? bot.text.slice(0, 700) : err || "timeout"));
+  const imgCheck = await c.eval(`
+    (() => {
+      document.querySelectorAll('.chip').forEach(ch => ch.click());
+      const imgs = [...document.querySelectorAll('.srev img')];
+      return { count: imgs.length, loaded: imgs.filter(i => i.naturalWidth > 0).length };
+    })()
+  `);
+  assert(imgCheck.loaded === imgCheck.count,
+    "evidence images load (" + imgCheck.loaded + "/" + imgCheck.count + ")");
   return c.shot(OUT("chat_answer.png"));
 }
 
@@ -196,13 +274,12 @@ const { proc, wsUrl } = await launch();
 let code = 0;
 try {
   const c = await CDP.connect(wsUrl);
-  if (mode === "quiz-initial") await quizInitial(c);
+  if (mode === "quiz-initial") await quizInit(c);
   else if (mode === "quiz-answered") await quizAnswered(c);
+  else if (mode === "quiz-generate") await quizGenerate(c);
   else if (mode === "chat-initial") await chatInitial(c);
-  else if (mode === "chat-answer") {
-    const q = process.argv[3] || "What is speculative decoding?";
-    await chatAnswer(c, q);
-  } else { console.error("unknown mode " + mode); code = 1; }
+  else if (mode === "chat-answer") await chatAnswer(c, process.argv[3] || "What is RAG and why would you use it?");
+  else { console.error("unknown mode " + mode); code = 1; }
 } catch (e) { console.error("harness error:", e.message); code = 1; }
 finally { proc.kill(); }
 process.exit(code);

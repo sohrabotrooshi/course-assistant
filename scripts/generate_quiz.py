@@ -23,6 +23,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from llm import chat_json, MODEL  # noqa: E402
+from retrieve import filter_chunks  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 CHUNKS = json.loads((ROOT / "data" / "course_chunks.json").read_text())
@@ -41,7 +42,7 @@ SYSTEM = (
 
 def quiz_prompt(chunk):
     return (
-        f"SLIDE (chunk {chunk['id']}, Week {chunk['week']}, slide {chunk['slide']})\n"
+        f"SOURCE (chunk {chunk['id']}, {chunk['loc']})\n"
         f"Title: {chunk['title']}\n\n{chunk['text']}\n\n"
         "Return JSON exactly:\n"
         "{\"question\": string, \"options\": [4 distinct strings], "
@@ -67,7 +68,10 @@ def validate(q, anchor_id):
         errs.append(f"answer not an int in 0..3: {ans!r}")
     if len(rat) < 10:
         errs.append("rationale too short")
-    if str(q.get("source_chunk_id")) != anchor_id:
+    sid = str(q.get("source_chunk_id") or "").strip().lower()
+    if sid.startswith("chunk "):  # model sometimes echoes the label prefix
+        sid = sid[len("chunk "):]
+    if sid != anchor_id.lower():
         errs.append(f"source_chunk_id {q.get('source_chunk_id')!r} != {anchor_id!r}")
     return (not errs), errs
 
@@ -109,44 +113,52 @@ def distribute_answers(weeks_out, base_seed):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--per-week", type=int, default=6)
+    ap.add_argument("--per-doc", dest="per_doc", type=int, default=6,
+                    help="questions per document")
     ap.add_argument("--seed", type=int, default=20261009)
-    ap.add_argument("--weeks", default="2,3,4,5,6")
+    ap.add_argument("--docs", default=None,
+                    help="comma-separated doc_ids to generate from "
+                         "(default: all, one quiz group per document)")
+    ap.add_argument("--topic", default=None, help="optional topic keyword filter")
     ap.add_argument("-o", "--out", default="results/quiz_questions.json")
     args = ap.parse_args()
 
-    weeks = [int(w) for w in args.weeks.split(",")]
+    docs = [d.strip() for d in args.docs.split(",")] if args.docs else None
+    selected = filter_chunks(CHUNKS, doc_ids=docs, topic=args.topic)
+    by_doc = {}
+    for c in selected:
+        by_doc.setdefault(c["doc_id"], []).append(c)
+
     rng = random.Random(args.seed)
-
-    by_week = {}
-    for c in CHUNKS:
-        by_week.setdefault(c["week"], []).append(c)
-
-    out, meta_fail, stats = {}, {}, {}
-    for w in weeks:
-        pool = [c for c in by_week.get(w, []) if len(c["text"].split()) >= 8]
-        pick = rng.sample(pool, min(args.per_week, len(pool)))
+    out, stats = {}, {}
+    for doc_id, pool in by_doc.items():
+        pool = [c for c in pool if len(c["text"].split()) >= 8]
+        if not pool:
+            continue
+        pick = rng.sample(pool, min(args.per_doc, len(pool)))
         questions, fails = [], []
         for c in pick:
             q, err = make_question(c)
             if q:
                 questions.append(q)
             else:
-                fails.append({"slide": c["id"], "error": err})
-        deck = pool[0]["deck"] if pool else f"Week {w}"
-        out[str(w)] = {"name": deck, "questions": questions}
-        stats[str(w)] = {"slides_sampled": len(pick),
+                fails.append({"chunk": c["id"], "error": err})
+        doc = pool[0]["doc"]
+        out[doc_id] = {"name": doc, "kind": pool[0]["kind"],
+                       "questions": questions}
+        stats[doc_id] = {"chunks_sampled": len(pick),
                          "questions_kept": len(questions),
                          "failed": fails}
-        print(f"Week {w}: {len(questions)}/{len(pick)} questions kept "
-              f"({len(fails)} failed)")
+        print(f"{doc_id} ({doc[:44]}): {len(questions)}/{len(pick)} "
+              f"questions kept ({len(fails)} failed)")
 
     result = {
-        "meta": {"seed": args.seed, "per_week": args.per_week,
-                 "model": MODEL,
+        "meta": {"seed": args.seed, "per_doc": args.per_doc,
+                 "docs": list(out.keys()),
+                 "topic": args.topic, "model": MODEL,
                  "generated_at": datetime.datetime.now(
                      datetime.timezone.utc).isoformat(timespec="seconds")},
-        "weeks": distribute_answers(out, args.seed),
+        "docs": distribute_answers(out, args.seed),
     }
     out_path = ROOT / args.out
     out_path.parent.mkdir(parents=True, exist_ok=True)

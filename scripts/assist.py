@@ -32,7 +32,8 @@ SAMPLES_FILE = ROOT / "results" / "qa_samples.json"
 def format_context(chunks):
     lines = ["CONTEXT"]
     for c in chunks:
-        lines.append(f"[Week {c['week']}, slide {c['slide']}] "
+        sec = f" — section: {c['section']}" if c.get("section") else ""
+        lines.append(f"[{c['loc']}]{sec} "
                      f"{c['title']} (chunk {c['id']})\n{c['text']}")
     return "\n\n".join(lines)
 
@@ -43,7 +44,7 @@ def answer(question, index, top=8, rerank_top=4, use_rerank=True,
                       use_rerank=use_rerank)
     if not chunks:
         return ("The course materials don't cover that — nothing in the "
-                "lecture slides matches your question.", [])
+                "selected materials matches your question.", [])
     user = f"{format_context(chunks)}\n\nQUESTION\n{question}"
     messages = [{"role": "system", "content": system_prompt()},
                 {"role": "user", "content": user}]
@@ -58,8 +59,8 @@ def save_sample(question, answer_text, chunks):
     samples.append({
         "question": question,
         "answer": answer_text,
-        "sources": [{"id": c["id"], "week": c["week"],
-                     "slide": c["slide"], "title": c["title"]}
+        "sources": [{"id": c["id"], "loc": c["loc"],
+                     "doc": c["doc"], "title": c["title"]}
                     for c in chunks],
     })
     SAMPLES_FILE.parent.mkdir(parents=True, exist_ok=True)
@@ -68,7 +69,7 @@ def save_sample(question, answer_text, chunks):
 
 
 def repl(index):
-    print("MBAX 6418 course assistant — ask about the lecture slides.")
+    print("MBAX 6418 course assistant — ask about the course materials.")
     print("(Ctrl-D or 'quit' to exit)\n")
     while True:
         try:
@@ -81,8 +82,7 @@ def repl(index):
         text, chunks = answer(q, index)
         print(f"\n{text}\n")
         if chunks:
-            print("Sources: " + ", ".join(
-                f"[Week {c['week']}, slide {c['slide']}]" for c in chunks))
+            print("Sources: " + ", ".join(f"[{c['loc']}]" for c in chunks))
         print()
 
 
@@ -92,19 +92,21 @@ def main():
     ap.add_argument("--top", type=int, default=8, help="BM25 candidates")
     ap.add_argument("--rerank", type=int, default=4, help="chunks after rerank")
     ap.add_argument("--no-rerank", action="store_true")
+    ap.add_argument("--docs", help="comma-separated doc_ids to restrict to")
+    ap.add_argument("--topic", help="topic keyword filter")
     ap.add_argument("--save", action="store_true",
                     help="append the Q/A to results/qa_samples.json")
     args = ap.parse_args()
 
-    index, _ = load_index()
+    docs = [d.strip() for d in args.docs.split(",")] if args.docs else None
+    index, _ = load_index(doc_ids=docs, topic=args.topic)
     if args.once:
         text, chunks = answer(args.once, index, top=args.top,
                               rerank_top=args.rerank,
                               use_rerank=not args.no_rerank)
         print(text)
         if chunks:
-            print("\nSources: " + ", ".join(
-                f"[Week {c['week']}, slide {c['slide']}]" for c in chunks))
+            print("\nSources: " + ", ".join(f"[{c['loc']}]" for c in chunks))
         if args.save:
             save_sample(args.once, text, chunks)
     else:

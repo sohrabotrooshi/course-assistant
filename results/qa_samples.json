@@ -1,91 +1,85 @@
 [
  {
   "question": "What is quantization and why does it matter for running models locally?",
-  "answer": "**Quantization** is a process for scaling and rounding model parameters to make models smaller and potentially faster [Week 2, slide 15].\n\nIt matters for running models locally because:\n*   **Reduced Memory Footprint:** It significantly decreases the storage and memory required to load a model. For example, a model that is ~61GB at 16-bit precision can be reduced to ~31GB at 8-bit or ~17GB at 4-bit [Week 2, slide 15].\n*   **Hardware Compatibility:** It helps reduce hardware requirements, allowing models to run on consumer-grade hardware (like CPUs or lower-end GPUs) that might not have enough VRAM for full-precision models [Week 2, slide 16].\n*   **Performance:** It can improve inference performance, though it may lead to output quality degradation or performance hits if applied too aggressively (e.g., below FP8) [Week 2, slide 15].",
+  "answer": "**Definition**\nQuantization is a process for scaling and rounding model parameters to make models smaller and potentially faster [Week 2, slide 15].\n\n**Why it matters for local running**\n*   **Reduced Hardware Requirements:** It allows models trained at 16-bit precision to be reduced to 8-bit or 4-bit without significant accuracy degradation, significantly lowering the memory footprint (e.g., a 30B model drops from ~61GB at 16-bit to ~17GB at 4-bit) [Week 2, slide 15].\n*   **Hardware Compatibility:** It enables the use of various quantization formats (like GGUF, AWQ, or MLX) that are appropriate for specific local hardware setups, including CPUs, GPUs, and Apple M chips [Week 2, slide 16].\n*   **Efficiency:** It helps improve inference performance and makes efficient inferencing possible depending on the user's available hardware [Week 2, slide 16].",
   "sources": [
    {
     "id": "w2-s15",
-    "week": 2,
-    "slide": 15,
+    "loc": "Week 2, slide 15",
+    "doc": "Week 2 - LLM Fundamentals v2.pptx",
     "title": "Quantization"
    },
    {
     "id": "w4-s7",
-    "week": 4,
-    "slide": 7,
+    "loc": "Week 4, slide 7",
+    "doc": "Week 4 - Serving and Debugging v4.pptx",
     "title": "Serving"
    },
    {
     "id": "w2-s26",
-    "week": 2,
-    "slide": 26,
+    "loc": "Week 2, slide 26",
+    "doc": "Week 2 - LLM Fundamentals v2.pptx",
     "title": "Running Local Models"
    },
    {
     "id": "w2-s16",
-    "week": 2,
-    "slide": 16,
+    "loc": "Week 2, slide 16",
+    "doc": "Week 2 - LLM Fundamentals v2.pptx",
     "title": "Quantization Formats"
    }
   ]
  },
  {
-  "question": "What is RAG and why would you use it instead of fine-tuning?",
-  "answer": "**RAG (Retrieval-Augmented Generation)** is a technique that optimizes context by supplying relevant information from external sources when the model responds, rather than relying solely on the model's internal parameters [Week 5, slide 13].\n\nYou would use RAG instead of fine-tuning for the following reasons:\n\n*   **Access to External Data:** RAG gives the model access to information beyond its training data, such as recent events or private documents, which fine-tuning cannot easily provide without retraining [Week 5, slide 11].\n*   **Grounding and Verification:** It selects relevant material from a large corpus to ground responses in specific sources, making answers easier to verify and potentially reducing hallucinations [Week 5, slide 11].\n*   **Flexibility:** RAG allows applications to draw on various information sources (codebases, course materials, etc.) to support tasks without the need to adapt the model itself through additional training [Week 5, slide 12; Week 5, slide 13].\n\nIn contrast, fine-tuning adapts the model itself through additional training, which is a different approach covered separately in the course [Week 5, slide 13].",
+  "question": "What is RAG and why would you use it over fine-tuning?",
+  "answer": "**RAG (Retrieval-Augmented Generation)** is a technique that optimizes context by supplying relevant information from a large collection (corpus) to the model when it responds, rather than relying solely on the model's internal parameters [Week 5, slide 13].\n\nYou would use RAG over fine-tuning for the following reasons:\n\n*   **Access to External Data:** RAG gives the model access to information beyond its training data, such as recent news or private documents, which fine-tuning cannot easily provide without retraining [Week 5, slide 11].\n*   **Grounding and Verification:** RAG selects relevant material and grounds responses in specific sources, making answers easier to verify and potentially reducing hallucinations [Week 5, slide 11].\n*   **Efficiency and Scope:** While fine-tuning adapts the model itself through additional training, RAG allows an app to draw on various information sources (like codebases or course materials) to support tasks without the computational cost of adapting the model weights [Week 5, slide 13] [Week 5, slide 12].",
   "sources": [
    {
     "id": "w5-s13",
-    "week": 5,
-    "slide": 13,
+    "loc": "Week 5, slide 13",
+    "doc": "Week 5 - Context Engineering and RAG v1.pptx",
     "title": "Context Optimization"
    },
    {
     "id": "w5-s12",
-    "week": 5,
-    "slide": 12,
+    "loc": "Week 5, slide 12",
+    "doc": "Week 5 - Context Engineering and RAG v1.pptx",
     "title": "RAG Use Cases"
    },
    {
     "id": "w2-s25",
-    "week": 2,
-    "slide": 25,
+    "loc": "Week 2, slide 25",
+    "doc": "Week 2 - LLM Fundamentals v2.pptx",
     "title": "Enterprise Deployment"
    },
    {
     "id": "w5-s11",
-    "week": 5,
-    "slide": 11,
+    "loc": "Week 5, slide 11",
+    "doc": "Week 5 - Context Engineering and RAG v1.pptx",
     "title": "Why Use RAG?"
    }
   ]
  },
  {
-  "question": "Explain the lost in the middle effect and why it matters for context engineering",
-  "answer": "The **Lost in the Middle (LITM)** effect is a phenomenon where Large Language Model (LLM) accuracy drops when relevant facts are located in the middle of the input context [Week 5, slide 7].\n\nThis matters for **context engineering** because:\n*   Historically, models struggled to retrieve information from the middle of long contexts, making placement of critical facts crucial [Week 5, slide 7].\n*   While some newer models are more resistant to this effect, performance still depends on the specific model, task, and surrounding content, meaning engineers must still carefully consider context structure and location [Week 5, slide 7].",
+  "question": "What are the steps to install Hermes Agent on a Mac?",
+  "answer": "Based on the provided course materials, here are the steps to install Hermes Agent on macOS:\n\n*   **Download the installer:** Download and open the latest version of Hermes Desktop from `https://hermes-assets.nousresearch.com/Hermes-Setup.dmg` [Hermes Agent Installation Guide 2026 v1, page 1].\n*   **Move to Applications:** When the DMG file opens in Finder, drag the Hermes app to the Applications folder [Hermes Agent Installation Guide 2026 v1, page 1].\n*   **Launch the Application:** Browse to the Applications folder in Finder and double-click the Hermes application icon to start it [Hermes Agent Installation Guide 2026 v1, page 2].\n*   **Confirm Opening:** If prompted with “Are you sure you want to open it?”, click Open [Hermes Agent Installation Guide 2026 v1, page 2].\n*   **Begin Installation:** Click the **Install Hermes ->** button on the installation screen [Hermes Agent Installation Guide 2026 v1, page 2].\n*   **Wait for Completion:** Wait for Hermes to complete all installation steps, which may take several minutes. Note that the step “Install browser-tool dependencies” may take just over 10 minutes; the recommended action is to patiently wait it out [Hermes Agent Installation Guide 2026 v1, page 2].",
   "sources": [
    {
-    "id": "w5-s7",
-    "week": 5,
-    "slide": 7,
-    "title": "Context Location Matters?"
+    "id": "hermes-agent-installation-guide-2026-v1-p1",
+    "loc": "Hermes Agent Installation Guide 2026 v1, page 1",
+    "doc": "Hermes Agent Installation Guide 2026 v1",
+    "title": "Page 1"
    },
    {
-    "id": "w5-s3",
-    "week": 5,
-    "slide": 3,
-    "title": "Context Engineering"
+    "id": "hermes-agent-installation-guide-2026-v1-p2",
+    "loc": "Hermes Agent Installation Guide 2026 v1, page 2",
+    "doc": "Hermes Agent Installation Guide 2026 v1",
+    "title": "Page 2"
    },
    {
-    "id": "w5-s5",
-    "week": 5,
-    "slide": 5,
-    "title": "But What Is Context Engineering?"
-   },
-   {
-    "id": "w5-s2",
-    "week": 5,
-    "slide": 2,
-    "title": "Context Engineering"
+    "id": "hermes-agent-installation-guide-2026-v1-p8",
+    "loc": "Hermes Agent Installation Guide 2026 v1, page 8",
+    "doc": "Hermes Agent Installation Guide 2026 v1",
+    "title": "Page 8"
    }
   ]
  },
@@ -95,20 +89,20 @@
   "sources": [
    {
     "id": "w2-s41",
-    "week": 2,
-    "slide": 41,
+    "loc": "Week 2, slide 41",
+    "doc": "Week 2 - LLM Fundamentals v2.pptx",
     "title": "Popular Closed Interfaces (2026)"
    },
    {
     "id": "w4-s8",
-    "week": 4,
-    "slide": 8,
+    "loc": "Week 4, slide 8",
+    "doc": "Week 4 - Serving and Debugging v4.pptx",
     "title": "Gradio vs. Streamlit vs. …"
    },
    {
     "id": "w2-s26",
-    "week": 2,
-    "slide": 26,
+    "loc": "Week 2, slide 26",
+    "doc": "Week 2 - LLM Fundamentals v2.pptx",
     "title": "Running Local Models"
    }
   ]

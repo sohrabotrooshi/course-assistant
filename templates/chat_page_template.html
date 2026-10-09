@@ -25,26 +25,44 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);
   line-height:1.5;-webkit-font-smoothing:antialiased}
-.wrap{max-width:880px;margin:0 auto;padding:36px 22px 80px;display:flex;
+.wrap{max-width:920px;margin:0 auto;padding:36px 22px 80px;display:flex;
   flex-direction:column;height:100vh}
 /* masthead */
 .overline{font-size:11px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--accent-deep);font-weight:700}
 h1{font-size:27px;margin:6px 0 6px;letter-spacing:-.02em}
-.sub{color:var(--muted);font-size:14px;margin:0 0 18px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 6px}
 .status{display:inline-flex;align-items:center;gap:8px;font:600 12.5px var(--font);
   padding:5px 14px;border-radius:99px;border:1px solid var(--line);background:var(--card)}
 .dot{width:9px;height:9px;border-radius:50%;background:#B7B09F}
 .dot.ready{background:var(--good)} .dot.err{background:var(--bad)}
+/* selection bar */
+.sel{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0 14px}
+.sel .lbl{font:700 11px var(--font);text-transform:uppercase;letter-spacing:.1em;
+  color:var(--muted);margin-right:2px}
+.docchip{font:600 12px var(--font);padding:5px 12px;border-radius:99px;cursor:pointer;
+  background:var(--card);border:1px solid var(--line);color:var(--muted)}
+.docchip.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.topic{display:flex;gap:6px;align-items:center;margin-left:auto}
+.topic input{width:230px;padding:7px 11px;border:1px solid var(--line);border-radius:99px;
+  font:12.5px var(--font);background:var(--card);outline:none}
+.topic input:focus{border-color:var(--accent)}
+.topic button{font:700 12px var(--font);border:1px solid var(--line);border-radius:99px;
+  padding:7px 14px;background:var(--card);color:var(--fg);cursor:pointer}
+.topic button:hover{border-color:var(--accent-deep)}
+.selcount{font:600 11.5px var(--font);color:var(--muted)}
 /* messages */
 .chat{flex:1;overflow-y:auto;padding:6px 2px 16px;display:flex;flex-direction:column;gap:14px}
-.msg{max-width:78%;padding:13px 16px;border-radius:16px;font-size:14.5px;
+.msg{max-width:80%;padding:13px 16px;border-radius:16px;font-size:14.5px;
   white-space:pre-wrap;word-wrap:break-word}
 .msg.user{align-self:flex-end;background:var(--accent);color:var(--accent-ink);
   border-bottom-right-radius:4px}
 .msg.bot{align-self:flex-start;background:var(--card);border:1px solid var(--line);
   border-bottom-left-radius:4px}
 .msg.bot.err{border-color:var(--bad);background:var(--bad-bg);color:#7C2A1F}
+.msg code{background:#F1EBDC;border-radius:5px;padding:1px 5px;font-size:12.5px}
+.cite{font-weight:700;color:var(--accent-deep);background:#F1EBDC;border-radius:5px;
+  padding:1px 6px;font-size:12.5px}
 .wait{align-self:flex-start;color:var(--muted);font-size:13px;font-style:italic;
   padding:4px 6px}
 .srcs{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
@@ -55,6 +73,12 @@ h1{font-size:27px;margin:6px 0 6px;letter-spacing:-.02em}
   border-radius:10px;background:#FBF9F3;font-size:12.5px;color:var(--muted);
   white-space:pre-wrap}
 .srcbox.open{display:block}
+.srcbox .sbhead{font-weight:700;color:var(--accent-deep);margin-bottom:4px}
+.srev{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.srev figure{margin:0;padding:5px;border:1px solid var(--line);border-radius:9px;background:#FFF}
+.srev img{display:block;max-width:230px;max-height:170px;border-radius:6px;cursor:zoom-in}
+.srev figcaption{font:600 10px var(--font);color:var(--muted);margin-top:4px;text-align:center;
+  max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* composer */
 .composer{display:flex;gap:10px;align-items:flex-end}
 .input{flex:1;min-height:52px;max-height:160px;padding:14px 16px;border:1px solid var(--line);
@@ -64,12 +88,18 @@ h1{font-size:27px;margin:6px 0 6px;letter-spacing:-.02em}
 .send{background:var(--fg);color:#FFF;border:none;border-radius:12px;font:700 14px var(--font);
   padding:0 22px;height:52px;cursor:pointer}
 .send:disabled{opacity:.4;cursor:default}
-.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;
-  border-top:1px solid var(--line);padding-top:12px;margin-top:12px;
-  flex-wrap:wrap;gap:8px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;
+  border-top:1px solid var(--line);padding-top:12px;margin-top:12px;flex-wrap:wrap}
 .keylink{font:600 12.5px var(--font);color:var(--accent-deep);background:none;
   border:none;cursor:pointer;text-decoration:underline}
 .note{font-size:11.5px;color:var(--muted)}
+/* lightbox */
+.lb{position:fixed;inset:0;background:rgba(20,18,12,.85);display:none;align-items:center;
+  justify-content:center;z-index:60;cursor:zoom-out}
+.lb.open{display:flex}
+.lb img{max-width:94vw;max-height:92vh;border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.lb p{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:#EDE7D6;
+  font:600 12px var(--font)}
 /* key modal */
 .overlay{position:fixed;inset:0;background:rgba(27,27,27,.45);display:none;
   align-items:center;justify-content:center;z-index:50}
@@ -85,7 +115,8 @@ h1{font-size:27px;margin:6px 0 6px;letter-spacing:-.02em}
 .btn.primary{background:var(--fg);color:#FFF}
 .btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}
 .hidden{display:none}
-@media(max-width:600px){.wrap{padding:22px 14px 40px}.msg{max-width:92%}}
+@media(max-width:700px){.wrap{padding:22px 14px 40px}.msg{max-width:92%}
+  .topic{margin-left:0;width:100%}.topic input{flex:1;width:auto}}
 </style>
 </head>
 <body>
@@ -93,21 +124,33 @@ h1{font-size:27px;margin:6px 0 6px;letter-spacing:-.02em}
   <div class="overline">MBAX 6418 · Study tool</div>
   <h1>Course Assistant</h1>
   <div class="bar">
-    <p class="sub" id="sub">Ask anything about the lecture slides — answers are retrieved from the actual decks and cited.</p>
-    <span class="status" id="status"><span class="dot" id="dot"></span><span id="statusTxt">checking endpoint…</span></span>
+    <p class="sub" id="sub"></p>
+    <span class="status" id="status"><span class="dot" id="dot"></span><span id="statusTxt">…</span></span>
+  </div>
+
+  <div class="sel" id="sel">
+    <span class="lbl">Materials</span>
+    <div id="docchips" style="display:contents"></div>
+    <span class="selcount" id="selcount"></span>
+    <span class="topic">
+      <input type="text" id="topic" placeholder="topic filter…" title="Optional topic: only chunks containing these words">
+      <button id="topicApply">Apply</button>
+    </span>
   </div>
 
   <div class="chat" id="chat"></div>
 
   <div class="composer">
-    <textarea class="input" id="input" rows="2" placeholder="Ask about the course materials…"></textarea>
+    <textarea class="input" id="input" rows="2" placeholder="Ask about the selected materials…"></textarea>
     <button class="send" id="send">Ask</button>
   </div>
   <div class="bar">
     <button class="keylink" id="keybtn">Set API key</button>
-    <span class="note" id="note">Answers use the class LLM endpoint, grounded in the lecture slides.</span>
+    <span class="note" id="note">Chat uses the class LLM endpoint, grounded in the course materials with slide/page citations and the source's own images.</span>
   </div>
 </div>
+
+<div class="lb" id="lb"><img id="lbImg" alt="source image"><p id="lbCap"></p></div>
 
 <div class="overlay" id="overlay">
   <div class="modal">
@@ -120,6 +163,7 @@ h1{font-size:27px;margin:6px 0 6px;letter-spacing:-.02em}
 
 <script>
 const CHUNKS = __CHUNKS_DATA__;
+const DOCS = __DOCS_DATA__;
 const SYSTEM_PROMPT = __SYSTEM_PROMPT__;
 const BASE = "http://dobolyi.com:9001/v1";
 const KEY_LS = "mbax6418-chat-key";
@@ -130,31 +174,45 @@ function md(s){
    .replace(/\*\*(.+?)\*\*/g,"<b>$1</b>")
    .replace(/(^|[^*])\*([^*\n]+)\*/g,"$1<i>$2</i>")
    .replace(/`([^`]+)`/g,"<code>$1</code>")
-   .replace(/\[(Week \d+, slide \d+)\]/g,'<span class="cite">$1</span>');
+   .replace(/\[(?:([^\[\]]+?))\]/g,'<span class="cite">$1</span>');
 }
-/* ---------- BM25 (mirrors scripts/retrieve.py) ---------- */
-const STOP=new Set(("the a an and or of to in on for with is are was be by at it its "
-+"this that these those from as into how what why does do can you your we our i me us").split(" "));
+/* ---------- tokenizer + selection ---------- */
+const STOP=new Set(("the a an and or of to in on for with is are was be by at it its "+
+"this that these those from as into how what why does do can you your we our i me us").split(" "));
 function toks(t){return (t.toLowerCase().match(/[a-z0-9]+/g)||[]).filter(w=>!STOP.has(w));}
-const IDX=(()=>{
-  const docs=CHUNKS.map(c=>toks(c.title+" "+c.text));
+let selDocs=new Set(DOCS.map(d=>d.doc_id));
+let selTopic="";
+function activeChunks(){
+  let cs=CHUNKS.filter(c=>selDocs.has(c.doc_id));
+  if(selTopic){
+    const need=toks(selTopic);
+    if(need.length)cs=cs.filter(c=>{
+      const have=new Set(toks(c.title+" "+c.text));
+      return need.every(t=>have.has(t));
+    });
+  }
+  return cs;
+}
+/* ---------- BM25 over the selection (mirrors scripts/retrieve.py) ---------- */
+let IDX=null;
+function rebuildIndex(){
+  const docs=activeChunks().map(c=>toks(c.title+" "+c.text));
   const df={};const dl=docs.map(d=>d.length);
   docs.forEach(d=>new Set(d).forEach(t=>df[t]=(df[t]||0)+1));
-  const N=docs.length,avg=dl.reduce((a,b)=>a+b,0)/N,k1=1.5,b=0.75;
+  const N=docs.length,avg=N?dl.reduce((a,b)=>a+b,0)/N:0,k1=1.5,b=0.75;
   const idf=t=>Math.log(1+(N-(df[t]||0)+0.5)/((df[t]||0)+0.5));
-  return {search(q,k){
+  IDX={search(q,k){
     const qt=toks(q);if(!qt.length)return[];
-    const scored=[];
+    const scored=[],src=activeChunks();
     for(let i=0;i<N;i++){
       const tf={};docs[i].forEach(t=>tf[t]=(tf[t]||0)+1);
       const d=dl[i]?k1*(1-b+b*dl[i]/avg):0;
       const s=qt.reduce((a,t)=>a+(tf[t]?idf(t)*tf[t]*(k1+1)/(tf[t]+d):0),0);
       if(s>0)scored.push([i,s]);
     }
-    return scored.sort((a,bb)=>bb[1]-a[1]).slice(0,k).map(x=>CHUNKS[x[0]]);
+    return scored.sort((a,bb)=>bb[1]-a[1]).slice(0,k).map(x=>src[x[0]]);
   }};
-})();
-
+}
 /* ---------- endpoint ---------- */
 async function callLLM(messages,max_tokens,temperature=0){
   const key=localStorage.getItem(KEY_LS);
@@ -169,9 +227,9 @@ async function callLLM(messages,max_tokens,temperature=0){
   return (d.choices[0].message.content||"").trim();
 }
 async function rerank(question,cands,top){
-  const listing=cands.map(c=>`- id=${c.id} | Week ${c.week}, slide ${c.slide} | ${c.title.slice(0,90)}`).join("\n");
+  const listing=cands.map(c=>`- id=${c.id} | ${c.loc} | ${c.title.slice(0,90)}`).join("\n");
   const out=await callLLM([
-    {role:"system",content:"You are a retrieval reranker for a course Q&A assistant. Given a student's question and slide chunks, return the chunk ids of the MOST relevant chunks, most relevant first. Return JSON: {\"chunk_ids\": [\"id\", ...]} with at most "+top+" ids; empty list if none help."},
+    {role:"system",content:"You are a retrieval reranker for a course Q&A assistant. Given a student's question and chunks (slides/pages), return the chunk ids of the MOST relevant chunks, most relevant first. Return JSON: {\"chunk_ids\": [\"id\", ...]} with at most "+top+" ids; empty list if none help."},
     {role:"user",content:`QUESTION: ${question}\n\nCANDIDATE CHUNKS:\n${listing}`}],300,0);
   const m=out.match(/\{[\s\S]*\}/);if(!m)return cands.slice(0,top);
   try{const ids=JSON.parse(m[0]).chunk_ids||[];const by={};cands.forEach(c=>by[c.id]=c);
@@ -185,22 +243,55 @@ const chat=document.getElementById("chat"),input=document.getElementById("input"
 function addMsg(text,cls){const m=document.createElement("div");
   m.className="msg "+cls;m.innerHTML=md(text);chat.appendChild(m);chat.scrollTop=chat.scrollHeight;return m;}
 function addWait(){const w=document.createElement("div");w.className="wait";
-  w.textContent="Retrieving from the slides…";w.id="wait";chat.appendChild(w);
+  w.textContent="Retrieving from the selected materials…";w.id="wait";chat.appendChild(w);
   chat.scrollTop=chat.scrollHeight;}
 function setStatus(txt,cls){document.getElementById("statusTxt").textContent=txt;
   document.getElementById("dot").className="dot"+(cls?" "+cls:"");}
-function keyState(){return localStorage.getItem(KEY_LS)?"set":"unset";}
+function openLb(src,cap){
+  document.getElementById("lbImg").src=src;
+  document.getElementById("lbCap").textContent=cap;
+  document.getElementById("lb").classList.add("open");
+}
+document.getElementById("lb").onclick=()=>{document.getElementById("lb").classList.remove("open");};
+
+function renderSel(){
+  const box=document.getElementById("docchips");
+  box.querySelectorAll(".docchip").forEach(e=>e.remove());
+  DOCS.forEach(d=>{
+    const chip=document.createElement("span");chip.className="docchip";
+    chip.classList.toggle("on",selDocs.has(d.doc_id));
+    chip.textContent=d.doc+(d.kind==="page"?" (PDF)":"");
+    chip.onclick=()=>{
+      if(selDocs.has(d.doc_id))selDocs.delete(d.doc_id);else selDocs.add(d.doc_id);
+      rebuildIndex();renderSel();
+    };
+    box.appendChild(chip);
+  });
+  document.getElementById("selcount").textContent=activeChunks().length+
+    " chunks"+(selTopic?" · topic: "+selTopic:"");
+}
+document.getElementById("topicApply").onclick=()=>{
+  selTopic=document.getElementById("topic").value.trim();
+  rebuildIndex();renderSel();
+};
+document.getElementById("topic").addEventListener("keydown",e=>{
+  if(e.key==="Enter")document.getElementById("topicApply").click();
+});
 
 async function ask(q){
   if(!localStorage.getItem(KEY_LS)){openKey();return;}
+  if(!selDocs.size){addMsg("Select at least one document in the Materials bar.","bot err");return;}
   input.value="";send.disabled=true;
   addMsg(q,"user");
   const wait=addWait();
   try{
     let cands=IDX.search(q,10);
-    if(!cands.length){addMsg("The course materials don't cover that — nothing in the lecture slides matches your question.","bot");return;}
+    if(!cands.length){addMsg("The course materials don't cover that — nothing in the selected materials matches your question.","bot");return;}
     cands=await rerank(q,cands,4);
-    const ctx=cands.map(c=>`[Week ${c.week}, slide ${c.slide}] ${c.title} (chunk ${c.id})\n${c.text}`).join("\n\n");
+    const ctx=cands.map(c=>{
+      const sec=c.section?" — section: "+c.section:"";
+      return `[${c.loc}]${sec} ${c.title} (chunk ${c.id})\n${c.text}`;
+    }).join("\n\n");
     const ans=await callLLM([
       {role:"system",content:SYSTEM_PROMPT},
       {role:"user",content:`CONTEXT\n${ctx}\n\nQUESTION\n${q}`}],900,0);
@@ -208,9 +299,25 @@ async function ask(q){
     const srcs=document.createElement("div");srcs.className="srcs";
     cands.forEach(c=>{
       const chip=document.createElement("span");chip.className="chip";
-      chip.textContent="Week "+c.week+" · slide "+c.slide;
+      chip.textContent=c.loc;
       const box=document.createElement("div");box.className="srcbox";
-      box.textContent="["+c.id+"] "+c.title+"\n"+c.text;
+      const head=document.createElement("div");head.className="sbhead";
+      head.textContent="["+c.loc+"] "+(c.title||"");
+      const body=document.createElement("div");
+      body.textContent=c.text;
+      box.appendChild(head);box.appendChild(body);
+      if(c.images&&c.images.length){
+        const ev=document.createElement("div");ev.className="srev";
+        c.images.forEach(im=>{
+          const fig=document.createElement("figure");
+          const img=document.createElement("img");
+          img.src=im;img.alt="source image";
+          img.onclick=()=>openLb(im,c.loc+" — "+im.split("/").pop());
+          const cap=document.createElement("figcaption");cap.textContent=im.split("/").pop();
+          fig.appendChild(img);fig.appendChild(cap);ev.appendChild(fig);
+        });
+        box.appendChild(ev);
+      }
       chip.onclick=()=>box.classList.toggle("open");
       srcs.appendChild(chip);srcs.appendChild(box);
     });
@@ -236,18 +343,23 @@ document.getElementById("keySave").onclick=()=>{
   const v=document.getElementById("keyin").value.trim();
   if(v){localStorage.setItem(KEY_LS,v);
     document.getElementById("keyin").value="";}
-  closeKey();setStatus("key "+keyState(),keyState()==="set"?"ready":"");
+  closeKey();setStatus("key "+keyState(),"ready");
 };
 
-/* hello + endpoint check */
-(async()=>{
-  const n=CHUNKS.length,weeks=new Set(CHUNKS.map(c=>c.week));
+/* init */
+function keyState(){return localStorage.getItem(KEY_LS)?"set":"unset";}
+(function(){
+  const n=CHUNKS.length;
   document.getElementById("sub").textContent=
-    n+" slide-chunks from Weeks "+[...weeks].sort().join("–")+
-    ". Answers are generated by the class LLM endpoint and grounded in these slides, with citations you can click to see the source slide.";
+    n+" chunks from "+DOCS.length+" course documents (lecture decks + PDFs). Pick the materials and "+
+    "optional topic, then ask — answers are generated by the class LLM endpoint, grounded in the "+
+    "selection, and every source shows its excerpt and original images.";
+  rebuildIndex();renderSel();
   if(localStorage.getItem(KEY_LS))setStatus("ready","ready");
   else setStatus("set your API key","");
-  addMsg("Hi! I'm your MBAX 6418 study assistant. Ask me anything about the course materials — e.g. *\"What is speculative decoding?\"* or *\"How do A/B tests work in prompt engineering?\"*","bot");
+  addMsg("Hi! I'm your MBAX 6418 study assistant. Pick your materials above, then ask me anything — "+
+    "e.g. *\"What is speculative decoding?\"* or *\"How do I install Hermes on macOS?\"*. "+
+    "Answers come with clickable slide/page citations; diagrams from the source appear as visual evidence.","bot");
 })();
 </script>
 </body>

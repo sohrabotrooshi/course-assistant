@@ -1,0 +1,70 @@
+{
+ "documents": {
+  "week02": {
+   "doc": "Week 2 - LLM Fundamentals v2.pptx",
+   "kind": [
+    "slide"
+   ],
+   "chunks": 42,
+   "images": 62,
+   "searchable": 42
+  },
+  "week03": {
+   "doc": "Week 3 - Prompt Engineering v1.pptx",
+   "kind": [
+    "slide"
+   ],
+   "chunks": 33,
+   "images": 24,
+   "searchable": 33
+  },
+  "week04": {
+   "doc": "Week 4 - Serving and Debugging v4.pptx",
+   "kind": [
+    "slide"
+   ],
+   "chunks": 29,
+   "images": 35,
+   "searchable": 29
+  },
+  "week05": {
+   "doc": "Week 5 - Context Engineering and RAG v1.pptx",
+   "kind": [
+    "slide"
+   ],
+   "chunks": 21,
+   "images": 27,
+   "searchable": 21
+  },
+  "week06": {
+   "doc": "Week 6 - Multimodal Generative AI v1.pptx",
+   "kind": [
+    "slide"
+   ],
+   "chunks": 20,
+   "images": 27,
+   "searchable": 20
+  },
+  "hermes-agent-installation-guide-2026-v1": {
+   "doc": "Hermes Agent Installation Guide 2026 v1",
+   "kind": [
+    "page"
+   ],
+   "chunks": 12,
+   "images": 12,
+   "searchable": 11
+  },
+  "mbax-6418-assignment-1": {
+   "doc": "MBAX 6418 Assignment 1",
+   "kind": [
+    "page"
+   ],
+   "chunks": 7,
+   "images": 7,
+   "searchable": 7
+  }
+ },
+ "total_chunks": 164,
+ "total_images": 194,
+ "media_dir": "data/media"
+}

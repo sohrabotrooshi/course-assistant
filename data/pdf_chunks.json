@@ -1,0 +1,306 @@
+[
+ {
+  "id": "hermes-agent-installation-guide-2026-v1-p1",
+  "kind": "page",
+  "doc": "Hermes Agent Installation Guide 2026 v1",
+  "doc_id": "hermes-agent-installation-guide-2026-v1",
+  "loc": "Hermes Agent Installation Guide 2026 v1, page 1",
+  "week": null,
+  "slide": null,
+  "page": 1,
+  "section": null,
+  "title": "Page 1",
+  "text": "Download, Install, and Test Hermes Agent\nThese instructions explain how to install Hermes Agent – and check\nthat the installation succeeded – on your personal computer for both\nmacOS and Windows. All the software you will need are both free and\nopen source. Please be sure to pay extra attention to any\ninstructions/notes highlighted in yellow.\nTable of Contents\n1. macOS Installation Instructions (pg. 1)\n2. Windows Installation Instructions (pg. 8)\nmacOS Installation Instructions\nDownload and open the latest version of Hermes Desktop here:\nhttps://hermes-assets.nousresearch.com/Hermes-Setup.dmg\nWhen you open the DMG file you downloaded, you will see the following\nin Finder:\nDrag the Hermes app to the Applications folder. Next, open Finder and\nbrowse to your Applications folder to find Hermes again:",
+  "images": [
+   "data/media/hermes-agent-installation-guide-2026-v1/p001.jpg"
+  ]
+ },
+ {
+  "id": "hermes-agent-installation-guide-2026-v1-p2",
+  "kind": "page",
+  "doc": "Hermes Agent Installation Guide 2026 v1",
+  "doc_id": "hermes-agent-installation-guide-2026-v1",
+  "loc": "Hermes Agent Installation Guide 2026 v1, page 2",
+  "week": null,
+  "slide": null,
+  "page": 2,
+  "section": null,
+  "title": "Page 2",
+  "text": "Double click the Hermes application icon to start it. You may then be\nasked: “Are you sure you want to open it?” If so, click Open.\nYou should now be at the Hermes installation screen:\nClick Install Hermes -> to begin the installation process. On the\ninstallation screen, wait for Hermes to complete all the installation\nsteps (this may take several minutes). Be aware that there is a known\nissue with the installer at time of writing (2026/08/19) where the\nstep “Install browser-tool dependencies” will take just over 10\nminutes to complete (you will likely see a download completed in the\n“Show details” logs when this occurs) – the temporary fix is to\npatiently wait it out.",
+  "images": [
+   "data/media/hermes-agent-installation-guide-2026-v1/p002.jpg"
+  ]
+ },
+ {
+  "id": "hermes-agent-installation-guide-2026-v1-p3",
+  "kind": "page",
+  "doc": "Hermes Agent Installation Guide 2026 v1",
+  "doc_id": "hermes-agent-installation-guide-2026-v1",
+  "loc": "Hermes Agent Installation Guide 2026 v1, page 3",
+  "week": null,
+  "slide": null,
+  "page": 3,
+  "section": null,
+  "title": "Page 3",
+  "text": "When the installation finishes, you will see the following screen:\nClick Launch Hermes to proceed. You will need to wait briefly for\nHermes to load:",
+  "images": [
+   "data/media/hermes-agent-installation-guide-2026-v1/p003.jpg"
+  ]
+ },
+ {
+  "id": "hermes-agent-installation-guide-2026-v1-p4",
+  "kind": "page",
+  "doc": "Hermes Agent Installation Guide 2026 v1",
+  "doc_id": "hermes-agent-installation-guide-2026-v1",
+  "loc": "Hermes Agent Installation Guide 2026 v1, page 4",
+  "week": null,
+  "slide": null,
+  "page": 4,
+  "section": null,
+  "title": "Page 4",
+  "text": "In the meantime, you may be asked if you want to “Allow ‘Hermes’ to\nfind devices on your local networks?” – click Allow:\nBack on Hermes, you will be asked to “Connect a model...”:\nClick the small “I have an API key” button in the lower right to\narrive at this screen:",
+  "images": [
+   "data/media/hermes-agent-installation-guide-2026-v1/p004.jpg"
+  ]
+ },
+ {
+  "id": "hermes-agent-installation-guide-2026-v1-p5",
+  "kind": "page",
+  "doc": "Hermes Agent Installation Guide 2026 v1",
+  "doc_id": "hermes-agent-installation-guide-2026-v1",
+  "loc": "Hermes Agent Installation Guide 2026 v1, page 5",
+  "week": null,
+  "slide": null,
+  "page": 5,
+  "section": null,
+  "title": "Page 5",
+  "text": "As shown in the screenshot above, select “Local / custom endpoint” and\nenter the following details in the two boxes at the bottom:\nhttp://dobolyi.com:9000/v1\n6418\nOnce done, click Connect to arrive at this screen:\nYour installation is now complete. Test it by typing “hi” in the input\nbox at the bottom (after a few moments, you should see a response\nsimilar to what’s shown below):",
+  "images": [
+   "data/media/hermes-agent-installation-guide-2026-v1/p005.jpg"
+  ]
+ },
+ {
+  "id": "hermes-agent-installation-guide-2026-v1-p6",
+  "kind": "page",
+  "doc": "Hermes Agent Installation Guide 2026 v1",
+  "doc_id": "hermes-agent-installation-guide-2026-v1",
+  "loc": "Hermes Agent Installation Guide 2026 v1, page 6",
+  "week": null,
+  "slide": null,
+  "page": 6,
+  "section": null,
+  "title": "Page 6",
+  "text": "You can now also load Hermes up in the Terminal (found in Applications\n-> Utilities -> Terminal) by simply typing hermes at the prompt and\npressing Return:\nDoing so will pull up the CLI version of Hermes:",
+  "images": [
+   "data/media/hermes-agent-installation-guide-2026-v1/p006.jpg"
+  ]
+ },
+ {
+  "id": "hermes-agent-installation-guide-2026-v1-p7",
+  "kind": "page",
+  "doc": "Hermes Agent Installation Guide 2026 v1",
+  "doc_id": "hermes-agent-installation-guide-2026-v1",
+  "loc": "Hermes Agent Installation Guide 2026 v1, page 7",
+  "week": null,
+  "slide": null,
+  "page": 7,
+  "section": null,
+  "title": "Page 7",
+  "text": "(scanned — no text layer)",
+  "images": [
+   "data/media/hermes-agent-installation-guide-2026-v1/p007.jpg"
+  ]
+ },
+ {
+  "id": "hermes-agent-installation-guide-2026-v1-p8",
+  "kind": "page",
+  "doc": "Hermes Agent Installation Guide 2026 v1",
+  "doc_id": "hermes-agent-installation-guide-2026-v1",
+  "loc": "Hermes Agent Installation Guide 2026 v1, page 8",
+  "week": null,
+  "slide": null,
+  "page": 8,
+  "section": null,
+  "title": "Page 8",
+  "text": "Windows Installation Instructions\nDownload and open the latest version of Hermes Desktop here:\nhttps://hermes-assets.nousresearch.com/Hermes-Setup.exe\nOpen the executable you downloaded to begin the installation process:\nClick INSTALL to begin the installation process. On the installation\nscreen, wait for Hermes to complete all the installation steps (this\nmay take several minutes). You may be prompted by User Account Control\n(UAC) to answer a question such as: “Do you want to allow this app\nfrom an unknown publisher to make changes to your device?” – if so,\nanswer Yes (e.g., for cua-driver.exe, which allows Hermes to control\napplications on your computer on your behalf). Be aware that there is\na known issue with the installer at time of writing (2026/08/19) where\nthe some steps may take 10 minutes to complete – the temporary fix is\nto patiently wait it out.",
+  "images": [
+   "data/media/hermes-agent-installation-guide-2026-v1/p008.jpg"
+  ]
+ },
+ {
+  "id": "hermes-agent-installation-guide-2026-v1-p9",
+  "kind": "page",
+  "doc": "Hermes Agent Installation Guide 2026 v1",
+  "doc_id": "hermes-agent-installation-guide-2026-v1",
+  "loc": "Hermes Agent Installation Guide 2026 v1, page 9",
+  "week": null,
+  "slide": null,
+  "page": 9,
+  "section": null,
+  "title": "Page 9",
+  "text": "When the installation finishes, you will see the following screen:\nClick LAUNCH to proceed. You will need to wait briefly for Hermes to\nload:\nEventually, you will be asked to “Connect a model...”:",
+  "images": [
+   "data/media/hermes-agent-installation-guide-2026-v1/p009.jpg"
+  ]
+ },
+ {
+  "id": "hermes-agent-installation-guide-2026-v1-p10",
+  "kind": "page",
+  "doc": "Hermes Agent Installation Guide 2026 v1",
+  "doc_id": "hermes-agent-installation-guide-2026-v1",
+  "loc": "Hermes Agent Installation Guide 2026 v1, page 10",
+  "week": null,
+  "slide": null,
+  "page": 10,
+  "section": null,
+  "title": "Page 10",
+  "text": "Click the small “I have an API key” button in the lower right to\narrive at this screen:\nAs shown in the screenshot above, select “Local / custom endpoint” and\nenter the following details in the two boxes at the bottom:\nhttp://dobolyi.com:9000/v1\n6418\nOnce done, click Connect to arrive at this screen:",
+  "images": [
+   "data/media/hermes-agent-installation-guide-2026-v1/p010.jpg"
+  ]
+ },
+ {
+  "id": "hermes-agent-installation-guide-2026-v1-p11",
+  "kind": "page",
+  "doc": "Hermes Agent Installation Guide 2026 v1",
+  "doc_id": "hermes-agent-installation-guide-2026-v1",
+  "loc": "Hermes Agent Installation Guide 2026 v1, page 11",
+  "week": null,
+  "slide": null,
+  "page": 11,
+  "section": null,
+  "title": "Page 11",
+  "text": "Your installation is now complete. Test it by typing “hi” in the input\nbox at the bottom (after a few moments, you should see a response\nsimilar to what’s shown below):\nYou can now also load Hermes up in the Terminal (Windows Menu ->\nSearch -> Terminal) by simply typing hermes at the prompt and pressing\nEnter:",
+  "images": [
+   "data/media/hermes-agent-installation-guide-2026-v1/p011.jpg"
+  ]
+ },
+ {
+  "id": "hermes-agent-installation-guide-2026-v1-p12",
+  "kind": "page",
+  "doc": "Hermes Agent Installation Guide 2026 v1",
+  "doc_id": "hermes-agent-installation-guide-2026-v1",
+  "loc": "Hermes Agent Installation Guide 2026 v1, page 12",
+  "week": null,
+  "slide": null,
+  "page": 12,
+  "section": null,
+  "title": "Page 12",
+  "text": "Doing so will pull up the CLI version of Hermes:",
+  "images": [
+   "data/media/hermes-agent-installation-guide-2026-v1/p012.jpg"
+  ]
+ },
+ {
+  "id": "mbax-6418-assignment-1-p1",
+  "kind": "page",
+  "doc": "MBAX 6418 Assignment 1",
+  "doc_id": "mbax-6418-assignment-1",
+  "loc": "MBAX 6418 Assignment 1, page 1",
+  "week": null,
+  "slide": null,
+  "page": 1,
+  "section": null,
+  "title": "Page 1",
+  "text": "MBAX 6418 — Assignment 1: Sentiment & Emotion\nClassification of Amazon Reviews\nGoal: Produce a working review-sentiment classifier for Amazon reviews — it classifies each\nreview as positive / neutral / negative, detects the primary emotion, checks its predictions\nagainst the star rating, and presents everything in a polished dashboard.\nHow to work on this: drive it with an agent — each step is a goal to reach, not a checklist. You\nand the agent choose the approach as you go: API, tooling, structure, dashboard design. A few\nfixed choices: the classification and scoring code is written in Python, and model calls go\nthrough an OpenAI-compatible endpoint (e.g., the endpoints provided to the class). The\ndashboard itself can be HTML or anything else. Work in order — each step should leave you\nwith something working. Your classmates are fair game for comparing approaches, asking\nquestions, and teaming up — but the write-up is owned by whoever submits it, and everyone\nsubmits their own copy (see the GitHub section for how that works).\nA note: where an earlier step hints at a later \"known finding,\" treat it as a hunch to test — it's\nmore interesting if your numbers disagree.\n(Useful if you haven't seen them: OpenAI offers verified US/Canada students $100 in ChatGPT\ncredits for use in Codex — https://developers.openai.com/community/students.)\nThe data\nThe task uses the Amazon 2023 \"Gift Cards\" review category — part of the large-scale\nAmazon Reviews '23 dataset collected by the McAuley Lab at UC San Diego. You can learn\nmore about the dataset (its scale, other categories, and the full field reference) on the dataset's\nsite:\nhttps://amazon-reviews-2023.github.io\nThe Gift Cards review file itself lives on the McAuley Lab's public dataset host:\nhttps://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/raw/review_cate\ngories/Gift_Cards.jsonl.gz\nIt is a gzipped JSON Lines (newline-delimited JSON) file; each line is one review. Expected\nfields:",
+  "images": [
+   "data/media/mbax-6418-assignment-1/p001.jpg"
+  ]
+ },
+ {
+  "id": "mbax-6418-assignment-1-p2",
+  "kind": "page",
+  "doc": "MBAX 6418 Assignment 1",
+  "doc_id": "mbax-6418-assignment-1",
+  "loc": "MBAX 6418 Assignment 1, page 2",
+  "week": null,
+  "slide": null,
+  "page": 2,
+  "section": null,
+  "title": "Page 2",
+  "text": "rating — the star rating, a number in {1, 2, 3, 4, 5} (encoded as a float, e.g., 4.0 ;\nintegral values throughout this dataset).\ntitle — the short review-issue title.\ntext — the review body.\nverified_purchase — boolean, whether the reviewer actually bought the item.\nhelpful_vote — integer count of \"helpful\" votes for the review.\ntimestamp — Unix milliseconds when the review was written.\nimages — array; image references attached to the review (often empty).\nasin — the product this review is about.\nparent_asin — the product family / parent item.\nuser_id — the reviewer.\nUse your judgment about metadata worth keeping. Before building anything, confirm you can\nactually read the file.\nStep 1 — A structured prompt\nA reusable prompt that takes a review's title and text and asks an LLM (see recommended\nendpoint below) to classify it as POSITIVE or NEGATIVE. Decide the edge cases yourself\n(conflicting title/text, terse or angry short reviews); the prompt must be set up so the model\ngives you a clear, simple answer you can read back programmatically, and it must not rely on\nthe rating.\nAsk yourself: does a quick spot-check on obviously positive and negative reviews come out\nright?\nRecommended LLM endpoint:\nBase URL: http://dobolyi.com:9001/v1\nAPI Key: 6418\nModel Name: cyankiwi/Qwen3.6-35B-A3B-AWQ-4bit\nStep 2 — Score against the rating\nScore a 100-row first batch and see how the model does against the \"correct answer\" you work\nout from the rating (≥4 positive, else negative). The model must never see the rating — it's\nonly for checking afterwards. How you structure and save the work is up to you; at minimum, be\nable to say how often the model agrees with the rating, which reviews it gets wrong, and a feel\nfor how often it's right on each class.",
+  "images": [
+   "data/media/mbax-6418-assignment-1/p002.jpg"
+  ]
+ },
+ {
+  "id": "mbax-6418-assignment-1-p3",
+  "kind": "page",
+  "doc": "MBAX 6418 Assignment 1",
+  "doc_id": "mbax-6418-assignment-1",
+  "loc": "MBAX 6418 Assignment 1, page 3",
+  "week": null,
+  "slide": null,
+  "page": 3,
+  "section": null,
+  "title": "Page 3",
+  "text": "Ask yourself: can you say, with evidence, what the model is good and bad at? Keep in mind\nthe data is heavily skewed toward high ratings — most reviews are ★★★★ or ★★★★★ —\nand don't let that lopsidedness fool you into thinking the model is better than it is.\nStep 3 — A results dashboard\nPresent the results in a visual dashboard. A single self-contained HTML page is a good\noption — everything baked into one file, works offline, no server or network needed — but\nyou're not limited to it: interactive app frameworks like Streamlit and Gradio work just as well.\nDecide what belongs in it; at minimum the headline numbers, a clear picture of which answers\nwere right and wrong and how mistakes cluster by class, and enough per-review detail to back\nup what you claim.\nDesign bar: this is a product, not a demo. Deliberate palette, refined typography, a coherent\ntheme the host can recolor — no library-shuffle look.\nAsk yourself: do the numbers on the page match what your scoring produced, and can a non-\ntechnical reader tell at a glance how good the model is?\nStep 4 — Interactive review filtering\nMake the review table explorable: let a reader filter to a subset (e.g., correct vs mismatched)\nwith a live count. Whether you do more than that is up to you.\nAsk yourself: does filtering show exactly the rows you asked for, and does the count make\nsense with what you recorded?\nStep 5 — Primary-emotion detection\nAdd two independent takes on the review's primary emotion:\n1. The LLM predicts it — extend the prompt's output so each review gives both sentiment\nand a primary emotion.\n2. A word list derives it — score each review's words against an NRC emotion word list (a\npublic list linking words to emotions: anger, anticipation, disgust, fear, joy, sadness, surprise,\ntrust), add the scores per emotion, and take the highest as the answer. This needs no\nmodel calls and runs over your existing predictions.",
+  "images": [
+   "data/media/mbax-6418-assignment-1/p003.jpg"
+  ]
+ },
+ {
+  "id": "mbax-6418-assignment-1-p4",
+  "kind": "page",
+  "doc": "MBAX 6418 Assignment 1",
+  "doc_id": "mbax-6418-assignment-1",
+  "loc": "MBAX 6418 Assignment 1, page 4",
+  "week": null,
+  "slide": null,
+  "page": 4,
+  "section": null,
+  "title": "Page 4",
+  "text": "Keep both, and compare them.\nAsk yourself: how often do the two agree, and where/why do they diverge?\nStep 6 — Three-class scoring with balanced sampling\nRedefine to the full split:\nRating Class\n4–5 POSITIVE\n3 NEUTRAL\n1–2 NEGATIVE\nCarry the change through everything — the correct answer you work out, the numbers you\ntrack, the prompt, and how the dashboard shows it. Because reading the first N rows in order\nunder-represents the rarer classes, instead pull a balanced group from the whole file — a\nroughly equal number from each class, picked with a fixed random seed so the same set\ncomes up every time — around 50 per class.\nAsk yourself: what do the balanced three-class numbers actually show, and what did the\nbalanced run reveal that the imbalanced one hid? In particular, do ★★★ (3-star) reviews get\ntheir own class, or do they collapse into another?\nStep 7 — Descriptive and prediction visualizations\nGive the dashboard a descriptive layer — e.g., a star-rating distribution, a comparison of the\n\"correct answer\" versus what the model predicted for each class, and how often each class was\nanswered right. The point is to make the model's failures visible at a glance.\nTwo things to be careful about:\nCheck the numbers on the page against the numbers you saved earlier — in the browser,\nnot just by eye.\nWatch out for layout bugs that can collapse very small chart elements (e.g., bars given zero\nwidth by a label/positioning interaction).\nAsk yourself: can a reader see, without drilling in, where the model succeeds and fails?",
+  "images": [
+   "data/media/mbax-6418-assignment-1/p004.jpg"
+  ]
+ },
+ {
+  "id": "mbax-6418-assignment-1-p5",
+  "kind": "page",
+  "doc": "MBAX 6418 Assignment 1",
+  "doc_id": "mbax-6418-assignment-1",
+  "loc": "MBAX 6418 Assignment 1, page 5",
+  "week": null,
+  "slide": null,
+  "page": 5,
+  "section": null,
+  "title": "Page 5",
+  "text": "Final deliverables\nProduce a short report plus the working files: the prompt, the scoring script that runs the\nreviews, the word-list script that adds the emotions, the dashboard generator, one balanced\nrun's raw output, and the final dashboard.\nReport format: write it as markdown in a README.md (so it can later drop into a GitHub\nrepository as-is), and include one or more screenshots of at least the interface (for example,\na capture of the dashboard you built). Make sure every number you quote in it matches a visible\nfigure in the saved output. Also cite the source of the data (the Amazon Reviews '23 dataset\nand its page) inside the README — don't expect a reader to go hunting for where the reviews\ncame from.\nThe report should be able to answer, with evidence:\n1. Why did the lopsided run look very accurate, and what did sampling equal amounts of each\nclass change?\n2. Look at where the model's mistakes go — which classes get confused with which, and in\nwhat direction? (For example, do ★★★ (i.e., 3-star neutral) reviews get labeled negative,\nor do negative ones get called neutral?) Report the concrete numbers from your matrix.\n3. How do the LLM's emotions and the word list's emotions differ, and why?\n4. What bugs and/or issues did you hit along the way — in the charts, the UI, in the process of\nworking with the agent, or anywhere else — and how did you work around them?\nAuthor / review split: the report should be generated with the agent (it produces the draft,\npulls the numbers from the saved output, writes the narrative), but it is your deliverable —\nreview and check it yourself before submitting. Checking the claimed numbers against the\nsaved output and putting the agent's framing and conclusions into your own words is part of the\nassignment, not an optional pass.\nSubmission: publish to GitHub and share the link\nRequirement: the final README.md report and all the project code must live in a GitHub\nrepository, and you must hand in a shareable link to it. There is no alternative submission\npath — the repo is the submission.\nOne per person, even in a team. If you work with classmates on the same work, you don't all\nshare one repo and one hand-in — each of you submits your own repository, even if it\ncontains essentially the same project. That requirement is there on purpose: it verifies that",
+  "images": [
+   "data/media/mbax-6418-assignment-1/p005.jpg"
+  ]
+ },
+ {
+  "id": "mbax-6418-assignment-1-p6",
+  "kind": "page",
+  "doc": "MBAX 6418 Assignment 1",
+  "doc_id": "mbax-6418-assignment-1",
+  "loc": "MBAX 6418 Assignment 1, page 6",
+  "week": null,
+  "slide": null,
+  "page": 6,
+  "section": null,
+  "title": "Page 6",
+  "text": "GitHub access works for every person in the class, not just one or two per group. If a teammate\npushes and everyone else just forwards the same link, only that teammate's account has\nproven GitHub works.\nPublic or private? Public is the simplest default — anyone with the link can read it, no extra\nsteps. Private works too, but it costs you one small step: add me\n( david.dobolyi@colorado.edu ) as a collaborator on the repo, otherwise I can't see the files\nwhen I open it. Do that after you create the repo, before you hand in the link.\nWhere to submit the link. The repo link is handed in as the assignment submission on\nCanvas — put the shareable GitHub link in the Canvas submission so it's tied to your account\nthere. Just make sure the link you paste works (see the check further down) before you hit\nsubmit.\nNew to GitHub? That's expected and fine — you'll likely need to create an account. Sign up\nhere if you don't have one:\nhttps://github.com/signup\nBecause you're all students, the GitHub Student Developer Pack gives you free access to\ntools that normally cost money — including GitHub Pro, Copilot, and Codespaces credits —\nplus bundled tutorials for getting started with git and open source:\nhttps://education.github.com/pack\nThe agent can and should help with every step. It can't sign up for you (only you can), but it\ncan:\nguide you through account creation and the one-time setup (creating a token /\nauthenticating git ),\ninitialize a repository in your project folder,\nstage and commit your code and the report,\ncreate the GitHub repository and push to it,\nfor a private repo, invite me ( david.dobolyi@colorado.edu ) as a collaborator,\ntell you how to confirm it's accessible and grab the shareable link.\nBefore you push, be deliberate about what goes in: include the code and the README.md ; think\nabout whether the data file (which is large and re-downloadable) or any credentials/tokens\nbelong in the repo — generally they don't. Ask the agent if you're unsure what's safe to commit.\nAsk yourself: does the link you submit open a repository that you can access, and would the\nperson grading it be able to too — a public repo readably, or a private one after you've invited",
+  "images": [
+   "data/media/mbax-6418-assignment-1/p006.jpg"
+  ]
+ },
+ {
+  "id": "mbax-6418-assignment-1-p7",
+  "kind": "page",
+  "doc": "MBAX 6418 Assignment 1",
+  "doc_id": "mbax-6418-assignment-1",
+  "loc": "MBAX 6418 Assignment 1, page 7",
+  "week": null,
+  "slide": null,
+  "page": 7,
+  "section": null,
+  "title": "Page 7",
+  "text": "them? Can they see the README (screenshots and all), and is the code there enough to\nreproduce your results?\nStanding considerations\nThe rating is the correct answer: it's what you judge the model against, but the model\nnever sees it.\nMake your results repeatable: any number you publish should come from a fixed choice\nof which reviews were used (a fixed \"seed\") and fixed settings, so running it again gives the\nsame answer.\nShow your work: every number you claim should match the saved output — don't publish\nsomething you haven't re-checked.\nBe honest about imbalance: say openly how unbalanced the data is; never let a run that's\nmostly one easy class look like proof the model is great.\nProduct bar: the dashboard is a finished, cohesive product.",
+  "images": [
+   "data/media/mbax-6418-assignment-1/p007.jpg"
+  ]
+ }
+]

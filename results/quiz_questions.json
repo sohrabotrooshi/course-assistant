@@ -1,24 +1,35 @@
 {
  "meta": {
   "seed": 20261009,
-  "per_week": 6,
-  "generated_at": "2026-10-09T03:56:02+00:00",
-  "model": "cyankiwi/Qwen3.6-35B-A3B-AWQ-4bit"
+  "per_doc": 6,
+  "docs": [
+   "week02",
+   "week03",
+   "week04",
+   "week05",
+   "week06",
+   "hermes-agent-installation-guide-2026-v1",
+   "mbax-6418-assignment-1"
+  ],
+  "topic": null,
+  "model": "cyankiwi/Qwen3.6-35B-A3B-AWQ-4bit",
+  "generated_at": "2026-10-09T18:19:24+00:00"
  },
- "weeks": {
-  "2": {
-   "name": "MBAX 6418 - Week 2 - LLM Fundamentals v2.pptx",
+ "docs": {
+  "week02": {
+   "name": "Week 2 - LLM Fundamentals v2.pptx",
+   "kind": "slide",
    "questions": [
     {
      "question": "According to the slide, what is a primary concern regarding AI models that are overly agreeable, and how is this issue being addressed?",
      "options": [
-      "Models are overly agreeable, a concern addressed through alignment measures and benchmarks like SycEval.",
-      "Models are ignoring user input, which is solved by using the Claude Sonnet 4.5 model exclusively.",
-      "Models are generating false information, which is mitigated by removing all alignment protocols.",
+      "Models exhibit sycophancy, which is measured through alignment techniques and evaluated using benchmarks like SycEval.",
+      "Models fail to provide any feedback, which is solved by removing all safety filters.",
+      "Models are too independent, which is mitigated by using older versions like Claude Sonnet 4.5 without alignment.",
       "Models are becoming too argumentative, which is addressed by increasing their training data volume."
      ],
      "answer": 0,
-     "rationale": "The slide explicitly warns to 'Be careful with models that are overly agreeable' and states that 'Models are measured in terms of alignment to address this concern,' citing benchmarks such as SycEval.",
+     "rationale": "The slide warns against models that are overly 'agreeable' (sycophancy) and states that models are measured in terms of alignment to address this, citing benchmarks such as SycEval.",
      "source_chunk_id": "w2-s20"
     },
     {
@@ -34,27 +45,27 @@
      "source_chunk_id": "w2-s42"
     },
     {
-     "question": "According to the slide, which specific technical components are listed as part of the 'Plus' configuration for the popular open coding model?",
+     "question": "According to the slide titled 'Popular Open Coding Models (Aug 2026)', which specific technical components are listed as additional features for the model indicated by the plus sign?",
      "options": [
       "51B n-gram embedding and 4B MTP",
+      "Standard transformer architecture and 10B parameters",
       "YaRN and RoPE extensions",
-      "4B MTP and RoPE",
-      "Aug 2026 and 51B n-gram"
+      "Multi-modal processing and 2B context window"
      ],
      "answer": 0,
-     "rationale": "The slide explicitly lists 'Plus 51B n-gram embedding (and 4B MTP)' as the components associated with the model's configuration.",
+     "rationale": "The slide explicitly lists 'Plus 51B n-gram embedding (and 4B MTP)' as the features associated with the model marked by the plus sign.",
      "source_chunk_id": "w2-s22"
     },
     {
      "question": "According to the slide, what is the primary mechanism by which speculative decoding improves throughput?",
      "options": [
       "It increases the context length to allow for more tokens to be processed simultaneously.",
-      "It uses a separate drafter model to generate tokens that are verified by the larger model in a single pass.",
+      "It uses a separate drafter model to generate tokens independently of the main model.",
       "It relies on multi-token prediction methods that are built into all large language models.",
-      "It guesses several upcoming candidate tokens that are verified by the model in a single pass."
+      "It guesses several upcoming candidate tokens and verifies them by the model in a single pass."
      ],
      "answer": 3,
-     "rationale": "The slide defines speculative decoding as a method of 'guessing' several upcoming candidate tokens that are verified by the model in a single pass to improve throughput.",
+     "rationale": "The slide defines speculative decoding as a method of 'guessing' several upcoming candidate tokens that are 'verified by the model in a single pass to improve throughput.'",
      "source_chunk_id": "w2-s13"
     },
     {
@@ -70,31 +81,32 @@
      "source_chunk_id": "w2-s19"
     },
     {
-     "question": "According to the slide, what is the primary mechanism by which KV caching improves the speed of LLM decoding?",
+     "question": "What is the primary mechanism by which KV caching improves the speed of LLM inference?",
      "options": [
-      "By eliminating the need for any inference passes during token generation",
-      "By increasing the Time to First Token (TTFT) to allow for deeper analysis",
-      "By avoiding the reprocessing of prior tokens when generating new ones",
-      "By reducing the memory demands required for storing key-value pairs"
+      "By reducing the total number of tokens generated in a single response",
+      "By allowing the model to skip the initial token generation phase entirely",
+      "By eliminating the need for the model to reprocess prior tokens when generating new ones",
+      "By decreasing the memory demands required to store the model weights"
      ],
      "answer": 2,
-     "rationale": "The slide states that decoding moves faster by 'avoiding the need to reprocess prior tokens when generating new ones,' which reduces TTFT.",
+     "rationale": "The slide states that decoding moves faster by 'avoiding the need to reprocess prior tokens when generating new ones.'",
      "source_chunk_id": "w2-s11"
     }
    ]
   },
-  "3": {
-   "name": "MBAX 6418 - Week 3 - Prompt Engineering v1.pptx",
+  "week03": {
+   "name": "Week 3 - Prompt Engineering v1.pptx",
+   "kind": "slide",
    "questions": [
     {
-     "question": "According to the slide, what is the primary purpose of using Markdown format in prompts for LLMs?",
+     "question": "According to the slide, what is the primary purpose of using Markdown format when writing prompts for LLMs?",
      "options": [
-      "To convert text into binary code for faster processing",
-      "To replace the need for natural language entirely",
-      "To provide text-based structure that LLMs understand",
-      "To encrypt the prompt data for security"
+      "To convert the text into binary code for faster processing",
+      "To encrypt the prompt data for security purposes",
+      "To replace the need for any natural language input",
+      "To provide text-based structure that LLMs understand"
      ],
-     "answer": 2,
+     "answer": 3,
      "rationale": "The slide states that prompts are often written in Markdown format 'to help provide text-based structure that LLMs understand.'",
      "source_chunk_id": "w3-s16"
     },
@@ -107,95 +119,96 @@
       "Only text-based instructions"
      ],
      "answer": 0,
-     "rationale": "The slide explicitly states that prompts consist of 'text and/or multimodal content (e.g., images, audio, video) provided to a model to guide its behavior and outputs.'",
+     "rationale": "The slide states that prompts consist of 'text and/or multimodal content (e.g., images, audio, video) provided to a model to guide its behavior and outputs.'",
      "source_chunk_id": "w3-s4"
     },
     {
      "question": "According to the slide, what is the specific function of the USER.md file in Hermes' persistent memory system?",
      "options": [
-      "Managing the installation and inspection of out-of-the-box skills",
-      "Maintaining a user profile with preferences and communication style",
-      "Storing the agent's personal notes and environment facts",
-      "Recording reusable skills learned from user descriptions"
+      "It serves as a temporary cache for skills learned through the /learn command.",
+      "It contains a log of all manually installed skills via the /skills command.",
+      "It stores the agent's personal notes regarding environment facts and conventions.",
+      "It records the user's preferences, communication style, and expectations."
      ],
-     "answer": 1,
-     "rationale": "The slide explicitly states that USER.md contains the 'User profile, including your preferences, communication style, expectations'.",
+     "answer": 3,
+     "rationale": "The slide explicitly states that USER.md is the 'User profile, including your preferences, communication style, expectations,' whereas MEMORY.md is for the agent's personal notes.",
      "source_chunk_id": "w3-s32"
     },
     {
      "question": "According to the slide, which Hermes command allows a user to set a standing goal that the agent works on until it is achieved?",
      "options": [
-      "/subgoal",
+      "/goal",
+      "/queue",
       "/steer",
-      "/plan",
-      "/goal"
+      "/plan"
      ],
-     "answer": 3,
-     "rationale": "The slide explicitly defines the /goal command as the method to 'Set a standing goal Hermes works on until achieved.'",
+     "answer": 0,
+     "rationale": "The slide explicitly defines the /goal command as the function to 'Set a standing goal Hermes works on until achieved.'",
      "source_chunk_id": "w3-s29"
     },
     {
      "question": "According to the slide, why is it recommended to use step-by-step instructions with numbered lists for complex tasks like coding?",
      "options": [
-      "Research beforehand is unnecessary if the prompt is complex",
+      "Sequential steps prevent the need for prior research on packages",
       "A single, giant prompt can lead to missed or skipped steps",
-      "Numbered lists allow the model to ignore sequential order",
-      "LLMs perform better when given multiple aspects to work on simultaneously"
+      "Numbered lists are required to specify the coding language and packages",
+      "AI models cannot process multiple aspects in a single prompt"
      ],
      "answer": 1,
      "rationale": "The slide explicitly states that 'A single, giant prompt can lead to missed or skipped steps,' necessitating step-by-step instructions.",
      "source_chunk_id": "w3-s24"
     },
     {
-     "question": "According to the slide, what is the primary characteristic of the rules-of-thumb regarding prompt engineering?",
+     "question": "According to the slide, what is the primary characteristic of rules-of-thumb in prompt engineering?",
      "options": [
+      " They are universally applicable and guarantee consistent outcomes across all tasks.",
+      " They are exclusively derived from the Lee & Palmer 2025 systematic review.",
       " Their effectiveness often varies depending on the specific task and setting.",
-      " They have been proven to be ineffective in higher education contexts.",
-      " They are universally applicable across all tasks and settings without exception.",
-      " They are based solely on the findings of Lee & Palmer (2025)."
+      " They have been proven ineffective in higher education contexts."
      ],
-     "answer": 0,
+     "answer": 2,
      "rationale": "The slide states that while there are many rules-of-thumb, 'outcomes often vary by task and setting.'",
      "source_chunk_id": "w3-s17"
     }
    ]
   },
-  "4": {
-   "name": "MBAX 6418 - Week 4 - Serving and Debugging v4.pptx",
+  "week04": {
+   "name": "Week 4 - Serving and Debugging v4.pptx",
+   "kind": "slide",
    "questions": [
     {
-     "question": "According to the slide, what is the primary characteristic that allows the OpenAI Python API library to function with endpoints other than the official OpenAI platform?",
+     "question": "According to the slide, how do OpenAI-compatible endpoints differ from the official OpenAI API Platform?",
      "options": [
-      "These endpoints communicate in the same way as the official OpenAI API Platform.",
-      "These endpoints require a different Python library specifically designed for vLLM.",
-      "These endpoints only support the DeepSeek-V4-Flash-0731 model name.",
-      "These endpoints are hosted exclusively on AWS infrastructure to ensure compatibility."
+      "They communicate in the same way as the official platform but can be hosted elsewhere.",
+      "They do not support the vLLM serving infrastructure used in the class example.",
+      "They require a paid subscription to access models like DeepSeek-V4-Flash-0731.",
+      "They use a different Python library than the OpenAI Python API library."
      ],
      "answer": 0,
-     "rationale": "The slide states that OpenAI-compatible endpoints 'communicate the same way as the official OpenAI API Platform,' which allows the standard library to be used.",
+     "rationale": "The slide states that these endpoints 'communicate the same way as the official OpenAI API Platform, but can be hosted elsewhere.'",
      "source_chunk_id": "w4-s12"
     },
     {
-     "question": "According to the slide, which Git command is used to send commits to a remote repository such as GitHub?",
+     "question": "According to the slide, which specific Git command does Hermes use to send commits to a remote repository such as GitHub?",
      "options": [
-      "git clone",
-      "git push",
       "git revert",
-      "git pull"
+      "git pull",
+      "git clone",
+      "git push"
      ],
-     "answer": 1,
+     "answer": 3,
      "rationale": "The slide explicitly states that 'git push' is used to 'send commits to a remote repository, e.g., GitHub'.",
      "source_chunk_id": "w4-s24"
     },
     {
      "question": "According to the slide, why are Gradio and Streamlit considered good interface options for Python?",
      "options": [
-      "They provide low-level control over technical details.",
-      "They are the only available interface options for Python.",
-      "They require extensive manual coding for every interface element.",
-      "They offer high abstraction by handling many technical details automatically."
+      "They provide low-level control over technical details for maximum customization.",
+      "They require extensive manual coding to manage technical implementation.",
+      "They handle many of the technical details for the user, offering high abstraction.",
+      "They are the only available interface options for Python applications."
      ],
-     "answer": 3,
+     "answer": 2,
      "rationale": "The slide states that Gradio and Streamlit are 'good, high abstraction options' because they 'handle many of the technical details for us.'",
      "source_chunk_id": "w4-s5"
     },
@@ -205,63 +218,64 @@
       " They provide prebuilt user interface (UI) elements to help quickly build interactive Python apps.",
       " They replace the need for Python programming by using a no-code drag-and-drop interface.",
       " They generate static HTML pages without any interactive components like buttons or sliders.",
-      " They are exclusively used for backend database management and data storage."
+      " They are exclusively used for backend database management and server configuration."
      ],
      "answer": 0,
      "rationale": "The slide explicitly states that 'Gradio and Streamlit provide prebuilt user interface (UI) elements (e.g., buttons, sliders, and text inputs) to help you quickly build interactive Python apps.'",
      "source_chunk_id": "w4-s6"
     },
     {
-     "question": "According to the slide, what is the critical step required after an agent claims a bug has been fixed?",
+     "question": "According to the slide, what is the primary reason for creating a thorough bug report when fixing software errors?",
      "options": [
-      "Reproduce the error to ensure it was not intended",
-      "Verify the fix yourself because agent claims may be false",
-      "Create a thorough bug report to document the issue",
-      "Build and test the app to find new bugs"
+      "It allows the agent to automatically verify that the code compiles without errors.",
+      "It prevents the code from containing any bugs during the initial build phase.",
+      "It helps document, reproduce, and ultimately fix each issue.",
+      "It ensures that the agent will never claim a bug is fixed when it is not."
      ],
-     "answer": 1,
-     "rationale": "The slide explicitly warns that 'Just because an agent says a bug was fixed doesn’t mean it’s true! You must check!', indicating that verification is necessary.",
+     "answer": 2,
+     "rationale": "The slide states that a thorough bug report 'helps document, reproduce, and ultimately fix each issue.'",
      "source_chunk_id": "w4-s18"
     },
     {
-     "question": "According to the slide, what is the specific starter prompt provided for creating the web application?",
+     "question": "According to the slide, what is the specific starter prompt provided for creating the small web app?",
      "options": [
-      "build a python app using flask for a pizza ordering website where customers can customize their pizzas with things like toppings, size, crust, etc.",
+      "build a python app using streamlit for a pizza ordering website where customers can customize their pizzas with things like toppings, size, crust, etc.",
       "build a python app using django for a pizza ordering website where customers can customize their pizzas with things like toppings, size, crust, etc.",
-      "build a python app using gradio for a pizza ordering website where customers can customize their pizzas with things like toppings, size, crust, etc.",
-      "build a python app using streamlit for a pizza ordering website where customers can customize their pizzas with things like toppings, size, crust, etc."
+      "build a python app using flask for a pizza ordering website where customers can customize their pizzas with things like toppings, size, crust, etc.",
+      "build a python app using gradio for a pizza ordering website where customers can customize their pizzas with things like toppings, size, crust, etc."
      ],
-     "answer": 2,
+     "answer": 3,
      "rationale": "The slide explicitly lists the starter prompt as: 'build a python app using gradio for a pizza ordering website where customers can customize their pizzas with things like toppings, size, crust, etc.'",
      "source_chunk_id": "w4-s4"
     }
    ]
   },
-  "5": {
-   "name": "MBAX 6418 - Week 5 - Context Engineering and RAG v1.pptx",
+  "week05": {
+   "name": "Week 5 - Context Engineering and RAG v1.pptx",
+   "kind": "slide",
    "questions": [
     {
      "question": "According to the slide, how does semantic search typically represent text and other data to retrieve information relevant to a user's question?",
      "options": [
       "By assigning random numerical values to text to ensure that all data points are evenly distributed in a low-dimensional space.",
       "By relying on vector search to compare the question's embedding with data embeddings without using any numerical representation.",
-      "By using keyword matching algorithms to find exact string matches between the user's question and the database.",
-      "By converting data into embeddings that act as coordinates in high-dimensional space, where similar items are located closer together."
+      "By using keyword matching algorithms to find exact word overlaps between the user's question and the database.",
+      "By converting data into embeddings that act as coordinates in high-dimensional space, where similar items are positioned closer together."
      ],
      "answer": 3,
-     "rationale": "The slide states that 'Semantic search typically uses embeddings to numerically represent text, images, and other data' and that 'Embeddings are like coordinates in high-dimensional space: similar items tend to lie closer together.'",
+     "rationale": "The slide states that 'Semantic search typically uses embeddings to numerically represent text' and that 'Embeddings are like coordinates in high-dimensional space: similar items tend to lie closer together.'",
      "source_chunk_id": "w5-s15"
     },
     {
      "question": "According to the slide, how does RAG optimize context compared to fine-tuning?",
      "options": [
-      "Both RAG and fine-tuning adapt the model itself through additional training.",
-      "Both RAG and fine-tuning supply relevant information when the model responds.",
-      "RAG supplies relevant information when the model responds, while fine-tuning adapts the model through additional training.",
-      "RAG adapts the model itself through additional training, while fine-tuning supplies relevant information."
+      "Both RAG and fine-tuning adapt the model itself through additional training to optimize context.",
+      "Both RAG and fine-tuning optimize context by supplying relevant information when the model responds.",
+      "RAG optimizes context by supplying relevant information when the model responds, whereas fine-tuning adapts the model itself through additional training.",
+      "RAG adapts the model through additional training, while fine-tuning supplies relevant information during response generation."
      ],
      "answer": 2,
-     "rationale": "The slide states that 'RAG optimizes context by supplying relevant information when the model responds' and 'Fine-tuning adapts the model itself through additional training.'",
+     "rationale": "The slide explicitly states that 'RAG optimizes context by supplying relevant information when the model responds' and distinguishes this from fine-tuning, which 'adapts the model itself through additional training.'",
      "source_chunk_id": "w5-s13"
     },
     {
@@ -289,15 +303,15 @@
      "source_chunk_id": "w5-s16"
     },
     {
-     "question": "Which of the following topics is explicitly listed as part of the 'Context Engineering' module in the provided slide?",
+     "question": "According to the slide titled 'Context Engineering', which specific technology is listed as a key component or topic alongside building a RAG system?",
      "options": [
-      "Database Schema Optimization",
-      "Building a RAG System",
-      "Natural Language Processing Fundamentals",
-      "Neural Network Architecture Design"
+      "Transformer Architecture",
+      "Retrieval Augmented Generation (RAG)",
+      "Large Language Model (LLM) Fine-tuning",
+      "Natural Language Processing (NLP)"
      ],
      "answer": 1,
-     "rationale": "The slide explicitly lists 'Building a RAG System' under the 'Context Engineering' title, whereas the other options are not mentioned.",
+     "rationale": "The slide explicitly lists 'Retrieval Augmented Generation (RAG)' as a topic under the heading 'Context Engineering'.",
      "source_chunk_id": "w5-s2"
     },
     {
@@ -314,8 +328,9 @@
     }
    ]
   },
-  "6": {
-   "name": "MBAX 6418 - Week 6 - Multimodal Generative AI v1.pptx",
+  "week06": {
+   "name": "Week 6 - Multimodal Generative AI v1.pptx",
+   "kind": "slide",
    "questions": [
     {
      "question": "According to the slide, what is the primary function of speaker diarization in the context of speech-to-text processing?",
@@ -330,39 +345,39 @@
      "source_chunk_id": "w6-s10"
     },
     {
-     "question": "Based on the provided slide, which statement best distinguishes a Vision-Language Model (VLM) from the broader category of Multimodal Large Language Models (MLLMs)?",
+     "question": "Based on the provided slide, which statement best distinguishes a Vision-Language Model (VLM) from the broader category of Multimodal Large Language Models (MLLM)?",
      "options": [
-      "A VLM is a type of transcription model that converts speech recordings into text, while an MLLM handles receipt images and totals.",
-      "A VLM specifically processes both visual content and language, while an MLLM is a broader term for an LLM that operates beyond text, often encompassing VLMs.",
-      "A VLM is defined strictly by its ability to generate images from text descriptions, whereas MLLMs are limited to text-only outputs.",
-      "A VLM and an MLLM are identical terms, as both refer exclusively to models that work with multiple modalities across inputs and outputs without distinction."
+      "A VLM is defined strictly as a model that processes both visual content and language, whereas an MLLM is a broader term for any LLM that operates beyond text, including but not limited to VLMs.",
+      "A VLM is a specific type of MLLM that only generates text from images, while an MLLM can only process audio inputs.",
+      "A VLM refers to any model that works with multiple modalities across inputs or outputs, while an MLLM is restricted to visual understanding tasks like reading receipts.",
+      "A VLM is a subset of MLLMs that exclusively handles transcription tasks, converting speech recordings into text transcripts."
      ],
-     "answer": 1,
-     "rationale": "The slide states that a VLM works with both visual content and language, while an MLLM is a broader term for an LLM that works beyond text, noting that many modern VLMs are also MLLMs.",
+     "answer": 0,
+     "rationale": "The slide defines a VLM as working with 'both visual content and language' and describes an MLLM as a 'broader term for an LLM that works beyond text,' noting that 'many modern VLMs are also MLLMs.'",
      "source_chunk_id": "w6-s6"
     },
     {
-     "question": "According to the slide, what is a potential licensing discrepancy that may exist between the code and the weights of a model like OmniVoice?",
+     "question": "According to the slide, what is a potential licensing discrepancy between the code and weights of a model like OmniVoice?",
      "options": [
-      "The code may have a permissive license like Apache 2.0 while the weights have a noncommercial license like CC-BY-NC.",
-      "The code is always licensed under CC-BY-NC while the weights are under Apache 2.0.",
-      "Geographic restrictions apply only to the code, while the weights are globally unrestricted.",
-      "The code and weights must always have identical licenses to be legally distributed."
+      "The code and weights share the same license, but geographic restrictions apply only to the code, not the weights.",
+      "Both the code and weights are exclusively licensed under MIT, permitting unrestricted commercial use without attribution.",
+      "The code is licensed under Apache 2.0 while the weights are licensed under CC-BY-NC, restricting commercial use.",
+      "The code is noncommercial while the weights are licensed under Apache 2.0, allowing free commercial redistribution."
      ],
-     "answer": 0,
+     "answer": 2,
      "rationale": "The slide explicitly states that 'Code and weights may have different licenses: OmniVoice has Apache 2.0 code but noncommercial weights (CC-BY-NC).'",
      "source_chunk_id": "w6-s19"
     },
     {
-     "question": "According to the slide, what is the primary distinction between open-weight and closed models regarding their operational characteristics?",
+     "question": "According to the slide, what is the primary distinction between open-weight and closed models regarding their operational structure?",
      "options": [
-      "Open-weight models offer managed access with provider-set pricing, while closed models require users to manage deployment and hosting costs.",
-      "Both open-weight and closed models eliminate the need for API access, focusing solely on local deployment without external connectivity.",
-      "Closed models allow for full deployment control and are subject to user-defined licensing, while open-weight models restrict access to managed environments only.",
-      "Open-weight models are subject to licensing and hosting costs with deployment control, whereas closed models provide managed access with provider-set pricing and limits."
+      "Open-weight models offer managed access with provider-set pricing, while closed models require users to manage their own deployment and hosting costs.",
+      "Open-weight models are subject to licensing and hosting costs with user-controlled deployment, whereas closed models provide managed access with provider-set pricing and limits.",
+      "Both open-weight and closed models eliminate the need for API access, focusing solely on local installation without external connectivity.",
+      "Closed models allow for full deployment control and lower hosting costs, while open-weight models restrict access through strict provider limits and managed services."
      ],
-     "answer": 3,
-     "rationale": "The slide explicitly states that open-weight models involve 'deployment control, subject to licensing and hosting costs,' while closed models are characterized by 'managed access, with provider-set pricing and limits.'",
+     "answer": 1,
+     "rationale": "The slide states that open-weight models involve 'deployment control, subject to licensing and hosting costs,' while closed models offer 'managed access, with provider-set pricing and limits.'",
      "source_chunk_id": "w6-s18"
     },
     {
@@ -370,8 +385,8 @@
      "options": [
       "Maintaining temporal consistency across frames",
       "Ensuring synchronized sound with visual output",
-      "Generating text-to-video prompts accurately",
-      "Using reference images to guide generation"
+      "Generating prompts that describe camera movement",
+      "Using reference images to guide initial generation"
      ],
      "answer": 0,
      "rationale": "The slide explicitly states that 'Temporal consistency, or keeping appearance and motion coherent across frames, is an ongoing challenge.'",
@@ -380,14 +395,170 @@
     {
      "question": "According to the slide, what is the primary function of reference images in the context of generating and editing images with models like FLUX.2-klein-4B?",
      "options": [
-      "Reference images are used to define the lighting and composition of the final output.",
-      "Reference images are utilized for inpainting to modify masked areas within an image.",
-      "Reference images serve as negative prompts to describe elements that should be avoided in the generation.",
-      "Reference images guide specific details such as a person’s appearance, product details, or visual style."
+      "Reference images are used to guide a person’s appearance, product details, or visual style.",
+      "Reference images are used to modify masked areas within an existing image.",
+      "Reference images are used to extend an image beyond its original boundaries.",
+      "Reference images are used to describe what to avoid in the final output."
+     ],
+     "answer": 0,
+     "rationale": "The slide explicitly states that 'Reference images guide a person’s appearance, product details, or visual style,' whereas negative prompts describe what to avoid, inpainting modifies masked areas, and outpainting extends images.",
+     "source_chunk_id": "w6-s13"
+    }
+   ]
+  },
+  "hermes-agent-installation-guide-2026-v1": {
+   "name": "Hermes Agent Installation Guide 2026 v1",
+   "kind": "page",
+   "questions": [
+    {
+     "question": "According to the installation guide, what is the required user action immediately after the installation process completes?",
+     "options": [
+      "Click the LAUNCH button to proceed with loading Hermes",
+      "Restart the computer to finalize the installation",
+      "Wait for the system to automatically launch the model connection screen",
+      "Manually configure the model settings before the screen appears"
+     ],
+     "answer": 0,
+     "rationale": "The slide explicitly states that when the installation finishes, the user must 'Click LAUNCH to proceed' before waiting for Hermes to load.",
+     "source_chunk_id": "hermes-agent-installation-guide-2026-v1-p9"
+    },
+    {
+     "question": "According to the Hermes Agent Installation Guide, what is the recommended action if the installation process appears to be stuck for up to 10 minutes?",
+     "options": [
+      "Patience is required as this is a known issue with a temporary fix of waiting it out.",
+      "Contact Nous Research support for a new installer version.",
+      "Manually edit the registry to bypass the cua-driver.exe verification.",
+      "Cancel the installation and restart the computer immediately."
+     ],
+     "answer": 0,
+     "rationale": "The slide states there is a known issue where steps may take 10 minutes to complete and the temporary fix is to 'patiently wait it out.'",
+     "source_chunk_id": "hermes-agent-installation-guide-2026-v1-p8"
+    },
+    {
+     "question": "According to the slide, which button must be clicked to proceed after being asked to 'Connect a model'?",
+     "options": [
+      "Click 'Skip' to bypass the model connection step",
+      "Click 'Allow' to find devices on local networks",
+      "Click the 'Connect Device' button in the center",
+      "Click the small 'I have an API key' button in the lower right"
      ],
      "answer": 3,
-     "rationale": "The slide explicitly states that 'Reference images guide a person’s appearance, product details, or visual style.'",
-     "source_chunk_id": "w6-s13"
+     "rationale": "The slide explicitly instructs the user to 'Click the small “I have an API key” button in the lower right' after being asked to 'Connect a model'.",
+     "source_chunk_id": "hermes-agent-installation-guide-2026-v1-p4"
+    },
+    {
+     "question": "According to the installation guide, what specific action must be taken after entering the endpoint URL and port number to finalize the connection?",
+     "options": [
+      "Click the 'Connect' button to proceed to the completion screen",
+      "Type 'hi' in the input box to verify the installation",
+      "Enter the API key in the top right corner",
+      "Restart the Hermes Agent service manually"
+     ],
+     "answer": 0,
+     "rationale": "The slide explicitly instructs that 'Once done, click Connect to arrive at this screen' after entering the details, whereas typing 'hi' is a subsequent testing step.",
+     "source_chunk_id": "hermes-agent-installation-guide-2026-v1-p5"
+    },
+    {
+     "question": "According to the guide, what is the correct method to launch Hermes directly from the Terminal?",
+     "options": [
+      "Type 'start hermes' in the input box at the bottom",
+      "Type 'hermes' at the prompt and press Enter",
+      "Click the Windows Menu and select 'Run Hermes'",
+      "Search for 'Hermes Agent' in the Terminal search bar"
+     ],
+     "answer": 1,
+     "rationale": "The slide explicitly states that you can load Hermes in the Terminal by 'simply typing hermes at the prompt and pressing Enter'.",
+     "source_chunk_id": "hermes-agent-installation-guide-2026-v1-p11"
+    },
+    {
+     "question": "According to the guide, what is the specific command to launch the CLI version of Hermes from the Terminal?",
+     "options": [
+      "Type 'open hermes' at the prompt and press Return",
+      "Type 'launch hermes' at the prompt and press Return",
+      "Type 'start hermes-cli' at the prompt and press Return",
+      "Type 'hermes' at the prompt and press Return"
+     ],
+     "answer": 3,
+     "rationale": "The slide states that you can load Hermes up in the Terminal by 'simply typing hermes at the prompt and pressing Return'.",
+     "source_chunk_id": "hermes-agent-installation-guide-2026-v1-p6"
+    }
+   ]
+  },
+  "mbax-6418-assignment-1": {
+   "name": "MBAX 6418 Assignment 1",
+   "kind": "page",
+   "questions": [
+    {
+     "question": "According to the slide, what is the specific requirement for submitting a private GitHub repository to ensure the instructor can access it for grading?",
+     "options": [
+      "Upload the code and data files directly to Canvas instead of using a GitHub link.",
+      "Ensure the repository is set to public so that anyone with the link can read it without extra steps.",
+      "Push the code to a public repository and then change it to private after the assignment is graded.",
+      "Add the instructor (david.dobolyi@colorado.edu) as a collaborator on the repository before submitting the link."
+     ],
+     "answer": 3,
+     "rationale": "The slide states that for a private repo, you must 'add me ( david.dobolyi@colorado.edu ) as a collaborator on the repo, otherwise I can't see the files when I open it.'",
+     "source_chunk_id": "mbax-6418-assignment-1-p6"
+    },
+    {
+     "question": "According to the slide, what is the recommended approach for determining the primary emotion of a review using a word list method?",
+     "options": [
+      "Sum the scores for all emotions in the NRC list and select the emotion with the highest total score.",
+      "Filter reviews by the NRC emotion categories and count the frequency of each emotion to determine the primary one.",
+      "Use the LLM to predict the primary emotion and compare it against the NRC word list to find the most accurate match.",
+      "Score each review's words against the NRC emotion word list, sum the scores per emotion, and select the emotion with the highest score."
+     ],
+     "answer": 3,
+     "rationale": "The slide states that for the word list method, one should 'score each review's words against an NRC emotion word list... add the scores per emotion, and take the highest as the answer.'",
+     "source_chunk_id": "mbax-6418-assignment-1-p3"
+    },
+    {
+     "question": "According to the submission requirements for the final deliverable, how should team members handle the submission of their work if they collaborated on the same project?",
+     "options": [
+      "Team members should share a single GitHub repository and submit one link to ensure the codebase is unified.",
+      "Only the team leader needs to submit the GitHub repository link, while other members submit their individual reports.",
+      "Team members must combine their individual reports into a single PDF document and upload it to the course portal instead of using GitHub.",
+      "Each team member must submit their own separate GitHub repository, even if the content is essentially identical to their teammates' work."
+     ],
+     "answer": 3,
+     "rationale": "The slide explicitly states that 'each of you submits your own repository, even if it contains essentially the same project' to verify individual completion, rather than sharing one repo.",
+     "source_chunk_id": "mbax-6418-assignment-1-p5"
+    },
+    {
+     "question": "According to Step 6, why is balanced sampling recommended over reading the first N rows in order when evaluating the three-class model?",
+     "options": [
+      "Reading the first N rows in order under-represents the rarer classes, whereas balanced sampling ensures a roughly equal number of samples from each class.",
+      "Reading the first N rows in order is computationally faster, allowing for quicker dashboard updates without sacrificing accuracy.",
+      "Balanced sampling is required because the model only performs well when trained on exactly 50 samples per class, regardless of the total dataset size.",
+      "Reading the first N rows in order introduces layout bugs that collapse chart elements, which balanced sampling prevents by using a fixed random seed."
+     ],
+     "answer": 0,
+     "rationale": "The slide explicitly states that 'reading the first N rows in order under-represents the rarer classes,' which is why the instruction advises pulling a balanced group with a roughly equal number from each class.",
+     "source_chunk_id": "mbax-6418-assignment-1-p4"
+    },
+    {
+     "question": "According to the instructions for Step 2, how is the 'correct answer' for sentiment classification determined from the dataset's rating field?",
+     "options": [
+      "A review is classified as positive if the helpful_vote count is high, regardless of the rating.",
+      "A review is classified as positive if the rating is 4 or higher, and negative if it is less than 4.",
+      "A review is classified as positive if the rating is 5, and negative if it is 1, 2, 3, or 4.",
+      "A review is classified as positive if the rating is greater than 4, and negative otherwise."
+     ],
+     "answer": 1,
+     "rationale": "The slide explicitly states that the correct answer is worked out from the rating by defining a review as positive if the rating is '≥4' (greater than or equal to 4) and negative otherwise.",
+     "source_chunk_id": "mbax-6418-assignment-1-p2"
+    },
+    {
+     "question": "According to the slide, what is the primary reason for making results repeatable by using a fixed seed and fixed settings?",
+     "options": [
+      "To hide the imbalance in the data so the model appears more effective than it is.",
+      "So that running the process again yields the same answer, ensuring the published numbers are verifiable.",
+      "To ensure the dashboard looks like a finished, cohesive product.",
+      "Because the model needs to see the rating to generate consistent outputs."
+     ],
+     "answer": 1,
+     "rationale": "The slide states that results should be repeatable so that 'running it again gives the same answer,' ensuring that any published number comes from a fixed choice of reviews and settings.",
+     "source_chunk_id": "mbax-6418-assignment-1-p7"
     }
    ]
   }

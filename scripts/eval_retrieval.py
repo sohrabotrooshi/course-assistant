@@ -38,6 +38,12 @@ CASES = [
     ("What are multimodal GenAI use cases?", "w6-s4"),
     ("Why is multimodal not the same as generative?", "w6-s7"),
     ("What should you weigh when choosing model licensing?", "w6-s17"),
+    # PDF targets (Hermes guide + Assignment 1 handout)
+    ("How do you install Hermes Agent on macOS?", "hermes-agent-installation-guide-2026-v1-p1"),
+    ("What should you check after the Windows installation finishes?",
+     "hermes-agent-installation-guide-2026-v1-p9"),
+    ("Which endpoint and model does the class recommend for Assignment 1 classification?",
+     "mbax-6418-assignment-1-p2"),
 ]
 
 
